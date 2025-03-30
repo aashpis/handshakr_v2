@@ -1,15 +1,28 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lusitana:wght@400;700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f2f6fa;
   --foreground: #171717;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: 'Noto Sans', Arial, Helvetica, sans-serif;
   --font-mono: var(--font-geist-mono);
+  --font-serif: 'Lusitana', Georgia, 'Times New Roman', serif;
+  --primary: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --primary-light: #e0f2fe;
+  --secondary: #fed085;
+  --neutral: #a9a9a9;
+  --neutral-dark: #374151;
+  --neutral-light: #f3f4f6;
+  --accent: #9b59b6;
+  --muted: #d1d5db;
 }
 
 @media (prefers-color-scheme: dark) {
