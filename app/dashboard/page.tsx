@@ -11,40 +11,38 @@ const user = {
 }
 
 // const userProfile = getUserProfile() 
-
 export default function Page() {
-
-
-    return (
-    <div>
-      <div className='flex row justify-evenly m-auto'>
-        <ProfileCard 
-        username = {user.username}
-        userId = {user.userID}
-        email = {user.email}
+  return (
+    <div className="flex items-start justify-between gap-8 p-8">
+      {/* Left Column with Profile and Analytics Cards */}
+      <div className="flex flex-col gap-6 w-1/3">
+        <ProfileCard
+          username={user.username}
+          userId={user.userID}
+          email={user.email}
         />
-        <HandshakeAnalyticsCard 
-          count = '10'
-          type = 'pending'
-        />
-        <HandshakeAnalyticsCard 
-          count = '10'
-          type = 'pending'
-        />
-        <HandshakeAnalyticsCard 
-          count = '10'
-          type = 'pending'
-        />
-
+        <div className="flex flex-col gap-4">
+          <HandshakeAnalyticsCard
+            count="10"
+            status="pending"
+          />
+          <HandshakeAnalyticsCard
+            count="10"
+            status="completed"
+          />
+          <HandshakeAnalyticsCard
+            count="10"
+            status="failed"
+          />
+        </div>
       </div>
-
-      <div>
+      {/* Right Column with Handshake Creation Form */}
+      <div className="flex-grow w-2/3">
         <HandshakeCreationForm />
       </div>
-
-    </div>  
-    );
-  }
+    </div>
+  );
+}
  
 
 // TODO: implement user vs admin dashboard 
