@@ -4,28 +4,28 @@ import axiosClient from "./axiosClient"
 import axiosServer from "./axiosServer"
 
 
-export async function checkEmailAvailability(email: string) {
-  try {
-    const response = await axiosServer.get(API.CHECK_EMAIL, {
-      params: { email },
-    });
-    return { success: true, data: response.data.available }; //TODO: Match available to backend response
-  } catch (error) {
-    return { success: false, error: "Failed to check email availability" };
-  }
-}
+// export async function checkEmailAvailability(email: string) {
+//   try {
+//     const response = await axiosServer.get(API.CHECK_EMAIL, {
+//       params: { email },
+//     });
+//     return { success: true, data: response.data.available }; //TODO: Match available to backend response
+//   } catch (error) {
+//     return { success: false, error: "Failed to check email availability" };
+//   }
+// }
 
 // creates new user
 export async function createUser(
+  email: string,
   username: string,
-  password: string,
-  email: string
+  password: string
 ) {
   try {
     const response = await axiosClient.post(API.REGISTER, {
+      email,
       username, 
-      password, 
-      email, 
+      password
     });
 
     return { success: true, data: response.data };
@@ -50,9 +50,9 @@ export async function authLoginData(data: { username: string; password: string }
 // redirect to user dashboard
 export async function registerNewUser(state: FormState, formData: FormData) {
   const validatedFields = UserRegisterFormSchema.safeParse({
-    username: formData.get('username'),
     email: formData.get('email'),
-    password: formData.get('password'),
+    username: formData.get('username'),
+    password: formData.get('password')
   });
 
   if (!validatedFields.success) {
@@ -61,7 +61,7 @@ export async function registerNewUser(state: FormState, formData: FormData) {
 
   const { username, email, password } = validatedFields.data;
 
-  const result = await createUser( username, email, password );
+  const result = await createUser( email, username, password );
 
   if (!result.success) {
     return { message: result.error };
@@ -97,12 +97,14 @@ export async function loginUser(state: FormState, formData: FormData) {
   redirect('/dashboard');
 }
 
+
+
   
 
 // Signout and redirect to login
 export async function signout() {
   try {
-    await axiosInstance.post(API.SIGNOUT);
+    await axiosClient.post(API.SIGNOUT);
     redirect("/login");
   } catch (error) {
     console.error("Signout error:", error);
