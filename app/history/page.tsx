@@ -1,13 +1,11 @@
 "use client";
-import { useState } from "react";
-import HandshakeCreationForm from "../ui/handshake-creation-form";
 import HandshakeCard from "../ui/handshake-card"
 
 const handshakes = [
     {
         id: "12345",
         initiator: "Shankar",
-        agreererer: "Ari",
+        agreerer: "Ari",
         compensation: "$20",
         terms: "I will sell you a used computer mouse for $20",
         status: "completed",
@@ -16,7 +14,7 @@ const handshakes = [
     {
         id: "12346",
         initiator: "Lenny",
-        agreererer: "Mike",
+        agreerer: "Mike",
         compensation: "Lunch",
         terms: "I will help you move furniture in exchange for lunch",
         status: "completed",
