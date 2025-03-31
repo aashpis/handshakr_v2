@@ -1,17 +1,12 @@
-
-
-
 export default function ProfileCard({ username, userId, email }) {
    return (
-      <div className="bg-white text-neutral-dark text-sm border rounded">
-         <div className="p-4">
-            <h1 className="text-primary font-bold">Hello {username}</h1>
-            <p>username: <span className="text-primary font-bold">{username}</span></p>
-            <p>user ID: <span className="text-primary font-bold">{userId}</span></p>
-            <p>email: <span className="text-primary font-bold">{email}</span></p>
-         </div>
-      </div>
-
-      
+     <div className="bg-white p-6 text-sm rounded-lg shadow-md">
+       <div>
+         <h1 className="text-primary text-xl font-bold">Hello {username}</h1>
+         <p className="mt-2">ID#: <span className="text-primary font-bold">{userId}</span></p>
+         <p className="mt-2">Email: <span className="text-primary font-bold">{email}</span></p>
+       </div>
+     </div>
    );
-}
+ }
+ 
