@@ -1,6 +1,4 @@
 "use client";
-import { useState } from "react";
-import HandshakeCreationForm from "../ui/handshake-creation-form";
 import HandshakeCard from "../ui/handshake-card"
 
 const handshake = {
