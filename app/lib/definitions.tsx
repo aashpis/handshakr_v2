@@ -13,17 +13,17 @@ export const API = {
   REGISTER: '/handshakr/auth/register',
   LOGIN: '/handshakr/auth/login', 
   SIGNOUT: '/handshakr/auth/signout',
-  CHECK_EMAIL: '/handshakr/auth/check-email-for-account/',
+  CHECK_EMAIL: '/handshakr/auth/check-email-for-account',
   PROFILE: {
-    GET: '/handshakr/auth/user-profile/',
-    UPDATE: '/handshakr/auth/edit-user/'
+    GET: '/handshakr/auth/user-profile',
+    UPDATE: '/handshakr/auth/edit-user'
   },
   HANDSHAKE: {
     CREATE: '/handshakr/auth/create-handshake',
     DELETE: '/handshakr/auth/delete-handshake',
     ACCEPT: '/handshakr/auth/accept-handshake',
     REJECT: '/handshakr/auth/reject-handshake',
-    CONNECT_agreererER: '/handshakr/auth/connect-user',
+    CONNECT_AGREERER: '/handshakr/auth/connect-user',
     ACTIVE: '/handshakr/auth/active-handshake',
     HISTORY: '/handshakr/auth/history-handshake',
     PENDING: '/handshakr/auth/pending-handshake',
