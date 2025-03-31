@@ -6,15 +6,15 @@ import { API } from './definitions';
 import axiosClient from './axiosClient'; // Client-side axios
 import axiosServer from './axiosServer'; // Server-side axios
 
-// Edit user profile (Server-side)
-export async function editUser(userData: {}) {
-    try {
-        const response = await axiosServer.put(API.PROFILE.GET, userData);
-        return { success: true, data: response.data };
-    } catch (error: any) {
-        return { success: false, error: error.response?.data?.message || "Failed to edit user profile" }; 
-    }
-}
+// // Edit user profile (Server-side)
+// export async function editUser(userData: {}) {
+//     try {
+//         const response = await axiosServer.put(API.PROFILE.GET, userData);
+//         return { success: true, data: response.data };
+//     } catch (error: any) {
+//         return { success: false, error: error.response?.data?.message || "Failed to edit user profile" }; 
+//     }
+// }
 
 // Create a new handshake (Client-side)
 export async function createHandshake(handshakeData: {}) {
