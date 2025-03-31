@@ -1,8 +1,8 @@
 'use client'
 
 import  ProfileCard  from '../ui/profile-card'
-import  InitiateHandshake from '../ui/initiate-handshake'
 import HandshakeAnalyticsCard from '../ui/handshake-analytics-card'
+import HandshakeCreationForm from '@/ui/handshake-creation-form'
 
 const user = {
   username: "jSmith",
@@ -39,7 +39,7 @@ export default function Page() {
       </div>
 
       <div>
-        <InitiateHandshake />
+        <HandshakeCreationForm />
       </div>
 
     </div>  
