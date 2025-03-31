@@ -13,8 +13,8 @@ const axiosServer = axios.create({
 
 // Attach JWT & CSRF Token 
 axiosServer.interceptors.request.use(async (config) => {
-  const cookieStore = cookies(); 
-  const jwt = await cookieStore.get("jwt_token")?.value;
+  const cookieStore = await cookies(); 
+  const jwt = cookieStore.get("jwt_token")?.value;
 
   if (jwt) {
     config.headers.Authorization = `Bearer ${jwt}`;
