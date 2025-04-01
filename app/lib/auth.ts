@@ -22,6 +22,11 @@ export async function createUser(
   password: string
 ) {
   try {
+    //for testing
+    console.log(`email: ${email}`)
+    console.log(`username: ${username}`)
+    console.log(`password: ${password}`)
+
     const response = await axiosClient.post(API.REGISTER, {
       email,
       username, 
@@ -90,11 +95,12 @@ export async function loginUser(state: FormState, formData: FormData) {
 
   if (!result.success) {
     return { message: result.error };
+
   }
 
   console.log("User successfully logged in"); //FOR TESTING ONLY
 
-  redirect('/dashboard');
+  return redirect('/dashboard');
 }
 
 
