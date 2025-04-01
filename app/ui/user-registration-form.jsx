@@ -3,7 +3,7 @@
 import { registerNewUser } from '../lib/auth'
 import { useActionState } from 'react'
 
-export default function UserRegisterForm() {
+export default function UserRegistrationForm() {
   const [state, action, pending] = useActionState(registerNewUser, undefined)
 
   return (

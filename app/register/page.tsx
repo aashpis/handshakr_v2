@@ -1,8 +1,8 @@
-import RegisterForm from '@/ui/user-register-form'
+import UserRegistrationForm from '@/ui/user-registration-form'
 
 export default function Page() {
   return (
-   <RegisterForm />
+   <UserRegistrationForm />
   );
 }
 
