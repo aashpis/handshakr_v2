@@ -11,6 +11,8 @@ const publicAssets = ['/favicon.ico'];
 
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
+
+  console.log(`Middleware running for: ${req.nextUrl.pathname}`);
   
   // check if public asset to bypass
   if (publicAssets.some(asset => url.pathname.startsWith(asset))) {
@@ -48,13 +50,13 @@ export async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-export const config = {
-  matcher: [
-    // Match all paths except those starting with:
-    // - api (API routes)
-    // - _next/static (static files)
-    // - _next/image (image optimization files)
-    // - favicon.ico, images with common extensions
-    '/((?!api|_next/static|_next/image|favicon\\.ico|.*\\.(png|jpg|jpeg|svg|gif|woff|woff2|ttf|eot)$).*)',
-  ],
-};
+// export const config = {
+//   matcher: [
+//     // Match all paths except those starting with:
+//     // - api (API routes)
+//     // - _next/static (static files)
+//     // - _next/image (image optimization files)
+//     // - favicon.ico, images with common extensions
+//     '/((?!api|_next/static|_next/image|favicon\\.ico|.*\\.(png|jpg|jpeg|svg|gif|woff|woff2|ttf|eot)$).*)',
+//   ],
+// };
