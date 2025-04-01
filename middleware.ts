@@ -32,7 +32,7 @@ export async function middleware(req: NextRequest) {
     
     if (!jwt) {
       // Redirect to login if no valid JWT
-      return NextResponse.redirect(new URL("/login", req.url));
+      return NextResponse.redirect(new URL("/", req.url));
     }
     
     // add jwt to header
@@ -50,14 +50,8 @@ export async function middleware(req: NextRequest) {
   // For all other routes, proceed
   return NextResponse.next();
 }
-
 export const config = {
   matcher: [
-    // Match all paths except those starting with:
-    // - api (API routes)
-    // - _next/static (static files)
-    // - _next/image (image optimization files)
-    // - favicon.ico, images with common extensions
-    '/((?!api|_next/static|_next/image|favicon\\.ico|.*\\.(png|jpg|jpeg|svg|gif|woff|woff2|ttf|eot)$).*)',
+    "/((?!api/|_next/|favicon.ico).*)",
   ],
 };
