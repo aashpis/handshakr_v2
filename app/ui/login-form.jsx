@@ -14,8 +14,9 @@ export default function LoginForm() {
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-xs rounded-lg">
         <div className='relative '>
-          <h1 className="absolute text-md font-bold text-neutral-dark bottom-0 left-1/2 -translate-x-1/2 ">
-            HandShakr</h1>
+          <h1 className="absolute text-5xl font-teko bottom-0 left-1/2 -translate-x-1/2 ">
+          Handshākr
+          </h1>
           <Image
             src="/handshake.jpg"
             width={1250}
