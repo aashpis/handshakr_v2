@@ -1,70 +1,60 @@
-
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { API } from './app/lib/definitions'
 
+// Public routes, no auth needed
+const publicRoutes = ['/', '/register'];
 
-//TODO: make sure all placeholders match backend shape
+// Routes that require auth
+const protectedRoutes = ["/dashboard", "/pending", "/history", "/"];
 
-// public routes, no auth needed 
-const publicRoutes = ['/login', '/register', '/']
-// routes that require auth
-const protectedRoutes = ["/dashboard", "/handshakes", "/history"];
+// Public assets that bypass middleware
+const publicAssets = ['/favicon.ico'];
 
-
-// Middleware function
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
-  const cookieStore = await cookies(); // Await the cookies() call
-  const jwt = cookieStore.get("jwt_token")?.value; // Read JWT from httpOnly cookie
-
-  // Check if the request is for a protected route
-  if (protectedRoutes.some((route) => url.pathname.startsWith(route))) {
-    if (!jwt) {
-      // Redirect to login if user is not authenticated
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    try {
-      // Fetch CSRF token from backend
-      //QUESTION: store it locally instead
-      //TODO: Match backend shape
-      const csrfRes = await fetch(`${API.BASE}${API.CSRF_TOKEN}`, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Cookie: `access_token=${jwt}`, // Send JWT in cookies
-        },
-      });
-
-      if (!csrfRes.ok) {
-        throw new Error("Failed to fetch CSRF token"); 
-      }
-
-      //store CSRF
-      //TODO: match backend shape
-      const { csrfToken } = await csrfRes.json();
-
-      // Attach JWT and CSRF to request headers
-      const requestHeaders = new Headers(req.headers);
-      requestHeaders.set("Authorization", `Bearer ${jwt}`);
-      requestHeaders.set("X-CSRF-Token", csrfToken);
-
-      return NextResponse.next({
-        request: {
-          headers: requestHeaders,
-        },
-      });
-    //if auth error, redirect to login  
-    } catch (error) {
-      console.error("Middleware auth error:", error); 
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
+  
+  // check if public asset to bypass
+  if (publicAssets.some(asset => url.pathname.startsWith(asset))) {
+    return NextResponse.next();
   }
-
+  
+  // direct to public routes, no auth needed
+  if (publicRoutes.some(route => url.pathname === route || url.pathname.startsWith(`${route}/`))) {
+    return NextResponse.next();
+  }
+  
+  // check if protected route
+  if (protectedRoutes.some((route) => url.pathname.startsWith(route))) {
+    // Read JWT directly from request cookies
+    const jwt = req.cookies.get("jwt_token")?.value;
+    
+    if (!jwt) {
+      // Redirect to login if no valid JWT
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+    
+    // add jwt to header
+    // TODO: do I need to add csrf?
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set("Authorization", `Bearer ${jwt}`);
+    
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+  }
+  
+  // For all other routes, proceed
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-}
+  matcher: [
+    // Match all paths except those starting with:
+    // - api (API routes)
+    // - _next/static (static files)
+    // - _next/image (image optimization files)
+    // - favicon.ico, images with common extensions
+    '/((?!api|_next/static|_next/image|favicon\\.ico|.*\\.(png|jpg|jpeg|svg|gif|woff|woff2|ttf|eot)$).*)',
+  ],
+};
