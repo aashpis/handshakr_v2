@@ -1,5 +1,5 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Teko:wght@300..700&display=swap" rel="stylesheet');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Teko:wght@300..700&display=swap');
 
 @import "tailwindcss";
 
@@ -11,19 +11,18 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Noto Sans', Arial, Helvetica, sans-serif;
+  --font-sans: 'Noto Sans', Helvetica, sans-serif;
   --font-teko: 'Teko';
   --font-mono: var(--font-geist-mono);
-  --font-serif: 'Lusitana', Georgia, 'Times New Roman', serif;
-  --primary: #3b82f6;
-  --primary-dark: #1d4ed8;
-  --primary-light: #e0f2fe;
-  --secondary: #fed085;
-  --neutral: #a9a9a9;
-  --neutral-dark: #374151;
-  --neutral-light: #f3f4f6;
-  --accent: #9b59b6;
-  --muted: #d1d5db;
+  --color-primary: #3b82f6;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-light: #e0f2fe;
+  --color-secondary: #fed085;
+  --color-neutral: #a9a9a9;
+  --color-neutral-dark: #374151;
+  --color-neutral-light: #f3f4f6;
+  --color-accent: #9b59b6;
+  --color-muted: #d1d5db;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,5 +35,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
