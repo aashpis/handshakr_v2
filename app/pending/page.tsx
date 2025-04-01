@@ -1,4 +1,3 @@
-"use client";
 import HandshakeCard from "@/ui/handshake-card"
 
 const handshake = {

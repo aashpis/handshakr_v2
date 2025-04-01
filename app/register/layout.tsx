@@ -1,5 +1,3 @@
-// app/layout.tsx or app/register/layout.tsx
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>

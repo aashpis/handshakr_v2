@@ -1,5 +1,4 @@
-"use client";
-import HandshakeCard from "../ui/handshake-card"
+import HandshakeCard from "@/ui/handshake-card"
 
 const handshakes = [
     {
@@ -48,8 +47,6 @@ const handshakes = [
         notarized: "Jane Smith",
     }
 ];
-
-
 
 
     export default function Page() {
