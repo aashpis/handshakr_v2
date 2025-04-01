@@ -38,7 +38,7 @@ export default function LoginForm() {
               Username
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full py-2 px-3 leading-tight shadow appearance-none border rounded border-neutral focus:ring-primary focus:outline-none focus:shadow-outline"
               id="username"
               name="username"
               type="text"
@@ -68,7 +68,7 @@ export default function LoginForm() {
 
           <div className="flex items-center justify-between">
             <Link
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+              className="inline-block align-baseline font-bold text-sm text-primary hover:text-primary-dark"
               href="google.com"
             >
               Forgot Password?
