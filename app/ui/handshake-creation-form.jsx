@@ -1,16 +1,15 @@
 'use client'
 
 import { useActionState } from 'react'
-import { createHandshake } from '../lib/dto'
+import { createHandshake } from '@/lib/dto'
 
 export default function HandshakeCreationForm() {
   const [state, action, pending] = useActionState(createHandshake, undefined)
 
   return (
-    <div className="">
+    <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-3xl">
       <form
         action={action}
-        className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg"
       >
         <h2 className="text-2xl font-semibold text-center mb-6">Create a Handshake</h2>
 
@@ -29,7 +28,7 @@ export default function HandshakeCreationForm() {
 
         <div className="mb-4">
           <label className="block text-sm font-medium  mb-2" htmlFor="acceptorUsername">
-            Acceptor Username
+            Agreerer Username
           </label>
           <input
             id="acceptorUsername"
