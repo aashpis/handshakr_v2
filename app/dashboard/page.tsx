@@ -1,5 +1,3 @@
-'use client'
-
 import  ProfileCard  from '../ui/profile-card'
 import HandshakeAnalyticsCard from '../ui/handshake-analytics-card'
 import HandshakeCreationForm from '@/ui/handshake-creation-form'
