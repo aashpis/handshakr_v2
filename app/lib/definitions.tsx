@@ -9,14 +9,14 @@ import { z } from 'zod'
 // API endpoints
 //TODO: replace placerholders
 export const API = {
-  BASE: 'http://localhost:8080',
-  REGISTER: '/handshakr/auth/register',
-  LOGIN: '/handshakr/auth/login', 
-  SIGNOUT: '/handshakr/auth/signout',
-  CHECK_EMAIL: '/handshakr/auth/check-email-for-account',
+  BASE: 'http://3.217.203.100:8080',
+  REGISTER: '/auth/register',
+  LOGIN: '/auth/login', 
+  SIGNOUT: '/auth/signout',
+  CHECK_EMAIL: '/auth/check-email-for-account',
   PROFILE: {
-    GET: '/handshakr/auth/user-profile',
-    UPDATE: '/handshakr/auth/edit-user'
+    GET: '/auth/user-profile',
+    UPDATE: '/auth/edit-user'
   },
   HANDSHAKE: {
     CREATE: '/handshakr/auth/create-handshake',

@@ -11,7 +11,7 @@ import axiosServer from "./axiosServer"
 // get user profile data
 export async function getUserProfile(userId: string ) {
   try {
-    const response = await axiosServer.get(`${API.PROFILE.GET}/${userId}`);
+    const response = await axiosServer.get(`${API.PROFILE.GET}`);
     return { success: true, data: response.data };
   } catch (error: any) {
     return { success: false, error: error.response?.data?.message || "Failed to get profile" }; 
@@ -24,7 +24,7 @@ export async function getUserProfile(userId: string ) {
 // show which handshakes have not been completed
 export async function getPendingHandshakes(userId: string ){
   try {
-    const response = await axiosServer.get(`${API.HANDSHAKE.PENDING}/${userId}`);
+    const response = await axiosServer.get(`${API.HANDSHAKE.PENDING}`);
     return { success: true, data: response.data };
   } catch (error: any) {
     return { success: false, error: error.response?.data?.message || "Failed to get your pending handshakes" }; 
@@ -32,13 +32,11 @@ export async function getPendingHandshakes(userId: string ){
 }
 
 
-
-
 // get encrypted handshake history data
 // each handshake must be decrypted by user to view
 export async function getHandshakeHistory(userId: string ){
   try {
-    const response = await axiosServer.get(`${API.HANDSHAKE.HISTORY}/${userId}`);
+    const response = await axiosServer.get(`${API.HANDSHAKE.HISTORY}`);
     return { success: true, data: response.data };
   } catch (error: any) {
     return { success: false, error: error.response?.data?.message || "Failed to get handshakes history" }; 
@@ -51,7 +49,7 @@ export async function getHandshakeHistory(userId: string ){
 // connect agreererer to new handshake
 export async function connectAgreerer(userId: string){
   try {
-      const response = await axiosServer.post(`${API.HANDSHAKE.CONNECT_AGREERER}/${userId}`);
+      const response = await axiosServer.post(`${API.HANDSHAKE.CONNECT_AGREERER}`);
       return { success: true, data: response.data };
     } catch (error: any) {
       return { success: false, error: error.response?.data?.message || "failed to reject handshake" }; 
