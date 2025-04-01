@@ -74,7 +74,7 @@ export default function LoginForm() {
               Forgot Password?
             </Link>
             <button
-              className="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
               disabled={pending}
             >
@@ -83,7 +83,7 @@ export default function LoginForm() {
           </div>
       
         </form>
-        <div className="flex items-center justify-center mt-5  bg-blue-500 text-white py-4 px-4 text-primary font-bold text-sm rounded cursor-pointer focus:outline-none focus:shadow-outline hover:bg-blue-800 ">
+        <div className="flex items-center justify-center mt-5  bg-blue-500 text-white py-4 px-4 font-bold text-sm rounded cursor-pointer focus:outline-none focus:shadow-outline hover:bg-blue-800 ">
             {/* create new account prompt register redirect */}
             <Link href='/register'> Create New Account </Link>
           </div>
