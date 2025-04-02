@@ -14,8 +14,8 @@ axiosClient.interceptors.response.use(
     // Handle authentication errors
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
       // If on the login page, don't redirect
-      if (!window.location.pathname.includes('/login')) {
-        window.location.href = '/login';
+      if (!window.location.pathname.includes('/')) {
+        window.location.href = '/';
       }
     }
     return Promise.reject(error);
