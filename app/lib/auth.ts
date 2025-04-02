@@ -74,7 +74,7 @@ export async function registerNewUser(state: FormState, formData: FormData) {
 
   console.log("User successfully created");
 
-  redirect('/dashboard');
+  return redirect('/dashboard');
 }
 
 
