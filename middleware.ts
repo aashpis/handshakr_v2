@@ -12,7 +12,7 @@ const publicAssets = ['/favicon.ico'];
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
-  console.log(`Middleware running for: ${url.pathname}`);
+  console.log(`Middleware running for: ${url.pathname}`); //FOR TESTING ONLY
 
   // Bypass middleware for public assets
   if (publicAssets.some(asset => url.pathname.startsWith(asset))) {
@@ -27,20 +27,12 @@ export async function middleware(req: NextRequest) {
   // Check for protected routes
   if (protectedRoutes.some(route => url.pathname === route || url.pathname.startsWith(`${route}/`))) {
     // Read JWT from cookies
-    const jwt = req.cookies.get("jwt_token")?.value;
+    const jwt = req.cookies.get("jwtToken")?.value;
     if (!jwt) {
       // Redirect to login if no valid JWT is found
-      return NextResponse.redirect(new URL("/login", req.url));
+      return NextResponse.redirect(new URL("/", req.url));
     }
 
-    // TODO: is this needed - attach JWT to the request headers for further backend processing
-    // const requestHeaders = new Headers(req.headers);
-    // requestHeaders.set("Authorization", `Bearer ${jwt}`);
-    // return NextResponse.next({
-    //   request: {
-    //     headers: requestHeaders,
-    //   },
-    // });
   }
 
   // For all other routes, proceed normally
