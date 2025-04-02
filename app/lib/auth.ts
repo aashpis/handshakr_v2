@@ -42,9 +42,11 @@ export async function createUser(
 
 
 // auth user login. 
-export async function authLoginData(data: { username: string; password: string }) {
+export async function authLoginData(username: string, password: string) {
   try {
-    const response = await axiosClient.post(API.LOGIN, data);
+    const response = await axiosClient.post(API.LOGIN, {username, password});
+    console.log(response)
+    console.log(response.data)
     return { success: true, data: response.data };
   } catch (error: any) {
     return { success: false, error: error.response?.data?.message || "Failed to login" }; 
@@ -91,11 +93,10 @@ export async function loginUser(state: FormState, formData: FormData) {
 
   const { username, password } = validatedFields.data;
 
-  const result = await authLoginData({ username, password });
+  const result = await authLoginData(username, password);
 
   if (!result.success) {
     return { message: result.error };
-
   }
 
   console.log("User successfully logged in"); //FOR TESTING ONLY
