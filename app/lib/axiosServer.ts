@@ -13,23 +13,16 @@ const axiosServer = axios.create({
 
 // Attach JWT & CSRF Token 
 axiosServer.interceptors.request.use(async (config) => {
+  
   const cookieStore = await cookies(); 
-  const jwt = cookieStore.get("jwt_token")?.value;
+  const jwt = cookieStore.get("jwtCookie")?.value;
+  const csrfToken = cookieStore.get("XSRF-TOKEN")?.value;
 
   if (jwt) {
     config.headers.Authorization = `Bearer ${jwt}`;
   }
-
-  try {
-    const csrfTokenRes = await axios.get(`${API.BASE}${API.CSRF_TOKEN}`, { // TODO: may need to replace with other way to get token
-      withCredentials: true,
-    });
-    //Add CSRF
-    if (csrfTokenRes.data?.csrfToken) {
-      config.headers["X-CSRF-Token"] = csrfTokenRes.data.csrfToken;
-    }
-  } catch (error) {
-    console.error("Error fetching CSRF token:", error);
+  if (csrfToken) {
+    config.headers["X-CSRF-TOKEN"] = csrfToken;
   }
 
   return config;
