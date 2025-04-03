@@ -15,6 +15,8 @@ import axiosClient from "./axiosClient"
 //   }
 // }
 
+//********** REGISTRATION FUNCTIONS *********************/
+
 // creates new user
 export async function createUser(
   email: string,
@@ -41,17 +43,6 @@ export async function createUser(
 
 
 
-// auth user login. 
-export async function authLoginData(username: string, password: string) {
-  try {
-    const response = await axiosClient.post(API.LOGIN, {username, password});
-    console.log(response) // FOR TESTING
-    console.log(response.data) // FOR TESTING
-    return { success: true, data: response.data };
-  } catch (error: any) {
-    return { success: false, error: error.response?.data?.message || "Failed to login" }; 
-  }
-}
 // new user sign up flow 
 // validates new user input and posts to the server
 // redirect to user dashboard
@@ -67,9 +58,9 @@ export async function registerNewUser(state: FormState, formData: FormData) {
   }
 
   const { username, email, password } = validatedFields.data;
-
+  
   const result = await createUser(email, username, password);
-
+  
   if (!result.success) {
     return { message: result.error };
   }
@@ -79,11 +70,26 @@ export async function registerNewUser(state: FormState, formData: FormData) {
   return { success: true }; 
 }
 
+//********** LOGIN FUNCTIONS *********************/
+
+// auth user login. 
+export async function authLoginData(username: string, password: string) {
+  try {
+    const response = await axiosClient.post(API.LOGIN, {username, password});
+    console.log(response) // FOR TESTING
+    console.log(response.data) // FOR TESTING
+    return { success: true, data: response.data };
+  } catch (error: any) {
+    return { success: false, error: error.response?.data?.message || "Failed to login" }; 
+  }
+}
+
 export async function loginUser(state: FormState, formData: FormData) {
   const validatedFields = LoginFormSchema.safeParse({
     username: formData.get("username"),
     password: formData.get("password"),
   });
+
 
   if (!validatedFields.success) {
     return { errors: validatedFields.error.flatten().fieldErrors };
@@ -99,7 +105,7 @@ export async function loginUser(state: FormState, formData: FormData) {
 
   console.log("User successfully logged in"); //FOR TESTING ONLY
 
-  return redirect('/dashboard');
+  return { success: true }; 
 }
 
 
