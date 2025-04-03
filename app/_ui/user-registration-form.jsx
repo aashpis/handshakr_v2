@@ -4,6 +4,7 @@ import { registerNewUser } from "@/_lib/auth";
 import { useActionState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from 'next/image';
 
 export default function UserRegistrationForm() {
   const router = useRouter();
@@ -89,7 +90,7 @@ export default function UserRegistrationForm() {
             />
           </div>
           {state?.errors?.confirmPassword && (
-            <p className="text-warning mb-4">{state.errors.email}</p>
+            <p className="text-warning mb-4">{state.errors.confirmPassword}</p>
           )}
           {state?.errors?.password && (
             <div>
@@ -107,7 +108,7 @@ export default function UserRegistrationForm() {
             disabled={pending}
             type="submit"
           >
-            Sign Up
+            {pending ? "Signing up..." : "Sign Up"}
           </button>
         </form>
       </div>
