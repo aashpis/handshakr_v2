@@ -19,11 +19,14 @@
   --color-primary: var(--color-blue-500);
   --color-primary-dark: var(--color-blue-800);
   --color-primary-light: var(--color-blue-200);;
-  --color-secondary: #fed085;
-  --color-neutral: #a9a9a9;
-  --color-neutral-dark: #374151;
-  --color-neutral-light: #f3f4f6;
+  --color-secondary: var(--color-amber-500);
+  --color-neutral: var(--color-gray-500);
+  --color-neutral-dark: var(--color-gray-800);
+  --color-neutral-light: var(--color-gray-200);
   --color-warning: var(--color-red-500);
+  --color-hs-completed: var(--color-green-700);
+  --color-hs-failed: var(--color-red-700);
+  --color-hs-pending: var(--color-amber-500);
   --color-accent: #9b59b6;
   --color-muted: #d1d5db;
 }
