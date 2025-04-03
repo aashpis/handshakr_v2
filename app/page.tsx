@@ -1,4 +1,4 @@
-import LoginForm from "@/ui/login-form"
+import LoginForm from "@/_ui/login-form"
 
 export default function Home() {
   return (

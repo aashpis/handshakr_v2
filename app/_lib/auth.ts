@@ -1,7 +1,7 @@
 import { UserRegisterFormSchema, FormState, API, LoginFormSchema } from './definitions'
 import { redirect } from 'next/navigation'
 import axiosClient from "./axiosClient"
-import axiosServer from "./axiosServer"
+// import axiosServer from "./axiosServer"
 
 
 // export async function checkEmailAvailability(email: string) {
@@ -45,8 +45,8 @@ export async function createUser(
 export async function authLoginData(username: string, password: string) {
   try {
     const response = await axiosClient.post(API.LOGIN, {username, password});
-    console.log(response)
-    console.log(response.data)
+    console.log(response) // FOR TESTING
+    console.log(response.data) // FOR TESTING
     return { success: true, data: response.data };
   } catch (error: any) {
     return { success: false, error: error.response?.data?.message || "Failed to login" }; 
@@ -74,7 +74,7 @@ export async function registerNewUser(state: FormState, formData: FormData) {
     return { message: result.error };
   }
 
-  console.log("User successfully created");
+  console.log("User successfully created"); //FOR TESTING ONLY
 
   return redirect('/dashboard');
 }

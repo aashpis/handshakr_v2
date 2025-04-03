@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link'
 import { useActionState } from 'react'
-import { loginUser } from '@/lib/auth';
+import { loginUser } from '@/_lib/auth';
 
 ``
 export default function LoginForm() {

@@ -1,4 +1,4 @@
-import HandshakeCard from "@/ui/handshake-card"
+import HandshakeCard from "@/_ui/handshake-card"
 
 const handshakes = [
     {

@@ -1,4 +1,4 @@
-import HandshakeCard from "@/ui/handshake-card"
+import HandshakeCard from "@/_ui/handshake-card"
 
 const handshake = {
     id: "12345",
@@ -7,13 +7,14 @@ const handshake = {
     compensation: "$20",
     terms: "I will sell you a used computer mouse for $20",
     status: "pending",
-    notarized: false
+    notarized: false,
 }
 
 export default function Page() {
     return (
     <div className="flex flex-col items-center justify-top min-h-screen">
-        <h1>Pending Handshakes</h1>
+        <h1>Unconfirmed Handshakes</h1>
+        <p>Assigned agreerer has not agreed yet</p>
         <HandshakeCard {...handshake} />
     </div>
 

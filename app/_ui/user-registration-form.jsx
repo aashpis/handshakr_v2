@@ -1,6 +1,6 @@
 'use client'
 
-import { registerNewUser } from '../lib/auth'
+import { registerNewUser } from '../_lib/auth'
 import { useActionState } from 'react'
 
 export default function UserRegistrationForm() {

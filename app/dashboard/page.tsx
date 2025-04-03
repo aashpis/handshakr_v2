@@ -1,6 +1,6 @@
-import  ProfileCard  from '@/ui/profile-card'
-import HandshakeAnalyticsCard from '@/ui/handshake-analytics-card'
-import HandshakeCreationForm from '@/ui/handshake-creation-form'
+import  ProfileCard  from '@/_ui/profile-card'
+import HandshakeAnalyticsCard from '@/_ui/handshake-analytics-card'
+import HandshakeCreationForm from '@/_ui/handshake-creation-form'
 
 const user = {
   username: "jSmith",

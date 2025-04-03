@@ -1,4 +1,4 @@
-import HandshakeCreationForm from '@/ui/handshake-creation-form'
+import HandshakeCreationForm from '@/_ui/handshake-creation-form'
 
 
 export default function Page() {

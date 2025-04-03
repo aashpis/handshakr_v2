@@ -1,7 +1,7 @@
 'use client'
 
 import { useActionState } from 'react'
-import { createHandshake } from '@/lib/dto'
+import { createHandshake } from '@/_lib/dto'
 
 export default function HandshakeCreationForm() {
   const [state, action, pending] = useActionState(createHandshake, undefined)
