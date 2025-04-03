@@ -57,9 +57,9 @@ export async function authLoginData(username: string, password: string) {
 // redirect to user dashboard
 export async function registerNewUser(state: FormState, formData: FormData) {
   const validatedFields = UserRegisterFormSchema.safeParse({
-    email: formData.get('email'),
-    username: formData.get('username'),
-    password: formData.get('password')
+    email: formData.get("email"),
+    username: formData.get("username"),
+    password: formData.get("password"),
   });
 
   if (!validatedFields.success) {
@@ -68,23 +68,21 @@ export async function registerNewUser(state: FormState, formData: FormData) {
 
   const { username, email, password } = validatedFields.data;
 
-  const result = await createUser( email, username, password );
+  const result = await createUser(email, username, password);
 
   if (!result.success) {
     return { message: result.error };
   }
 
-  console.log("User successfully created"); //FOR TESTING ONLY
+  console.log("User successfully created"); // FOR TESTING ONLY
 
-  return redirect('/dashboard');
+  return { success: true }; 
 }
-
-
 
 export async function loginUser(state: FormState, formData: FormData) {
   const validatedFields = LoginFormSchema.safeParse({
-    username: formData.get('username'),
-    password: formData.get('password'),
+    username: formData.get("username"),
+    password: formData.get("password"),
   });
 
   if (!validatedFields.success) {
@@ -103,7 +101,6 @@ export async function loginUser(state: FormState, formData: FormData) {
 
   return redirect('/dashboard');
 }
-
 
 
   
