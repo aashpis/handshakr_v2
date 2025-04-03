@@ -57,15 +57,18 @@ export const UserRegisterFormSchema = z.object({
     .trim(),
 })
 
-// validate login-form input 
+// validate login-form input
+// makes sure values are strings and not null
 // returns error messages to be displayed in form
 export const LoginFormSchema = z.object({
   username: z
     .string()
-    .min(2, { message: 'Name must be at least 2 characters long.' })
-    .trim(),
-  password: z.string({ message: "Password is required" })
-})
+    .trim()
+    .min(1, { message: "Username is required" }), 
+  password: z
+    .string()
+    .min(1, { message: "Password is required" }) 
+});
 
 // validate handshake-creation-form input
 // returns error messages to be displayed in form
