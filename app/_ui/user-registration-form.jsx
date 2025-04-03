@@ -18,7 +18,20 @@ export default function UserRegistrationForm() {
 
   return (
     <div className="flex items-center justify-center min-h-screen ">
-      <div className="rounded-lg shadow-md">
+      <div className="w-full max-w-xs rounded-lg">
+        <div className="relative">
+          <h1 className="absolute text-5xl font-teko bottom-0 left-1/2 -translate-x-1/2">
+            Handshākr
+          </h1>
+          <Image
+            src="/handshake.jpg"
+            width={1250}
+            height={625}
+            alt="handshake"
+            className="w-full"
+          />
+        </div>
+        <h1 className="font-bold text-primary text-3xl">Create New Account</h1>
         <form action={action} className="bg-white px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2" htmlFor="username">
@@ -32,41 +45,55 @@ export default function UserRegistrationForm() {
             />
           </div>
           {state?.errors?.username && (
-            <p className="text-red-500 mb-4">{state.errors.username}</p>
+            <p className="text-warning mb-4">{state.errors.username}</p>
           )}
 
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-black text-sm font-bold mb-2"
               htmlFor="email"
             >
               Email
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
               id="email"
               name="email"
               placeholder="Email"
             />
           </div>
           {state?.errors?.email && (
-            <p className="text-red-500 mb-4">{state.errors.email}</p>
+            <p className="text-warning mb-4">{state.errors.email}</p>
           )}
 
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-black text-sm font-bold mb-2">
               Password
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               name="password"
               type="password"
             />
           </div>
+          <div className="mb-4">
+            <label className="block text-black text-sm font-bold mb-2">
+              Confirm Password
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+              id="confirmPassword"
+              name="confirmPassword"
+              type="confirmPassword"
+            />
+          </div>
+          {state?.errors?.confirmPassword && (
+            <p className="text-warning mb-4">{state.errors.email}</p>
+          )}
           {state?.errors?.password && (
             <div>
-              <p className="text-red-500">Password must:</p>
+              <p className="text-warning">Password must:</p>
               <ul className="text-sm mb-4">
                 {state.errors.password.map((error) => (
                   <li key={error}>- {error}</li>

@@ -41,11 +41,14 @@ export const API = {
 // validate user registration-form input 
 // returns error messages to be displayed in form
 export const UserRegisterFormSchema = z.object({
+  
   username: z
     .string()
     .min(5, { message: 'Name must be at least 5 characters long.' })
     .trim(),
-  email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
+  
+    email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
+  
   password: z
     .string()
     .min(8, { message: 'Be at least 8 characters long' })
@@ -55,7 +58,18 @@ export const UserRegisterFormSchema = z.object({
       message: 'Contain at least one special character.',
     })
     .trim(),
-})
+
+    confirmPassword: z.string().trim()
+
+  })
+  //check if passwords match
+  .refine(
+    (data) => data.password === data.confirmPassword,
+    {
+      message: "The passwords did not match.",
+      path: ["confirmPassword"],
+  }
+);
 
 // validate login-form input
 // makes sure values are strings and not null
