@@ -14,26 +14,26 @@ export async function middleware(req: NextRequest) {
 
   console.log(`Middleware running for: ${url.pathname}`); //FOR TESTING ONLY
 
-  // Bypass middleware for public assets
-  if (publicAssets.some(asset => url.pathname.startsWith(asset))) {
-    return NextResponse.next();
-  }
+  // // Bypass middleware for public assets
+  // if (publicAssets.some(asset => url.pathname.startsWith(asset))) {
+  //   return NextResponse.next();
+  // }
 
-  // Allow public pages
-  if (publicRoutes.some(route => url.pathname === route || url.pathname.startsWith(`${route}/`))) {
-    return NextResponse.next();
-  }
+  // // Allow public pages
+  // if (publicRoutes.some(route => url.pathname === route || url.pathname.startsWith(`${route}/`))) {
+  //   return NextResponse.next();
+  // }
 
-  // Check for protected routes
-  if (protectedRoutes.some(route => url.pathname === route || url.pathname.startsWith(`${route}/`))) {
-    // Read JWT from cookies
-    const jwt = req.cookies.get("jwtToken")?.value;
-    if (!jwt) {
-      // Redirect to login if no valid JWT is found
-      return NextResponse.redirect(new URL("/", req.url));
-    }
+  // // Check for protected routes
+  // if (protectedRoutes.some(route => url.pathname === route || url.pathname.startsWith(`${route}/`))) {
+  //   // Read JWT from cookies
+  //   const jwt = req.cookies.get("jwtToken")?.value;
+  //   if (!jwt) {
+  //     // Redirect to login if no valid JWT is found
+  //     return NextResponse.redirect(new URL("/", req.url));
+  //   }
 
-  }
+  // }
 
   // For all other routes, proceed normally
   return NextResponse.next();
