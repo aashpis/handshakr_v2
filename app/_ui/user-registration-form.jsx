@@ -43,6 +43,7 @@ export default function UserRegistrationForm() {
               id="username"
               name="username"
               placeholder="Username"
+              required
             />
           </div>
           {state?.errors?.username && (
@@ -61,6 +62,7 @@ export default function UserRegistrationForm() {
               id="email"
               name="email"
               placeholder="Email"
+              required
             />
           </div>
           {state?.errors?.email && (
@@ -76,6 +78,7 @@ export default function UserRegistrationForm() {
               id="password"
               name="password"
               type="password"
+              required
             />
           </div>
           <div className="mb-4">
@@ -86,7 +89,8 @@ export default function UserRegistrationForm() {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
               id="confirmPassword"
               name="confirmPassword"
-              type="confirmPassword"
+              type="password"
+              required
             />
           </div>
           {state?.errors?.confirmPassword && (
@@ -104,7 +108,7 @@ export default function UserRegistrationForm() {
           )}
 
           <button
-            className="w-full bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             disabled={pending}
             type="submit"
           >
