@@ -4,7 +4,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f2f6fa;
+  --background: var(--color-gray-100);;
   --foreground: #171717;
 }
 
@@ -14,7 +14,7 @@
   --font-sans: 'Noto Sans', Helvetica, sans-serif;
   --font-teko: 'Teko';
   --font-mono: var(--font-geist-mono);
-  --color-white: var(--color-white);
+  --color-white: var(--color-gray-50);
   --color-black: var(--color-gray-950);
   --color-primary: var(--color-blue-500);
   --color-primary-dark: var(--color-blue-800);
