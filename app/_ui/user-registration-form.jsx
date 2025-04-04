@@ -70,7 +70,10 @@ export default function UserRegistrationForm() {
           )}
 
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2">
+            <label 
+            className="block text-black text-sm font-bold mb-2"
+            htmlFor="password"
+            >
               Password
             </label>
             <input
@@ -82,7 +85,10 @@ export default function UserRegistrationForm() {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2">
+            <label 
+              className="block text-black text-sm font-bold mb-2"
+              htmlFor="confirmPassword"
+              >
               Confirm Password
             </label>
             <input

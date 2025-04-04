@@ -51,9 +51,12 @@ export async function registerNewUser(state: FormState, formData: FormData) {
     email: formData.get("email"),
     username: formData.get("username"),
     password: formData.get("password"),
+    confirmPassword: formData.get("confirmPassword")
   });
 
   if (!validatedFields.success) {
+    console.log("userFormSchema errors: ")
+    console.log(validatedFields.error.flatten().fieldErrors);
     return { errors: validatedFields.error.flatten().fieldErrors };
   }
 
