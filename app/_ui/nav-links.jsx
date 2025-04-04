@@ -21,8 +21,8 @@ import clsx from 'clsx';
 const links = [
   { name: 'Home', href: '/dashboard'},
   { name: 'Create Handshake', href: '/create'},
-  { name: 'Unconfirmed Handshakes', href: '/unconfirmed'},
-  { name: 'Pending Handshakes', href: '/pending'},
+  { name: 'Initiated Handshakes', href: '/initiated-handshakes'},
+  { name: 'Received Handshakes', href: '/received-handshakes'},
   { name: 'History', href: '/history'}
 ];
 
@@ -39,12 +39,12 @@ export default function NavLinks() {
             className={clsx(
               'flex h-[48px] grow items-center justify-center gap-2 text-sm font-medium hover:bg-blue-100 md:flex-none md:justify-start md:p-2 md:px-3',
               {
-                'bg-blue-500 text-white': pathname === link.href,
+                'bg-primary-light ': pathname === link.href,
               },
             )}
           >
             {/* <LinkIcon className="w-6" /> */}
-            <p className="hidden md:block">{link.name}</p>
+            <p className="hidden pl-5 md:block">{link.name}</p>
           </Link>
         );
       })}
