@@ -47,7 +47,7 @@ export default function UserRegistrationForm() {
             />
           </div>
           {state?.errors?.username && (
-            <p className="text-warning mb-4">{state.errors.username}</p>
+            <p className="text-warning italic mb-4">{state.errors.username}</p>
           )}
 
           <div className="mb-4">
@@ -66,7 +66,7 @@ export default function UserRegistrationForm() {
             />
           </div>
           {state?.errors?.email && (
-            <p className="text-warning mb-4">{state.errors.email}</p>
+            <p className="text-warning italic mb-4">{state.errors.email}</p>
           )}
 
           <div className="mb-4">
@@ -100,12 +100,12 @@ export default function UserRegistrationForm() {
             />
           </div>
           {state?.errors?.confirmPassword && (
-            <p className="text-warning mb-4">{state.errors.confirmPassword}</p>
+            <p className="text-warning italic mb-4">{state.errors.confirmPassword}</p>
           )}
           {state?.errors?.password && (
             <div>
               <p className="text-warning">Password must:</p>
-              <ul className="text-sm mb-4">
+              <ul className="text-sm italic mb-4 ">
                 {state.errors.password.map((error) => (
                   <li key={error}>- {error}</li>
                 ))}
