@@ -87,6 +87,34 @@ export async function authLoginData(username: string, password: string) {
   }
 }
 
+export async function authLoginDataWithFetch(username: string, password: string) {
+  try {
+    const response = await fetch("https://handshakr.duckdns.org/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",  // Set Content-Type as JSON
+      },
+      body: JSON.stringify({ username, password }),  // Send data as JSON
+      credentials: "include",  // Include credentials (cookies, JWT tokens)
+    });
+
+    // Check if the response is OK (status code 200-299)
+    if (!response.ok) {
+      const errorData = await response.json();
+      return { success: false, error: errorData.message || "Failed to login" };
+    }
+
+    // Parse the response JSON if the request was successful
+    const data = await response.json();
+    return { success: true, data };
+
+  } catch (error) {
+    // Handle any network errors or other exceptions
+    console.error("Error during login:", error);
+    return { success: false, error: "Network or unexpected error occurred" };
+  }
+}
+
 export async function loginUser(state: FormState, formData: FormData) {
   const validatedFields = LoginFormSchema.safeParse({
     username: formData.get("username"),
@@ -100,7 +128,7 @@ export async function loginUser(state: FormState, formData: FormData) {
 
   const { username, password } = validatedFields.data;
 
-  const result = await authLoginData(username, password);
+  const result = await authLoginDataWithFetch(username, password);
 
   if (!result.success) {
     return { message: result.error };
