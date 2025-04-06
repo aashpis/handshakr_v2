@@ -80,7 +80,7 @@ export default function LoginForm() {
           </div>
           {state?.message && (
             <p className="text-warning text-center font-semibold mb-4">
-              {state.message}
+              Login Failed
             </p>
           )}
         </form>
