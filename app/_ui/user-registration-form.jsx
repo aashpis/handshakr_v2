@@ -104,7 +104,7 @@ export default function UserRegistrationForm() {
           )}
           {state?.errors?.password && (
             <div>
-              <p className="text-warning">Password must:</p>
+              <p className="text-warning font-bold">Password must:</p>
               <ul className="text-sm italic mb-4 ">
                 {state.errors.password.map((error) => (
                   <li key={error}>- {error}</li>
