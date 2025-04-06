@@ -1,11 +1,24 @@
+'use client'
+
 import Link from 'next/link';
 import Image from 'next/image';
 import NavLinks from './nav-links';
-import { logout } from '@/_lib/auth';
+import { logoutUser } from '@/_lib/auth';
+import { useRouter } from 'next/Navigation';
 
 // import { PowerIcon } from '@heroicons/react/24/outline';
 
+
 export default function SideNav() {
+
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logoutUser();
+    router.push('/');
+  };
+
+
   return (
     <div className="flex h-full flex-col bg-white">
       <Link
@@ -26,7 +39,7 @@ export default function SideNav() {
         <div className="hidden h-auto w-full grow md:block"></div>
 
         <button
-          onClick={logout}
+          onClick={handleLogout}
           className="w-full h-auto items-center bg-primary text-white font-bold text-sm hover:bg-warning hover:text-white md:justify-start md:p-2 md:px-3"
         >
           <div className="w-full text-center">Log Out</div>

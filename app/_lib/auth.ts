@@ -144,17 +144,11 @@ export async function loginUser(state: FormState, formData: FormData) {
 
   
 
-export function logout() {
-  
-  const logout = async () => {
-    try {
-      await axiosClient.post(API.LOGOUT);
-      redirect('/');
-    } catch (error) {
-      console.error("Signout error:", error);
-      redirect('/');
-    }
-  };
-  
-  return logout;
+export async function logoutUser(): Promise<void> {
+  try {
+    await axiosClient.post(API.LOGOUT);
+  } catch (error) {
+    console.error("Signout error:", error);
+  }
 }
+
