@@ -1,6 +1,7 @@
 import { UserRegisterFormSchema, FormState, API, LoginFormSchema } from './definitions'
 import { redirect } from 'next/navigation'
 import axiosClient from "./axiosClient"
+import { useRouter } from 'next/router'
 // import axiosServer from "./axiosServer"
 
 
@@ -79,8 +80,8 @@ export async function registerNewUser(state: FormState, formData: FormData) {
 export async function authLoginData(username: string, password: string) {
   try {
     const response = await axiosClient.post(API.LOGIN, {username, password});
-    console.log(response) // FOR TESTING
-    console.log(response.data) // FOR TESTING
+    console.log("authLoginData response:");
+    console.log(response);
     return { success: true, data: response.data };
   } catch (error: any) {
     return { success: false, error: error.response?.data?.message || "Failed to login" }; 
@@ -130,6 +131,7 @@ export async function loginUser(state: FormState, formData: FormData) {
 
   const result = await authLoginData(username, password);
 
+
   if (!result.success) {
     return { message: result.error };
   }
@@ -142,13 +144,18 @@ export async function loginUser(state: FormState, formData: FormData) {
 
   
 
-// Signout and redirect to login
-export async function logout() {
-  try {
-    await axiosClient.post(API.LOGOUT);
-    redirect("/");
-  } catch (error) {
-    console.error("Signout error:", error);
-    redirect("/");
-  }
+export function logout() {
+  const router = useRouter();
+  
+  const logout = async () => {
+    try {
+      await axiosClient.post(API.LOGOUT);
+      router.push('/');
+    } catch (error) {
+      console.error("Signout error:", error);
+      router.push('/');
+    }
+  };
+  
+  return logout;
 }

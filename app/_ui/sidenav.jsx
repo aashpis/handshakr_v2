@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import NavLinks from './nav-links';
+import { logout } from '@/_lib/auth';
 
 // import { PowerIcon } from '@heroicons/react/24/outline';
 
@@ -12,24 +13,24 @@ export default function SideNav() {
         href="/"
       >
         <Image
-            src="/hs_icon.png"
-            // src="/handshakr-namebanner.png"
-            width={1250}
-            height={625}
-            alt="handshake"
-            className='object-scale-down'
-          />
+          src="/hs_icon.png"
+          // src="/handshakr-namebanner.png"
+          width={1250}
+          height={625}
+          alt="handshake"
+          className='object-scale-down'
+        />
       </Link>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
-        <div className="hidden h-auto w-full grow  md:block"></div>
-        <Link
-  href="/"
-  className="w-full h-auto items-center  bg-primary text-white font-bold text-sm hover:bg-warning hover:text-white md:justify-start md:p-2 md:px-3"
->
-  <div className="w-full text-center">Sign Out</div>
-</Link>
+        <div className="hidden h-auto w-full grow md:block"></div>
 
+        <button
+          onClick={logout}
+          className="w-full h-auto items-center bg-primary text-white font-bold text-sm hover:bg-warning hover:text-white md:justify-start md:p-2 md:px-3"
+        >
+          <div className="w-full text-center">Log Out</div>
+        </button>
       </div>
     </div>
   );
