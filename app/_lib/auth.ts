@@ -128,7 +128,7 @@ export async function loginUser(state: FormState, formData: FormData) {
 
   const { username, password } = validatedFields.data;
 
-  const result = await authLoginDataWithFetch(username, password);
+  const result = await authLoginData(username, password);
 
   if (!result.success) {
     return { message: result.error };
@@ -143,10 +143,10 @@ export async function loginUser(state: FormState, formData: FormData) {
   
 
 // Signout and redirect to login
-export async function signout() {
+export async function logout() {
   try {
-    await axiosClient.post(API.SIGNOUT);
-    redirect("/login");
+    await axiosClient.post(API.LOGOUT);
+    redirect("/");
   } catch (error) {
     console.error("Signout error:", error);
     redirect("/");
