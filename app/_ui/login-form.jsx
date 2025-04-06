@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { loginUser } from '@/_lib/auth';
 
 export default function LoginForm() {
-  const router = useRouter(); 
+  const router = useRouter();
   const [state, action, pending] = useActionState(loginUser, undefined);
 
   // Redirect after successful login
@@ -35,8 +35,8 @@ export default function LoginForm() {
         </div>
         <form action={action} className="bg-white px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
-            <label 
-              className="block text-sm font-bold mb-2" 
+            <label
+              className="block text-sm font-bold mb-2"
               htmlFor="username"
             >
               Username
@@ -50,10 +50,6 @@ export default function LoginForm() {
               required
             />
           </div>
-          {state?.errors?.username && (
-            <p className="text-red-500 mb-4">{state.errors.username}</p>
-          )}
-
           <div className="mb-6">
             <label className="block text-sm font-bold mb-2" htmlFor="password">
               Password
@@ -67,10 +63,6 @@ export default function LoginForm() {
               required
             />
           </div>
-          {state?.errors?.password && (
-            <p className="text-red-500 mb-4">{state.errors.password}</p>
-          )}
-
           <div className="flex items-center justify-between">
             <Link
               className="inline-block align-baseline font-bold text-sm text-primary hover:text-primary-dark"
@@ -86,6 +78,11 @@ export default function LoginForm() {
               {pending ? 'Signing in...' : 'Sign In'}
             </button>
           </div>
+          {state?.message && (
+            <p className="text-warning text-center font-semibold mb-4">
+              {state.message}
+            </p>
+          )}
         </form>
         <div className="flex items-center justify-center mt-5 bg-primary text-white py-4 px-4 font-bold text-sm rounded cursor-pointer focus:outline-none focus:shadow-outline hover:bg-primary-dark">
           <Link href="/register">Create New Account</Link>
