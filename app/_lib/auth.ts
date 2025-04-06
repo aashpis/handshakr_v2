@@ -145,15 +145,14 @@ export async function loginUser(state: FormState, formData: FormData) {
   
 
 export function logout() {
-  const router = useRouter();
   
   const logout = async () => {
     try {
       await axiosClient.post(API.LOGOUT);
-      router.push('/');
+      redirect('/');
     } catch (error) {
       console.error("Signout error:", error);
-      router.push('/');
+      redirect('/');
     }
   };
   
