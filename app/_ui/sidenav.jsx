@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import NavLinks from './nav-links';
 import { logoutUser } from '@/_lib/auth';
-import { useRouter } from 'next/Navigation';
+import { useRouter } from 'next/navigation';
 
 // import { PowerIcon } from '@heroicons/react/24/outline';
 
