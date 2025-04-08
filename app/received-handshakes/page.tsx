@@ -1,4 +1,6 @@
 import HandshakeCard from "@/_ui/handshake-card"
+import PageHeader from "@/_ui/page-header"
+
 
 const handshake = {
     id: "12345",
@@ -12,11 +14,13 @@ const handshake = {
 
 export default function Page() {
     return (
-    <div className="flex flex-col items-center justify-top min-h-screen">
-        <h1>Unconfirmed Handshakes</h1>
-        <p>Assigned agreerer has not agreed yet</p>
-        <HandshakeCard {...handshake} />
-    </div>
+        <div className="flex flex-col items-center justify-top min-h-screen">
+            <PageHeader
+                title="Initiated Handshake"
+                subTitle="Handshakes you have initiated"
+            />
+            <HandshakeCard {...handshake} />
+        </div>
 
     );
 }

@@ -1,4 +1,5 @@
 import HandshakeCard from "@/_ui/handshake-card"
+import PageHeader from "@/_ui/page-header"
 
 const handshakes = [
     {
@@ -52,6 +53,10 @@ const handshakes = [
     export default function Page() {
         return (
             <div className="flex flex-col items-center justify-top min-h-screen">
+            <PageHeader
+            title = "Handshake History"
+            subTitle = "All verified handshakes - completed and failed"
+            />
                 {handshakes.map((handshake) => (
                     <HandshakeCard key={handshake.id} {...handshake} />
                 ))}
