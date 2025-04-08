@@ -16,7 +16,7 @@ export default function Page() {
        subTitle="Welcome to Handshakr"
       />
       {/* Profile and Analytics Cards */}
-      <div className="gap-2">
+      <div className="flex flex-col gap-2">
         <ProfileCard
           username={user.username}
           userId={user.userID}
