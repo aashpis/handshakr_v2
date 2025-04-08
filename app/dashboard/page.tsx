@@ -13,10 +13,10 @@ export default function Page() {
     <div className="flex flex-col items-center justify-top min-h-screen">
       <PageHeader
        title="Dashboard"
-       subTitle="Welcome"
+       subTitle="Welcome to Handshakr"
       />
       {/* Profile and Analytics Cards */}
-      <div>
+      <div className="gap-2">
         <ProfileCard
           username={user.username}
           userId={user.userID}
