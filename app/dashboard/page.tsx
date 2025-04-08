@@ -22,7 +22,6 @@ export default function Page() {
           userId={user.userID}
           email={user.email}
         />
-        <div>
           <HandshakeAnalyticsCard
             count="10"
             status="pending"
@@ -35,7 +34,6 @@ export default function Page() {
             count="10"
             status="failed"
           />
-        </div>
       </div>
     </div>
   );
