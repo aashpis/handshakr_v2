@@ -1,41 +1,29 @@
 'use client';
-// import {
-//   UserGroupIcon,
-//   HomeIcon,
-//   DocumentDuplicateIcon,
-// } from '@heroicons/react/24/outline';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
+import {LayoutDashboard, Handshake, ArrowRightFromLine, ArrowLeftFromLine, History} from 'lucide-react';
 
 // Map of links to display in the side navigation.
-
-// const links = [
-//   { name: 'Home', href: '/dashboard', icon: <ICON> },
-//   {
-//     name: 'My Handshakes', href: '/handshakes',icon: <ICON>,
-//   },
-//   { name: 'History', href: '/history', icon: <ICON> },
-// ];
 const links = [
-  { name: 'Home', href: '/dashboard'},
-  { name: 'Create Handshake', href: '/create'},
-  { name: 'Initiated Handshakes', href: '/initiated-handshakes'},
-  { name: 'Received Handshakes', href: '/received-handshakes'},
-  { name: 'History', href: '/history'}
+  { name: 'Home', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Create Handshake', href: '/create', icon: Handshake },
+  { name: 'Initiated Handshakes', href: '/initiated-handshakes', icon: ArrowRightFromLine },
+  { name: 'Received Handshakes', href: '/received-handshakes', icon: ArrowLeftFromLine },
+  { name: 'History', href: '/history', icon: History },
 ];
-
-export default function NavLinks() {
+export default function NavLinks({clickHandler}) {
   const pathname = usePathname();
   return (
     <>
       {links.map((link) => {
-        // const LinkIcon = link.icon;
+        const LinkIcon = link.icon;
         return (
           <Link
             key={link.name}
             href={link.href}
+            onClick={clickHandler}
             className={clsx(
               'flex h-[48px] grow items-center justify-center gap-2 text-sm font-medium hover:bg-blue-100 md:flex-none md:justify-start md:p-2 md:px-3',
               {
@@ -43,7 +31,7 @@ export default function NavLinks() {
               },
             )}
           >
-            {/* <LinkIcon className="w-6" /> */}
+            <LinkIcon className="w-6" />
             <p className="hidden pl-5 md:block">{link.name}</p>
           </Link>
         );
