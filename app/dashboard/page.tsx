@@ -10,19 +10,19 @@ const user = {
 // const userProfile = getUserProfile() 
 export default function Page() {
   return (
-    <div className="flex items-start justify-between gap-8 p-8">
+    <div className="flex flex-col items-center justify-top min-h-screen">
       <PageHeader
        title="Dashboard"
-       subTitle="Welcome back!"
+       subTitle="Welcome"
       />
-      {/* Left Column with Profile and Analytics Cards */}
-      <div className="flex flex-col gap-6 w-1/3">
+      {/* Profile and Analytics Cards */}
+      <div>
         <ProfileCard
           username={user.username}
           userId={user.userID}
           email={user.email}
         />
-        <div className="flex flex-col gap-4">
+        <div>
           <HandshakeAnalyticsCard
             count="10"
             status="pending"

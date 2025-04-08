@@ -16,8 +16,8 @@ export default function Page() {
     return (
         <div className="flex flex-col items-center justify-top min-h-screen">
             <PageHeader
-                title="Initiated Handshake"
-                subTitle="Handshakes you have initiated"
+                title="Received Handshake"
+                subTitle="Handshakes you have received that need to be accepted or rejected"
             />
             <HandshakeCard {...handshake} />
         </div>
