@@ -3,15 +3,15 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import {LayoutDashboard, Handshake, ArrowRightFromLine, ArrowLeftFromLine, History} from 'lucide-react';
+import {LayoutDashboard, Handshake, ArrowRightFromLine, ArrowLeftFromLine, GalleryVerticalEnd} from 'lucide-react';
 
 // Map of links to display in the side navigation.
 const links = [
-  { name: 'Home', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Create Handshake', href: '/create', icon: Handshake },
   { name: 'Initiated Handshakes', href: '/initiated-handshakes', icon: ArrowRightFromLine },
   { name: 'Received Handshakes', href: '/received-handshakes', icon: ArrowLeftFromLine },
-  { name: 'History', href: '/history', icon: History },
+  { name: 'History', href: '/history', icon: GalleryVerticalEnd },
 ];
 export default function NavLinks({clickHandler}) {
   const pathname = usePathname();
@@ -23,7 +23,9 @@ export default function NavLinks({clickHandler}) {
           <Link
             key={link.name}
             href={link.href}
-            onClick={clickHandler}
+            // for closing hamburger nav menu 
+            onClick={clickHandler} 
+            //highlights link when user is on the page
             className={clsx(
               'flex h-[48px] grow items-center justify-center gap-2 text-sm font-medium hover:bg-blue-100 md:flex-none md:justify-start md:p-2 md:px-3',
               {
@@ -32,7 +34,7 @@ export default function NavLinks({clickHandler}) {
             )}
           >
             <LinkIcon className="w-6" />
-            <p className="hidden pl-5 md:block">{link.name}</p>
+            <p className="block pl-1 md:pl-5">{link.name}</p>
           </Link>
         );
       })}
