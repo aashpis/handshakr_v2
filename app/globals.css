@@ -31,8 +31,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    .dark {
-      --background: #121212;
+      --background: #292929;
       --foreground: #e0e0e0;
       --color-white: var(--color-gray-950);
       --color-black: var(--color-gray-50);
@@ -47,7 +46,6 @@
       --color-hs-completed: var(--color-green-700);
       --color-hs-failed: var(--color-red-700);
       --color-hs-pending: var(--color-amber-500);
-    }
   }
 }
 
