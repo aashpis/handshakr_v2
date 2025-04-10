@@ -37,16 +37,20 @@
       --background: #121212;
       --foreground: #e0e0e0;
       --color-white: var(--color-gray-950);
-      --color-black: var(--color-white);
-      --color-primary: #90caf9;
-      --color-primary-dark: #42a5f5;
-      --color-primary-light: #bbdefb;
-      --color-secondary: #ffcc80;
-      --color-neutral: #b0bec5;
-      --color-neutral-dark: #263238;
-      --color-neutral-light: #37474f;
-      --color-accent: #ce93d8;
-      --color-muted: #9e9e9e;
+      --color-black: var(--color-gray-50);
+      --color-primary: var(--color-blue-500);
+      --color-primary-dark: var(--color-blue-800);
+      --color-primary-light: var(--color-blue-200);;
+      --color-secondary: var(--color-amber-500);
+      --color-neutral: var(--color-gray-500);
+      --color-neutral-dark: var(--color-gray-800);
+      --color-neutral-light: var(--color-gray-200);
+      --color-warning: var(--color-red-500);
+      --color-hs-completed: var(--color-green-700);
+      --color-hs-failed: var(--color-red-700);
+      --color-hs-pending: var(--color-amber-500);
+      --color-accent: #9b59b6;
+      --color-muted: #d1d5db;
     }
   }
 }
