@@ -6,10 +6,10 @@ import 'server-only'
 import {API} from './definitions'
 import axiosServer from "./axiosServer"
 
-// let data = { username: string; userID: string }
+
 
 // get user profile data
-export async function getUserProfile(userId: string ) {
+export async function getUserProfile( ) {
   try {
     const response = await axiosServer.get(`${API.PROFILE.GET}`);
     return { success: true, data: response.data };
@@ -22,7 +22,7 @@ export async function getUserProfile(userId: string ) {
 
 
 // show which handshakes have not been completed
-export async function getPendingHandshakes(userId: string ){
+export async function getPendingHandshakes( ){
   try {
     const response = await axiosServer.get(`${API.HANDSHAKE.PENDING}`);
     return { success: true, data: response.data };
@@ -33,8 +33,7 @@ export async function getPendingHandshakes(userId: string ){
 
 
 // get encrypted handshake history data
-// each handshake must be decrypted by user to view
-export async function getHandshakeHistory(userId: string ){
+export async function getHandshakeHistory( ){
   try {
     const response = await axiosServer.get(`${API.HANDSHAKE.HISTORY}`);
     return { success: true, data: response.data };
@@ -44,10 +43,8 @@ export async function getHandshakeHistory(userId: string ){
 
 }
 
-
-
 // connect agreererer to new handshake
-export async function connectAgreerer(userId: string){
+export async function connectAgreerer(){
   try {
       const response = await axiosServer.post(`${API.HANDSHAKE.CONNECT_AGREERER}`);
       return { success: true, data: response.data };
