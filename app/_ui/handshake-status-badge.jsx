@@ -1,5 +1,5 @@
 export default function HandshakeStatusBadge({ status }) {
-    const normalizedStatus = status.toLowerCase(); // Normalize input
+    const sanitiizedStatus = status.toLowerCase(); // Normalize input
    
     const STATUS_BADGE = {
       completed: (
@@ -17,7 +17,7 @@ export default function HandshakeStatusBadge({ status }) {
           Pending
         </span>
       ),
-    }[normalizedStatus] ?? (
+    }[sanitiizedStatus] ?? (
       <span className="bg-neutral-700 text-xs text-white text-center py-1 px-3 rounded uppercase">
         Status Unknown
       </span>
