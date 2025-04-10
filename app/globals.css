@@ -27,8 +27,6 @@
   --color-hs-completed: var(--color-green-700);
   --color-hs-failed: var(--color-red-700);
   --color-hs-pending: var(--color-amber-500);
-  --color-accent: #9b59b6;
-  --color-muted: #d1d5db;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,8 +47,6 @@
       --color-hs-completed: var(--color-green-700);
       --color-hs-failed: var(--color-red-700);
       --color-hs-pending: var(--color-amber-500);
-      --color-accent: #9b59b6;
-      --color-muted: #d1d5db;
     }
   }
 }
