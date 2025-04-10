@@ -10,6 +10,7 @@ const handshake = {
     terms: "I will sell you a used computer mouse for $20",
     status: "pending",
     notarized: false,
+    notary: null
 }
 
 export default function Page() {
