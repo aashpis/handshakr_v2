@@ -2,10 +2,10 @@ export default function HandshakeAnalyticsCard({ count, status }) {
   const sanitizedStatus = status.toLowerCase();
   // Define background styles based on the status
   const STATUS_BG_STYLE = {
-    completed: "bg-green-100",
-    failed: "bg-red-100",
-    pending: "bg-amber-100",
-  }[sanitizedStatus] || "bg-gray-100"; // Default to gray if no match
+    completed: "bg-hs-completed/50",
+    failed: "bg-hs-failed/50",
+    pending: "bg-hs-pending/50",
+  }[sanitizedStatus] || "bg-neutral"; // Default to gray if no match
  
   return (
     <div className="flex flex-row rounded-lg shadow-md">
