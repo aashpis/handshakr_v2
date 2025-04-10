@@ -11,18 +11,19 @@ const axiosServer = axios.create({
   withCredentials: true, 
 });
 
-// Attach JWT & CSRF Token 
+//  Intercepts requests
+//  Attaches JWT & CSRF Token 
 axiosServer.interceptors.request.use(async (config) => {
   
   const cookieStore = await cookies(); 
   const jwt = cookieStore.get("jwtCookie")?.value;
-  const csrfToken = cookieStore.get("XSRF-TOKEN")?.value;
+  const csrfToken = cookieStore.get("X-XSRF-TOKEN")?.value;
 
   if (jwt) {
     config.headers.Authorization = `Bearer ${jwt}`;
   }
   if (csrfToken) {
-    config.headers["X-CSRF-TOKEN"] = csrfToken;
+    config.headers["X-XSRF-TOKEN"] = csrfToken;
   }
 
   return config;
