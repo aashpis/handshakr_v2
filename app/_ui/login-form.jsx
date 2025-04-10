@@ -20,7 +20,7 @@ export default function LoginForm() {
   return (
 
     <div className="w-full max-w-xs rounded-lg">
-      <form action={action} className="bg-white px-8 pt-6 pb-8 mb-4">
+      <form action={action} className="bg-white px-8 pt-6">
         <div className="mb-4">
           <label
             className="block text-sm font-bold mb-2"
