@@ -12,23 +12,22 @@ export async function createUser(
   password: string
 ) {
   try {
-    // For testing
-    console.log(`email: ${email}`)
-    console.log(`username: ${username}`)
-    console.log(`password: ${password}`)
-
-    const response = await axiosClient.post(API.REGISTER, {
+    await axiosClient.post(API.REGISTER, {
       email,
-      username, 
-      password
+      username,
+      password,
     });
 
-    return { success: true};
+    return { success: true };
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
-      return { success: false, error: error.response?.data?.message || "Account creation failed,\nPlease try again" };
+      return {
+        success: false,
+        error: error.response?.data?.message || "Account creation failed. Please try again.",
+      };
     }
-    return { success: false, error: "An unknown error occurred" };
+
+    return { success: false, error: "An unknown error occurred." };
   }
 }
 
