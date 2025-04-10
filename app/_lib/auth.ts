@@ -1,20 +1,6 @@
 import { UserRegisterFormSchema, FormState, API, LoginFormSchema } from './definitions'
-import { redirect } from 'next/navigation'
 import axiosClient from "./axiosClient"
-import { useRouter } from 'next/router'
-// import axiosServer from "./axiosServer"
 
-
-// export async function checkEmailAvailability(email: string) {
-//   try {
-//     const response = await axiosServer.get(API.CHECK_EMAIL, {
-//       params: { email },
-//     });
-//     return { success: true, data: response.data.available }; //TODO: Match available to backend response
-//   } catch (error) {
-//     return { success: false, error: "Failed to check email availability" };
-//   }
-// }
 
 //********** REGISTRATION FUNCTIONS *********************/
 
@@ -88,33 +74,6 @@ export async function authLoginData(username: string, password: string) {
   }
 }
 
-export async function authLoginDataWithFetch(username: string, password: string) {
-  try {
-    const response = await fetch("https://handshakr.duckdns.org/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",  // Set Content-Type as JSON
-      },
-      body: JSON.stringify({ username, password }),  // Send data as JSON
-      credentials: "include",  // Include credentials (cookies, JWT tokens)
-    });
-
-    // Check if the response is OK (status code 200-299)
-    if (!response.ok) {
-      const errorData = await response.json();
-      return { success: false, error: errorData.message || "Failed to login" };
-    }
-
-    // Parse the response JSON if the request was successful
-    const data = await response.json();
-    return { success: true, data };
-
-  } catch (error) {
-    // Handle any network errors or other exceptions
-    console.error("Error during login:", error);
-    return { success: false, error: "Network or unexpected error occurred" };
-  }
-}
 
 export async function loginUser(state: FormState, formData: FormData) {
   const validatedFields = LoginFormSchema.safeParse({
@@ -144,11 +103,10 @@ export async function loginUser(state: FormState, formData: FormData) {
 
   
 
-export async function logoutUser(): Promise<void> {
+export async function logoutUser() {
   try {
     await axiosClient.post(API.LOGOUT);
-  } catch (error) {
-    console.error("Signout error:", error);
+  } catch (error: any) {
+    console.error("Logout failed", error);
   }
-}
-
+};
