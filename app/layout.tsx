@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+// import { Analytics } from '@vercel/analytics/next'; //pnpm i @vercel/analytics
+
 
 export const metadata: Metadata = {
   title: "Handshakr",
@@ -15,6 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        {/* <Analytics /> */}
       </body>
     </html>
   );
