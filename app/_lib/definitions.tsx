@@ -28,9 +28,12 @@ export const API = {
     HISTORY: '/users/history-handshake',
     PENDING: '/users/pending-handshake',
   },
-  REFRESH_TOKEN: '/handshakr/auth/refresh-token',
-  JWT_TOKEN: '/handshakr/auth/jwt-token',
-  CSRF_TOKEN: '/handshakr/auth/csrf_token',
+  GET_PRICE_STATS: '/get-price-stats',
+  GRAPH: {
+    ITEM_PRICE: '/graph-item-sales',
+    ITEM_PRICE_HIST: '/graph-item-price-histogram',
+    WEEKLY_MEDIAN_PRICE: '/graph-item-weekly-median-price',
+  }
 }
 
 /**********  SCHEMA DEFINTIONS  *******************
