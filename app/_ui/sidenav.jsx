@@ -52,12 +52,13 @@ export default function SideNav() {
         <div className="hidden h-auto w-full grow md:block"></div>
 
         {/* Logout button */}
-        <button
+        {/* <button
           onClick={handleLogout}
           className="w-full h-auto items-center bg-primary text-white font-bold text-sm hover:bg-warning hover:text-white md:justify-start md:p-2 md:px-3"
         >
           <div className="w-full text-center md:text-left">Log Out</div>
-        </button>
+        </button> */}
+        <LogoutButton/>
       </div>
     </div>
   );
