@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import NavLinks from './nav-links';
-import LogoutButton from '@/ui/logout-button';
+import LogoutButton from './logout-button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react'; // Optional: install lucide-react for icons
