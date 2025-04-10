@@ -12,12 +12,24 @@ export default function UserRegistrationForm() {
   // Redirect when registration is successful
   useEffect(() => {
     if (state?.success) {
-      router.push("/dashboard");
+      const timeout = setTimeout(() => {
+        router.push("/"); // redirect to login after 2 seconds
+      }, 2000);
+  
+      return () => clearTimeout(timeout); // cleanup in case component unmounts
     }
   }, [state, router]);
 
   return (
     <div className="p-4">
+      {/* registration success message appears after successful response from registerNewUser */}
+      {state?.success && (
+        <p className="text-primary font-bold text-sm mb-4">
+          Registration successful! Redirecting to login...
+        </p>
+      )}
+      {/* Registration form renders first since success is false by default */}
+      {!state?.success && (    
       <form action={action} className="bg-white px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2" htmlFor="username">
@@ -27,7 +39,6 @@ export default function UserRegistrationForm() {
             className="w-full py-2 px-3 leading-tight shadow appearance-none border rounded border-neutral-dark focus:ring-primary focus:outline-none focus:shadow-outline"
             id="username"
             name="username"
-            placeholder="Username"
             required
           />
           {state?.errors?.username && (
@@ -46,7 +57,6 @@ export default function UserRegistrationForm() {
             className="w-full py-2 px-3 leading-tight shadow appearance-none border rounded border-neutral-dark focus:ring-primary focus:outline-none focus:shadow-outline"
             id="email"
             name="email"
-            placeholder="Email"
             required
           />
           {state?.errors?.email && (
@@ -55,7 +65,7 @@ export default function UserRegistrationForm() {
         </div>
 
         <div className="mb-4">
-          <label 
+          <label
             className="block text-sm font-bold mb-2"
             htmlFor="password"
           >
@@ -81,7 +91,7 @@ export default function UserRegistrationForm() {
         </div>
 
         <div className="mb-6">
-          <label 
+          <label
             className="block text-sm font-bold mb-2"
             htmlFor="confirmPassword"
           >
@@ -109,6 +119,7 @@ export default function UserRegistrationForm() {
           </button>
         </div>
       </form>
+    )}
     </div>
   );
 }
