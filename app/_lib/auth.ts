@@ -1,17 +1,18 @@
 import { UserRegisterFormSchema, FormState, API, LoginFormSchema } from './definitions'
 import axiosClient from "./axiosClient"
+import { AxiosError } from 'axios'
 
 
 //********** REGISTRATION FUNCTIONS *********************/
 
-// creates new user
+// Creates new user
 export async function createUser(
   email: string,
   username: string,
   password: string
 ) {
   try {
-    //for testing
+    // For testing
     console.log(`email: ${email}`)
     console.log(`username: ${username}`)
     console.log(`password: ${password}`)
@@ -23,8 +24,11 @@ export async function createUser(
     });
 
     return { success: true, data: response.data };
-  } catch (error) {
-    return { success: false, error: "Account creation failed" };
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      return { success: false, error: error.response?.data?.message || "Account creation failed" };
+    }
+    return { success: false, error: "An unknown error occurred" };
   }
 }
 
@@ -65,14 +69,18 @@ export async function registerNewUser(state: FormState, formData: FormData) {
 // auth user login. 
 export async function authLoginData(username: string, password: string) {
   try {
-    const response = await axiosClient.post(API.LOGIN, {username, password});
+    const response = await axiosClient.post(API.LOGIN, { username, password });
     console.log("authLoginData response:");
     console.log(response);
     return { success: true, data: response.data };
-  } catch (error: any) {
-    return { success: false, error: error.response?.data?.message || "Failed to login" }; 
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      return { success: false, error: error.response?.data?.message || "Failed to login" }; 
+    }
+    return { success: false, error: "An unknown error occurred" };
   }
 }
+
 
 
 export async function loginUser(state: FormState, formData: FormData) {
@@ -101,12 +109,14 @@ export async function loginUser(state: FormState, formData: FormData) {
 }
 
 
-  
-
 export async function logoutUser() {
   try {
     await axiosClient.post(API.LOGOUT);
-  } catch (error: any) {
-    console.error("Logout failed", error);
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("Logout failed:", error.response?.data?.message || "Unknown error");
+    } else {
+      console.error("Logout failed: An unknown error occurred");
+    }
   }
 };

@@ -1,55 +1,58 @@
-// Data Access layer 
-// Verifies Auth of requests from client isde
-'use server' 
+'use server'
 
 import 'server-only'
-import {API} from './definitions'
-import axiosServer from "./axiosServer"
+import { API } from './definitions'
+import axiosServer from './axiosServer'
+import { AxiosError } from 'axios' // Import AxiosError type
 
-
-
-// get user profile data
-export async function getUserProfile( ) {
+// Get user profile data
+export async function getUserProfile() {
   try {
     const response = await axiosServer.get(`${API.PROFILE.GET}`);
     return { success: true, data: response.data };
-  } catch (error: any) {
-    return { success: false, error: error.response?.data?.message || "Failed to get profile" }; 
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      return { success: false, error: error.response?.data?.message || "Failed to get profile" };
+    }
+    return { success: false, error: "An unknown error occurred" };
   }
 }
 
-
-
-
-// show which handshakes have not been completed
-export async function getPendingHandshakes( ){
+// Show which handshakes have not been completed
+export async function getPendingHandshakes() {
   try {
     const response = await axiosServer.get(`${API.HANDSHAKE.PENDING}`);
     return { success: true, data: response.data };
-  } catch (error: any) {
-    return { success: false, error: error.response?.data?.message || "Failed to get your pending handshakes" }; 
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      return { success: false, error: error.response?.data?.message || "Failed to get your pending handshakes" };
+    }
+    return { success: false, error: "An unknown error occurred" };
   }
 }
 
-
-// get encrypted handshake history data
-export async function getHandshakeHistory( ){
+// Get encrypted handshake history data
+export async function getHandshakeHistory() {
   try {
     const response = await axiosServer.get(`${API.HANDSHAKE.HISTORY}`);
     return { success: true, data: response.data };
-  } catch (error: any) {
-    return { success: false, error: error.response?.data?.message || "Failed to get handshakes history" }; 
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      return { success: false, error: error.response?.data?.message || "Failed to get handshakes history" };
+    }
+    return { success: false, error: "An unknown error occurred" };
   }
-
 }
 
-// connect agreererer to new handshake
-export async function connectAgreerer(){
+// Connect agreerer to new handshake
+export async function connectAgreerer() {
   try {
-      const response = await axiosServer.post(`${API.HANDSHAKE.CONNECT_AGREERER}`);
-      return { success: true, data: response.data };
-    } catch (error: any) {
-      return { success: false, error: error.response?.data?.message || "failed to reject handshake" }; 
+    const response = await axiosServer.post(`${API.HANDSHAKE.CONNECT_AGREERER}`);
+    return { success: true, data: response.data };
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      return { success: false, error: error.response?.data?.message || "Failed to connect agreerer to handshake" };
     }
-
+    return { success: false, error: "An unknown error occurred" };
+  }
 }
