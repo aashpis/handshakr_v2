@@ -16,6 +16,11 @@ export default function Home() {
         
         <div className="p-4">
           <LoginForm />
+          <div className='flex flex-row items-center justify-center m-4'>
+            <hr className="flex-grow border-neutral"/>
+            <p className="p-2 text-neutral">or</p>
+            <hr className="flex-grow border-neutral"/>
+          </div>
           <CreateNewAccountButton />
         </div>
       </div>
