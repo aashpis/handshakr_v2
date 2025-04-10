@@ -7,10 +7,11 @@ export default function HandshakeCard({ id, initiator, agreerer, compensation, t
     
     const sanitizedStatus = status.toLowerCase();
 
+    //sets the background of the card header at 50% opacity of colors
     const STATUS_BG_STYLE = {
-        "completed": "bg-hs-completed",
-        "failed": "bg-hs-failed",
-        "pending": "bg-hs-pending"
+        "completed": "bg-hs-completed/50",
+        "failed": "bg-hs-failed/50",
+        "pending": "bg-hs-pending/50"
     }[sanitizedStatus] || "bg-neutral-light";
 
     return (
@@ -18,7 +19,7 @@ export default function HandshakeCard({ id, initiator, agreerer, compensation, t
             {/* Top section with dynamic background */}
             <div className={`px-6 py-2 rounded-t-lg ${STATUS_BG_STYLE}`}>
                 <div className="flex justify-between items-center">
-                    <h1 className="text-lg font-semibold">Handshake #{id}</h1>
+                    <h1 className="text-lg text-white font-semibold">Handshake #{id}</h1>
                     <div className="text-right">
                         <HandshakeStatusBadge status = {sanitizedStatus}/>
                         {/* {STATUS_BADGE} */}
