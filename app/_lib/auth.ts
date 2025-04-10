@@ -23,10 +23,10 @@ export async function createUser(
       password
     });
 
-    return { success: true, data: response.data };
+    return { success: true};
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
-      return { success: false, error: error.response?.data?.message || "Account creation failed" };
+      return { success: false, error: error.response?.data?.message || "Account creation failed,\nPlease try again" };
     }
     return { success: false, error: "An unknown error occurred" };
   }
@@ -56,6 +56,7 @@ export async function registerNewUser(state: FormState, formData: FormData) {
   const result = await createUser(email, username, password);
   
   if (!result.success) {
+    console.log("user registration failed");
     return { message: result.error };
   }
 
