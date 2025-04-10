@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-// import { Analytics } from '@vercel/analytics/next'; //pnpm i @vercel/analytics
+import { Analytics } from '@vercel/analytics/next'; 
 
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
-        {/* <Analytics /> */}
+        <Analytics />
       </body>
     </html>
   );
