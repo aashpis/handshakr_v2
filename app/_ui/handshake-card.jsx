@@ -8,10 +8,10 @@ export default function HandshakeCard({ id, initiator, agreerer, compensation, t
     const sanitizedStatus = status.toLowerCase();
 
     const STATUS_BG_STYLE = {
-        "completed": "bg-green-100",
-        "failed": "bg-red-100",
-        "pending": "bg-amber-100"
-    }[sanitizedStatus] || "bg-gray-100";
+        "completed": "bg-hs-completed",
+        "failed": "bg-hs-failed",
+        "pending": "bg-hs-pending"
+    }[sanitizedStatus] || "bg-neutral-light";
 
     return (
         <div className=" mb-10 w-full max-w-md rounded-lg shadow-md">
