@@ -4,7 +4,6 @@ import { registerNewUser } from "@/_lib/auth";
 import { useActionState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from 'next/image';
 
 export default function UserRegistrationForm() {
   const router = useRouter();
@@ -18,110 +17,98 @@ export default function UserRegistrationForm() {
   }, [state, router]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen ">
-      <div className="w-full max-w-xs rounded-lg">
-        <div className="relative">
-          <h1 className="absolute text-5xl font-teko bottom-0 left-1/2 -translate-x-1/2">
-            Handshākr
-          </h1>
-          <Image
-            src="/handshake.jpg"
-            width={1250}
-            height={625}
-            alt="handshake"
-            className="w-full"
+    <div className="p-4">
+      <form action={action} className="bg-white px-8 pt-6 pb-8 mb-4">
+        <div className="mb-4">
+          <label className="block text-sm font-bold mb-2" htmlFor="username">
+            Username
+          </label>
+          <input
+            className="w-full py-2 px-3 leading-tight shadow appearance-none border rounded border-neutral-dark focus:ring-primary focus:outline-none focus:shadow-outline"
+            id="username"
+            name="username"
+            placeholder="Username"
+            required
           />
-        </div>
-        <h1 className="font-bold text-primary text-3xl">Create New Account</h1>
-        <form action={action} className="bg-white px-8 pt-6 pb-8 mb-4">
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2" htmlFor="username">
-              Username
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              name="username"
-              placeholder="Username"
-              required
-            />
-          </div>
           {state?.errors?.username && (
-            <p className="text-warning italic mb-4">{state.errors.username}</p>
+            <p className="text-warning italic mt-1">{state.errors.username}</p>
           )}
+        </div>
 
-          <div className="mb-4">
-            <label
-              className="block text-black text-sm font-bold mb-2"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              name="email"
-              placeholder="Email"
-              required
-            />
-          </div>
+        <div className="mb-4">
+          <label
+            className="block text-sm font-bold mb-2"
+            htmlFor="email"
+          >
+            Email
+          </label>
+          <input
+            className="w-full py-2 px-3 leading-tight shadow appearance-none border rounded border-neutral-dark focus:ring-primary focus:outline-none focus:shadow-outline"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
           {state?.errors?.email && (
-            <p className="text-warning italic mb-4">{state.errors.email}</p>
+            <p className="text-warning italic mt-1">{state.errors.email}</p>
           )}
+        </div>
 
-          <div className="mb-4">
-            <label 
-            className="block text-black text-sm font-bold mb-2"
+        <div className="mb-4">
+          <label 
+            className="block text-sm font-bold mb-2"
             htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              name="password"
-              type="password"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label 
-              className="block text-black text-sm font-bold mb-2"
-              htmlFor="confirmPassword"
-              >
-              Confirm Password
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              required
-            />
-          </div>
-          {state?.errors?.confirmPassword && (
-            <p className="text-warning italic mb-4">{state.errors.confirmPassword}</p>
-          )}
+          >
+            Password
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 mb-1 leading-tight focus:outline-none focus:shadow-outline"
+            id="password"
+            name="password"
+            type="password"
+            required
+          />
           {state?.errors?.password && (
-            <div>
+            <div className="mt-1">
               <p className="text-warning font-bold">Password must:</p>
-              <ul className="text-sm italic mb-4 ">
+              <ul className="text-sm italic">
                 {state.errors.password.map((error) => (
                   <li key={error}>- {error}</li>
                 ))}
               </ul>
             </div>
           )}
+        </div>
 
+        <div className="mb-6">
+          <label 
+            className="block text-sm font-bold mb-2"
+            htmlFor="confirmPassword"
+          >
+            Confirm Password
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 mb-1 leading-tight focus:outline-none focus:shadow-outline"
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            required
+          />
+          {state?.errors?.confirmPassword && (
+            <p className="text-warning italic mt-1">{state.errors.confirmPassword}</p>
+          )}
+        </div>
+
+        <div className="flex justify-end">
           <button
-            className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="w-full bg-primary text-white py-4 px-4 font-bold text-sm rounded cursor-pointer focus:outline-none focus:shadow-outline hover:bg-primary-dark"
             disabled={pending}
             type="submit"
           >
             {pending ? "Signing up..." : "Sign Up"}
           </button>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 }
