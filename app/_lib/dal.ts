@@ -56,3 +56,57 @@ export async function connectAgreerer() {
     return { success: false, error: "An unknown error occurred" };
   }
 }
+
+/*************** PRICE ANALYZER METHODS ****************/
+
+// gets price object with properties: median, mean, min, max
+// export async function getPriceStats(itemName: string) {
+//   try {
+//     const response = await axiosServer.get(`${API.GET_PRICE_STATS}/${itemName}`);
+//     return { success: true, data: response.data };
+//   } catch (error: unknown) {
+//     if (error instanceof AxiosError) {
+//       return { success: false, error: error.response?.data?.message || "Failed to get price stats" };
+//     }
+//     return { success: false, error: "An unknown error occurred" };
+//   }
+// }
+
+// // gets .png graph of final sales prices 
+// export async function getPriceSalesGraph(itemName: string) {
+//   try {
+//     const response = await axiosServer.get(`${API.GRAPH.ITEM_PRICE}/${itemName}`);
+//     return { success: true, data: response.data };
+//   } catch (error: unknown) {
+//     if (error instanceof AxiosError) {
+//       return { success: false, error: error.response?.data?.message || "Failed to get sales graph" };
+//     }
+//     return { success: false, error: "An unknown error occurred" };
+//   }
+// }
+
+// // gets .png graph of price histogram 
+// export async function getPriceHistogramGraph(itemName: string) {
+//   try {
+//     const response = await axiosServer.get(`${API.GRAPH.ITEM_PRICE_HISTOGRAM}/${itemName}`);
+//     return { success: true, data: response.data };
+//   } catch (error: unknown) {
+//     if (error instanceof AxiosError) {
+//       return { success: false, error: error.response?.data?.message || "Failed to get price histogram" };
+//     }
+//     return { success: false, error: "An unknown error occurred" };
+//   }
+// }
+
+// // gets .png graph of median prices 
+// export async function getMedianPriceGraph(itemName: string) {
+//   try {
+//     const response = await axiosServer.get(`${API.GRAPH.ITEM_PRICE_HISTOGRAM}/${itemName}`);
+//     return { success: true, data: response.data };
+//   } catch (error: unknown) {
+//     if (error instanceof AxiosError) {
+//       return { success: false, error: error.response?.data?.message || "Failed to get median price graph" };
+//     }
+//     return { success: false, error: "An unknown error occurred" };
+//   }
+// }
