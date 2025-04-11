@@ -73,6 +73,21 @@ export async function authLoginData(username: string, password: string) {
 
        console.log("authLoginData response:");
         console.log(response);
+
+    return { success: true, data: response.data };
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      return { success: false, error: error.response?.data?.message || "Failed to login" }; 
+    }
+    return { success: false, error: "An unknown error occurred" };
+  }
+}
+export async function authLoginDataAndSetCookiesInLocalStorage(username: string, password: string) {
+  try {
+    const response = await axiosClient.post(API.LOGIN, { username, password });
+
+       console.log("authLoginData response:");
+        console.log(response);
         // 1. Extract JWT from response body
         const jwtToken = response.data.data; // The JWT string
     
@@ -85,7 +100,7 @@ export async function authLoginData(username: string, password: string) {
         
         console.log('Tokens stored:', { jwtToken, csrfToken });
 
-  
+
     return { success: true, data: response.data };
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
