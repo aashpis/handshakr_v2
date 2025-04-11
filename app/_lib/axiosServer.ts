@@ -15,18 +15,22 @@ const axiosServer = axios.create({
 //  Attaches JWT & CSRF Token 
 axiosServer.interceptors.request.use(async (config) => {
   
-  const cookieStore = await cookies(); 
-  const jwt = cookieStore.get("jwtCookie")?.value;
-  const csrfToken = cookieStore.get("X-XSRF-TOKEN")?.value;
+  // Get stored tokens
+  const jwt = localStorage.getItem('jwt');
+  const csrf = localStorage.getItem('csrf');
 
+  // Attach JWT
   if (jwt) {
     config.headers.Authorization = `Bearer ${jwt}`;
   }
-  if (csrfToken) {
-    config.headers["X-XSRF-TOKEN"] = csrfToken;
+
+  // Attach CSRF token for data modification requests
+  if (csrf && ['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase() || '')) {
+    config.headers['X-XSRF-TOKEN'] = csrf;
   }
 
   return config;
 });
 
 export default axiosServer;
+
