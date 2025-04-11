@@ -2,12 +2,11 @@
 import axios from "axios";
 import { API } from "./definitions";
 import type { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
-
 
 const axiosClient = axios.create({
   baseURL: API.BASE,
   timeout: 10000,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -15,22 +14,17 @@ const axiosClient = axios.create({
 
 // Request interceptor to attach tokens
 axiosClient.interceptors.request.use((config) => {
-  // Get tokens from localStorage
-  const jwt = localStorage.getItem('jwt');
-  const csrf = localStorage.getItem('csrf');
+  // Extract CSRF token from cookies
+  const csrfToken = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('XSRF-TOKEN='))
+    ?.split('=')[1];
 
-  // Attach JWT to all requests if available
-  if (jwt) {
-    config.headers.Authorization = `Bearer ${jwt}`;
+  // Attach to mutating requests
+  if (csrfToken && ['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase() || '')) {
+    config.headers['XSRF-TOKEN'] = csrfToken; // Correct header name
   }
 
-  // Attach CSRF token for mutating requests
-  if (csrf && ['post', 'put', 'delete'].includes(config.method?.toLowerCase() || '')) {
-    config.headers["X-CSRF-TOKEN"] = csrf;
-  }
-
-  config.headers["Content-Type"] = "application/json";
-  
   return config;
 });
 
@@ -39,14 +33,10 @@ axiosClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     if (error.response?.status === 401 || error.response?.status === 403) {
-      // Clear tokens on auth failures
-      localStorage.removeItem('jwt');
-      localStorage.removeItem('csrf');
       
       // Redirect if not already on login page
-      if (!window.location.pathname.includes('/')) {
-          const router = useRouter();
-          router.push("/");
+      if (window.location.pathname !=='/') {
+          window.location.href = "/"; 
       }
     }
     return Promise.reject(error);

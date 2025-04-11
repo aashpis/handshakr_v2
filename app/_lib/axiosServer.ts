@@ -1,41 +1,40 @@
 // Axios server component 
-// stores jwt in cookies
-// intercepts request gets and adds CSRF token in headers
+// intercepts requests and adds CSRF token in headers
 'use server'
 import axios from "axios";
-// import { cookies } from "next/headers";
+import { cookies } from "next/headers";
 import { API } from "./definitions";
 
 const axiosServer = axios.create({
   baseURL: API.BASE,
-  withCredentials: true, 
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-//  Intercepts requests
-//  Attaches JWT & CSRF Token 
+// Intercepts requests
 axiosServer.interceptors.request.use(async (config) => {
+  const cookieStore = await cookies();
   
-  // Get stored tokens
-  const jwt = localStorage.getItem('jwt');
-  const csrf = localStorage.getItem('csrf');
+  // Get tokens from cookies
+  const jwt = cookieStore.get('jwtCookie')?.value;
+  const csrf = cookieStore.get('XSRF-TOKEN')?.value;
 
-  // Attach JWT
+  // Attach JWT from cookie
   if (jwt) {
     config.headers.Authorization = `Bearer ${jwt}`;
   }
 
-  // Attach CSRF token for data modification requests
+  // Attach CSRF token for mutating requests
   if (csrf && ['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase() || '')) {
-    config.headers["X-CSRF-TOKEN"] = csrf;
+    config.headers["XSRF-TOKEN"] = csrf; 
   }
-  
+
+  // config content type
   config.headers["Content-Type"] = "application/json";
 
   return config;
 });
 
 export default axiosServer;
-
