@@ -24,6 +24,8 @@ axiosClient.interceptors.request.use((config) => {
   if (csrfToken && ['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase() || '')) {
     config.headers['XSRF-TOKEN'] = csrfToken; // Correct header name
   }
+  console.log("request config:");
+  console.log(config);
 
   return config;
 });
