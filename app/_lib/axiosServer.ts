@@ -31,8 +31,8 @@ axiosServer.interceptors.request.use(async (config) => {
     config.headers["XSRF-TOKEN"] = csrf; 
   }
 
-  // config content type
-  config.headers["Content-Type"] = "application/json";
+  console.log("request config:");
+  console.log(config);
 
   return config;
 });
