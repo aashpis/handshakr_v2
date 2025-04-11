@@ -70,8 +70,22 @@ export async function registerNewUser(state: FormState, formData: FormData) {
 export async function authLoginData(username: string, password: string) {
   try {
     const response = await axiosClient.post(API.LOGIN, { username, password });
-    console.log("authLoginData response:");
-    console.log(response);
+
+       console.log("authLoginData response:");
+        console.log(response);
+        // 1. Extract JWT from response body
+        const jwtToken = response.data.data; // The JWT string
+    
+        // 2. Extract CSRF token from response headers
+        const csrfToken = response.headers['x-csrf-token'];
+        
+        // 3. Store tokens 
+        localStorage.setItem('jwt', jwtToken); 
+        localStorage.setItem('csrf', csrfToken);
+        
+        console.log('Tokens stored:', { jwtToken, csrfToken });
+
+  
     return { success: true, data: response.data };
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
