@@ -3,7 +3,7 @@ import { API } from "./definitions";
 
 // Create axios instance with default configuration
 const axiosClient = axios.create({
-  baseURL: API.BASE,
+  baseURL: "handshakr-v2.vercel.app",
   withCredentials: true, // includes JWT and CSRF 
   timeout: 10000, // timeout for request
 });
