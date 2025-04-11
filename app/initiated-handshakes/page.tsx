@@ -1,6 +1,7 @@
 import HandshakeCard from "@/_ui/handshake-card"
 import PageHeader from "@/_ui/page-header"
-
+import UserRegistrationForm from "@/_ui/user-registration-form";
+import LoginForm from "@/_ui/login-form";
 const handshake = {
     id: "12345",
     initiator: "Shankar",
@@ -20,6 +21,7 @@ export default function Page() {
                 subTitle="Handshakes you have initiated"
             />
             <HandshakeCard {...handshake} />
+            <LoginForm />
         </div>
 
     );
