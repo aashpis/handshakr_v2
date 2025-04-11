@@ -31,7 +31,7 @@ export const API = {
   GET_PRICE_STATS: '/get-price-stats',
   GRAPH: {
     ITEM_PRICE: '/graph-item-sales',
-    ITEM_PRICE_HIST: '/graph-item-price-histogram',
+    ITEM_PRICE_HISTOGRAM: '/graph-item-price-histogram',
     WEEKLY_MEDIAN_PRICE: '/graph-item-weekly-median-price',
   }
 }
