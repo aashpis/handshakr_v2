@@ -72,7 +72,8 @@ export async function authLoginData(username: string, password: string) {
     const response = await axiosClient.post(API.LOGIN, { username, password });
 
        console.log("authLoginData response:");
-        console.log(response);
+       console.log(response);
+       console.log("Cookies after login:", document.cookie);
 
     return { success: true, data: response.data };
   } catch (error: unknown) {
@@ -82,33 +83,33 @@ export async function authLoginData(username: string, password: string) {
     return { success: false, error: "An unknown error occurred" };
   }
 }
-export async function authLoginDataAndSetCookiesInLocalStorage(username: string, password: string) {
-  try {
-    const response = await axiosClient.post(API.LOGIN, { username, password });
+// export async function authLoginDataAndSetCookiesInLocalStorage(username: string, password: string) {
+//   try {
+//     const response = await axiosClient.post(API.LOGIN, { username, password });
 
-       console.log("authLoginData response:");
-        console.log(response);
-        // 1. Extract JWT from response body
-        const jwtToken = response.data.data; // The JWT string
+//        console.log("authLoginData response:");
+//         console.log(response);
+//         // 1. Extract JWT from response body
+//         const jwtToken = response.data.data; // The JWT string
     
-        // 2. Extract CSRF token from response headers
-        const csrfToken = response.headers['x-csrf-token'];
+//         // 2. Extract CSRF token from response headers
+//         const csrfToken = response.headers['x-csrf-token'];
         
-        // 3. Store tokens 
-        localStorage.setItem('jwt', jwtToken); 
-        localStorage.setItem('csrf', csrfToken);
+//         // 3. Store tokens 
+//         localStorage.setItem('jwt', jwtToken); 
+//         localStorage.setItem('csrf', csrfToken);
         
-        console.log('Tokens stored:', { jwtToken, csrfToken });
+//         console.log('Tokens stored:', { jwtToken, csrfToken });
 
 
-    return { success: true, data: response.data };
-  } catch (error: unknown) {
-    if (error instanceof AxiosError) {
-      return { success: false, error: error.response?.data?.message || "Failed to login" }; 
-    }
-    return { success: false, error: "An unknown error occurred" };
-  }
-}
+//     return { success: true, data: response.data };
+//   } catch (error: unknown) {
+//     if (error instanceof AxiosError) {
+//       return { success: false, error: error.response?.data?.message || "Failed to login" }; 
+//     }
+//     return { success: false, error: "An unknown error occurred" };
+//   }
+// }
 
 
 
