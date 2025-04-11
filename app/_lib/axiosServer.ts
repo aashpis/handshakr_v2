@@ -3,12 +3,15 @@
 // intercepts request gets and adds CSRF token in headers
 'use server'
 import axios from "axios";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import { API } from "./definitions";
 
 const axiosServer = axios.create({
   baseURL: API.BASE,
   withCredentials: true, 
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 //  Intercepts requests
@@ -26,8 +29,10 @@ axiosServer.interceptors.request.use(async (config) => {
 
   // Attach CSRF token for data modification requests
   if (csrf && ['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase() || '')) {
-    config.headers["x-csrf-token"] = csrf;
+    config.headers["X-CSRF-TOKEN"] = csrf;
   }
+  
+  config.headers["Content-Type"] = "application/json";
 
   return config;
 });

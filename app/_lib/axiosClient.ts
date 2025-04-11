@@ -3,9 +3,13 @@ import { API } from "./definitions";
 import type { AxiosError } from "axios";
 import { useRouter } from "next/router";
 
+
 const axiosClient = axios.create({
   baseURL: API.BASE,
   timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 // Request interceptor to attach tokens
@@ -21,9 +25,11 @@ axiosClient.interceptors.request.use((config) => {
 
   // Attach CSRF token for mutating requests
   if (csrf && ['post', 'put', 'delete'].includes(config.method?.toLowerCase() || '')) {
-    config.headers["x-csrf-token"] = csrf;
+    config.headers["X-CSRF-TOKEN"] = csrf;
   }
 
+  config.headers["Content-Type"] = "application/json";
+  
   return config;
 });
 
