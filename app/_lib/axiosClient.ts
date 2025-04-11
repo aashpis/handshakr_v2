@@ -1,3 +1,4 @@
+'use client'
 import axios from "axios";
 import { API } from "./definitions";
 import type { AxiosError } from "axios";
