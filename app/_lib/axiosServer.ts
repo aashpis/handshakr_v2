@@ -26,7 +26,7 @@ axiosServer.interceptors.request.use(async (config) => {
 
   // Attach CSRF token for data modification requests
   if (csrf && ['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase() || '')) {
-    config.headers['X-XSRF-TOKEN'] = csrf;
+    config.headers["x-csrf-token"] = csrf;
   }
 
   return config;

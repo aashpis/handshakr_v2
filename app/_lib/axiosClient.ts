@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API } from "./definitions";
 import type { AxiosError } from "axios";
+import { useRouter } from "next/router";
 
 const axiosClient = axios.create({
   baseURL: API.BASE,
@@ -20,7 +21,7 @@ axiosClient.interceptors.request.use((config) => {
 
   // Attach CSRF token for mutating requests
   if (csrf && ['post', 'put', 'delete'].includes(config.method?.toLowerCase() || '')) {
-    config.headers['X-XSRF-TOKEN'] = csrf;
+    config.headers["x-csrf-token"] = csrf;
   }
 
   return config;
@@ -37,7 +38,8 @@ axiosClient.interceptors.response.use(
       
       // Redirect if not already on login page
       if (!window.location.pathname.includes('/')) {
-        window.location.href = '/';
+          const router = useRouter();
+          router.push("/");
       }
     }
     return Promise.reject(error);
