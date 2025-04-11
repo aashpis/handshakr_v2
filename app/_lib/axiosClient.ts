@@ -19,6 +19,8 @@ axiosClient.interceptors.request.use((config) => {
     .split('; ')
     .find(row => row.startsWith('XSRF-TOKEN='))
     ?.split('=')[1];
+    
+    console.log("Cookies after axiosClient csrfToken: ", csrfToken);
 
   // Attach to mutating requests
   if (csrfToken && ['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase() || '')) {
