@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 import { API } from "./definitions";
 
 const axiosServer = axios.create({
-  baseURL: API.BASE,
+  baseURL: "handshakr-v2.vercel.app",
   withCredentials: true, 
 });
 
