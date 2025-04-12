@@ -24,7 +24,8 @@ axiosClient.interceptors.request.use((config) => {
 
   // Attach to mutating requests
   if (csrfToken && ['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase() || '')) {
-    config.headers['X-XSRF-TOKEN-FRONTEND-HEADER'] = csrfToken; // Correct header name
+    config.headers['X-XSRF-TOKEN'] = csrfToken; // TODO: Is this the right syntax to set headers? Is this the Correct header name?
+    console.log("csrfToken added to header") 
   }
   console.log("request config:");
   console.log(config);
