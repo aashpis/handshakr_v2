@@ -19,8 +19,8 @@ import { AxiosError } from 'axios'; // Import AxiosError type
 //     }
 // }
 
-// Create a new handshake (Client-side)
-export async function createHandshake(handshakeData: { name: string, details: string }) {
+// Create a new handshake
+export async function createHandshake(handshakeData: { handshakeName: string, details: string, recieverUsername: string }) {
     try {
         const response = await axiosClient.post(API.HANDSHAKE.CREATE, handshakeData);
         return { success: true, data: response.data };
@@ -32,10 +32,10 @@ export async function createHandshake(handshakeData: { name: string, details: st
     }
 }
 
-// Accept a handshake (Server-side)
+// Accept a handshake
 export async function acceptHandshake(handshakeId: string) {
     try {
-        const response = await axiosServer.post(API.HANDSHAKE.ACCEPT, { handshakeId });
+        const response = await axiosClient.post(API.HANDSHAKE.ACCEPT, { handshakeId });
         return { success: true, data: response.data };
     } catch (error: unknown) {
         if (error instanceof AxiosError) {
@@ -45,10 +45,10 @@ export async function acceptHandshake(handshakeId: string) {
     }
 }
 
-// Reject a handshake (Server-side)
+// Reject a handshake 
 export async function rejectHandshake(handshakeId: string) {
     try {
-        const response = await axiosServer.post(API.HANDSHAKE.REJECT, { handshakeId });
+        const response = await axiosClient.post(API.HANDSHAKE.REJECT, { handshakeId });
         return { success: true, data: response.data };
     } catch (error: unknown) {
         if (error instanceof AxiosError) {
