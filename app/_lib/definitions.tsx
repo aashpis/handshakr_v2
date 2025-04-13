@@ -9,7 +9,7 @@ import { z } from 'zod'
 // API endpoints
 //TODO: replace placerholders
 export const API = {
-  BASE: 'https://handshakr.duckdns.org',
+  BASE: 'https://handshakr.duckdns.org/api/',
   REGISTER: '/auth/register',
   LOGIN: '/auth/login', 
   LOGOUT: '/auth/logout',
@@ -21,8 +21,8 @@ export const API = {
   HANDSHAKE: {
     CREATE: '/users/create-handshake',
     DELETE: '/users/delete-handshake',
-    ACCEPT: '/users/accept-handshake',
-    REJECT: '/users/reject-handshake',
+    ACCEPT: '/handshake/complete-handshake', 
+    REJECT: '/handshake/reject-handshake', 
     CONNECT_AGREERER: '/users/connect-user',
     ACTIVE: '/users/active-handshake',
     HISTORY: '/users/history-handshake',
@@ -48,6 +48,7 @@ export const UserRegisterFormSchema = z.object({
   username: z
     .string()
     .min(5, { message: 'Name must be at least 5 characters long.' })
+    .max(30, )
     .trim(),
   
     email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
@@ -90,27 +91,27 @@ export const LoginFormSchema = z.object({
 // validate handshake-creation-form input
 // returns error messages to be displayed in form
 export const HandshakeFormSchema = z.object({
-  title: z
+  handshakeName: z
     .string()
-    .min(2, { message: 'Title must be at least 2 characters long.' })
+    .min(5, { message: 'Name must be at least 5 characters long.' })
     .trim(),
-  description: z
+  receiverUsername: z
     .string()
     .min(10, { message: 'Description must be at least 10 characters long.' })
     .trim(),
-  agreererEmail: z
+  encryptedDetails: z
     .string()
-    .email({ message: 'Please enter a valid email.' })
-    .trim(),
+    .min(10, {message: "Make sure handshake has enough details"})
+    .trim()
 })
 
-/********** TYPE DEFINTIONS  *******************
-* custom type defintions  
-*/
+/********** FormState Definitions  *******************/
+//defines the state of forms
+
 
 // collects error messages to be displayed
 // if no errors messages, it is set as undefined 
-export type FormState =
+export type UserAuthFormState =
   | {
       errors?: {
         name?: string[]
@@ -122,3 +123,13 @@ export type FormState =
   | undefined
 
 
+  export type HandshakeFormState =
+  | {
+      errors?: {
+        handshakeName?: string[];
+        encryptedDetails?: string[];
+        receiverUsername?: string[];
+      };
+      message?: string;
+    }
+  | undefined;
