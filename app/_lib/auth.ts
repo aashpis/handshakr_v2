@@ -1,4 +1,4 @@
-import { UserRegisterFormSchema, FormState, API, LoginFormSchema } from './definitions'
+import { UserRegisterFormSchema, UserAuthFormState, API, LoginFormSchema } from './definitions'
 import axiosClient from "./axiosClient"
 import { AxiosError } from 'axios'
 
@@ -6,7 +6,7 @@ import { AxiosError } from 'axios'
 //********** REGISTRATION FUNCTIONS *********************/
 
 // Creates new user
-export async function createUser(
+export async function createUserRequest(
   email: string,
   username: string,
   password: string
@@ -36,7 +36,7 @@ export async function createUser(
 
 // validates new user input and posts to the server
 // redirect to user dashboard
-export async function registerNewUser(state: FormState, formData: FormData) {
+export async function registerNewUser(state: UserAuthFormState, formData: FormData) {
   const validatedFields = UserRegisterFormSchema.safeParse({
     email: formData.get("email"),
     username: formData.get("username"),
@@ -52,7 +52,7 @@ export async function registerNewUser(state: FormState, formData: FormData) {
 
   const { username, email, password } = validatedFields.data;
   
-  const result = await createUser(email, username, password);
+  const result = await createUserRequest(email, username, password);
   
   if (!result.success) {
     console.log("user registration failed");
@@ -67,7 +67,7 @@ export async function registerNewUser(state: FormState, formData: FormData) {
 //********** LOGIN FUNCTIONS *********************/
 
 // auth user login. 
-export async function authLoginData(username: string, password: string) {
+export async function authLoginDataRequest(username: string, password: string) {
   try {
     const response = await axiosClient.post(API.LOGIN, { username, password });
 
@@ -113,7 +113,7 @@ export async function authLoginData(username: string, password: string) {
 
 
 
-export async function loginUser(state: FormState, formData: FormData) {
+export async function loginUser(state: UserAuthFormState, formData: FormData) {
   const validatedFields = LoginFormSchema.safeParse({
     username: formData.get("username"),
     password: formData.get("password"),
@@ -126,7 +126,7 @@ export async function loginUser(state: FormState, formData: FormData) {
 
   const { username, password } = validatedFields.data;
 
-  const result = await authLoginData(username, password);
+  const result = await authLoginDataRequest(username, password);
 
 
   if (!result.success) {
@@ -139,7 +139,7 @@ export async function loginUser(state: FormState, formData: FormData) {
 }
 
 
-export async function logoutUser() {
+export async function logoutUserRequest() {
   try {
     await axiosClient.post(API.LOGOUT);
   } catch (error: unknown) {
