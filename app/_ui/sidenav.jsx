@@ -6,16 +6,11 @@ import NavLinks from './nav-links';
 import LogoutButton from './logout-button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react'; // Optional: install lucide-react for icons
+import { Menu, X } from 'lucide-react'; 
 
 export default function SideNav() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const handleLogout = async () => {
-    await logoutUser();
-    router.push('/');
-  };
 
   return (
     <div className="flex h-full flex-col bg-white">
