@@ -4,23 +4,37 @@ import { NextRequest, NextResponse } from 'next/server';
 const publicRoutes = ['/', '/register'];
 
 // Protected routes that require authentication
-const protectedRoutes = ['/dashboard', '/initiated-handshakes', '/create', '/history', '/received-handshakes'];
+const protectedRoutes = [
+  '/dashboard', 
+  '/create', 
+  '/initiated-handshakes', 
+  '/received-handshakes',
+  '/history'
+];
 
-// Public assets that bypass middleware
-const publicAssets = ['/favicon.ico',  '/hs_icon.png', '/handshakr-banner.png'];
+// Static files/extensions to bypass middleware
+const staticFiles = [
+  '/favicon.ico',
+  '/hs_icon.png',
+  '/handshakr-banner.png'
+];
+const staticExtensions = [
+  '.png', '.ico', '.svg', '.css', '.js', '.json'
+];
 
 export async function middleware(req: NextRequest) {
-  const url = req.nextUrl;
+  const { pathname } = req.nextUrl;
 
-  console.log(`Middleware running for: ${url.pathname}`); //FOR TESTING ONLY
-
-  // Bypass middleware for public assets
-  if (publicAssets.some(asset => url.pathname.startsWith(asset))) {
+  // Bypass middleware for static files
+  if (staticFiles.some(file => pathname === file) || 
+      staticExtensions.some(ext => pathname.endsWith(ext))) {
     return NextResponse.next();
   }
 
+  console.log(`Middleware running for: ${pathname}`); // FOR TESTING ONLY
+
   // Allow public pages
-  if (publicRoutes.some(route => url.pathname === route || url.pathname.startsWith(`${route}/`))) {
+  if (publicRoutes.some(route => pathname === route || pathname.startsWith(`${route}/`))) {
     return NextResponse.next();
   }
 
