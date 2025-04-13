@@ -15,12 +15,19 @@ const handshake = {
 
 export default function Page() {
     return (
-        <div className="flex flex-col items-center justify-top min-h-screen">
-            <PageHeader
-                title="Received Handshake"
-                subTitle="Handshakes you have received that need to be accepted or rejected"
-            />
-            <HandshakeCard {...handshake} />
+        <div>
+            {/* price analyzer */}
+            <div>
+                
+            </div>
+            {/* recieved handshakes */}
+            <div className="flex flex-col items-center justify-top min-h-screen">
+                <PageHeader
+                    title="Received Handshake"
+                    subTitle="Handshakes you have received that need to be accepted or rejected"
+                />
+                <HandshakeCard {...handshake} />
+            </div>
         </div>
 
     );
