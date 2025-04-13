@@ -20,7 +20,11 @@ export default function LoginForm() {
   return (
 
     <div className="w-full max-w-xs rounded-lg">
+
+       {/* Form to collect login data */}
       <form action={action} className="bg-white px-8 pt-6">
+
+        {/***** Username field *****/}
         <div className="mb-4">
           <label
             className="block text-sm font-bold mb-2"
@@ -36,6 +40,9 @@ export default function LoginForm() {
             required
           />
         </div>
+
+
+        {/***** Password field *****/}
         <div className="mb-6">
           <label className="block text-sm font-bold mb-2" htmlFor="password">
             Password
@@ -48,6 +55,8 @@ export default function LoginForm() {
             required
           />
         </div>
+
+        {/*****  Submit Button *****/}
         <div className="flex justify-end">
           <button
             className="w-full bg-primary text-white py-4 px-4 font-bold text-sm rounded cursor-pointer focus:outline-none focus:shadow-outline hover:bg-primary-dark"
@@ -56,6 +65,8 @@ export default function LoginForm() {
           >
             {pending ? 'Signing in...' : 'Sign In'}
           </button>
+
+        {/*****  Failed Login Error Message *****/}
         </div>
         {state?.message && (
           <p className="text-warning text-center font-semibold my-3">
