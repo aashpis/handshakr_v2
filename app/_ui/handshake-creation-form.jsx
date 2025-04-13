@@ -35,7 +35,6 @@ export default function HandshakeCreationForm() {
           <input
             id="handshakeName"
             name="handshakeName"
-            placeholder="handshakeName"
             required
             className="w-full px-4 py-2 border border-neutral-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light focus:border-transparent"
           />
@@ -52,7 +51,7 @@ export default function HandshakeCreationForm() {
             name="agreererUsername"
             placeholder="Username"
             required
-            className="w-full px-4 py-2 border border-neutral-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light focus:border-transparent"
+            className="w-full px-4 py-2 border border-neutral-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
         </div>
 
@@ -65,7 +64,7 @@ export default function HandshakeCreationForm() {
             name="compensation"
             placeholder="Enter details..."
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
         </div>
 
@@ -78,7 +77,7 @@ export default function HandshakeCreationForm() {
             name="details"
             placeholder="Enter details..."
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
         </div>
 
