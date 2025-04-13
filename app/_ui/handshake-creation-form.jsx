@@ -1,7 +1,7 @@
 'use client'
 
 import { useActionState } from 'react'
-import { createHandshake } from '@/_lib/dto'
+import { createHandshake } from '@/_lib/handshakeService'
 
 export default function HandshakeCreationForm() {
   const [state, action, pending] = useActionState(createHandshake, undefined)
@@ -27,8 +27,8 @@ export default function HandshakeCreationForm() {
         </div> */}
 
         <div className="mb-4">
-          <label 
-            className="block text-sm font-medium  mb-2" 
+          <label
+            className="block text-sm font-medium  mb-2"
             htmlFor="handshakeName">
             Handshake Name
           </label>
@@ -39,23 +39,27 @@ export default function HandshakeCreationForm() {
             className="w-full px-4 py-2 border border-neutral-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light focus:border-transparent"
           />
         </div>
-
+        {state?.errors?.username && (
+          <p className="text-warning italic mt-1">{state.errors.handshakeName}</p>
+        )}
         <div className="mb-4">
-          <label 
-            className="block text-sm font-medium  mb-2" 
-            htmlFor="agreererUsername">
-            Agreerer Username
+          <label
+            className="block text-sm font-medium  mb-2"
+            htmlFor="receiverUsername">
+            Receiver Username
           </label>
           <input
-            id="agreererUsername"
-            name="agreererUsername"
-            placeholder="Username"
+            id="receiverUsername"
+            name="receiverUsername"
             required
             className="w-full px-4 py-2 border border-neutral-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
         </div>
+        {state?.errors?.username && (
+          <p className="text-warning italic mt-1">{state.errors.receiverUsername}</p>
+        )}
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label className="block text-sm font-medium  mb-2" htmlFor="compensation">
             Compensation
           </label>
@@ -66,30 +70,34 @@ export default function HandshakeCreationForm() {
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
-        </div>
+        </div> */}
 
         <div className="mb-6">
-          <label className="block text-sm font-medium  mb-2" htmlFor="encryptedDetails">
+          <label 
+            className="block text-sm font-medium  mb-2" 
+            htmlFor="encryptedDetails">
             Details
           </label>
           <textarea
-            id="details"
-            name="details"
-            placeholder="Enter details..."
+            id="encryptedDetails"
+            name="encryptedDetails"
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
         </div>
+        {state?.errors?.username && (
+          <p className="text-warning italic mt-1">{state.errors.encryptedDetails}</p>
+        )}
 
         <button
-          className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full bg-primary text-white py-4 px-4 font-bold text-sm rounded cursor-pointer focus:outline-none focus:shadow-outline hover:bg-primary-dark"
           disabled={pending}
           type="submit"
         >
           {pending ? 'Creating Handshake...' : 'Create Handshake'}
         </button>
 
-        {state?.error && <p className="text-red-500 text-center mt-4">{state.error}</p>}
+        {state?.error && <p className="text-warning text-center font-semibold my-3">{state.error}</p>}
       </form>
     </div>
   )
