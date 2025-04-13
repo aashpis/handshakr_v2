@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const publicRoutes = ['/', '/register'];
 
 // Protected routes that require authentication
-const protectedRoutes = ['/dashboard', '/pending', '/create', '/history', '/unconfirmed'];
+const protectedRoutes = ['/dashboard', '/initiated-handshakes', '/create', '/history', '/received-handshakes'];
 
 // Public assets that bypass middleware
 const publicAssets = ['/favicon.ico'];
