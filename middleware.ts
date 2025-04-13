@@ -7,22 +7,22 @@ const publicRoutes = ['/', '/register'];
 const protectedRoutes = ['/dashboard', '/initiated-handshakes', '/create', '/history', '/received-handshakes'];
 
 // Public assets that bypass middleware
-const publicAssets = ['/favicon.ico'];
+const publicAssets = ['/favicon.ico',  '/hs_icon.png', '/handshakr-banner.png'];
 
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
   console.log(`Middleware running for: ${url.pathname}`); //FOR TESTING ONLY
 
-  // // Bypass middleware for public assets
-  // if (publicAssets.some(asset => url.pathname.startsWith(asset))) {
-  //   return NextResponse.next();
-  // }
+  // Bypass middleware for public assets
+  if (publicAssets.some(asset => url.pathname.startsWith(asset))) {
+    return NextResponse.next();
+  }
 
-  // // Allow public pages
-  // if (publicRoutes.some(route => url.pathname === route || url.pathname.startsWith(`${route}/`))) {
-  //   return NextResponse.next();
-  // }
+  // Allow public pages
+  if (publicRoutes.some(route => url.pathname === route || url.pathname.startsWith(`${route}/`))) {
+    return NextResponse.next();
+  }
 
   // // Check for protected routes
   // if (protectedRoutes.some(route => url.pathname === route || url.pathname.startsWith(`${route}/`))) {
