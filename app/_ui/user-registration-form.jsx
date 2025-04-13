@@ -23,17 +23,20 @@ export default function UserRegistrationForm() {
 
   return (
     <div className="p-4">
-      {/* registration success message appears after successful response from registerNewUser */}
+      {/* Registration success message
+      appears after successful response from registerNewUser */}
       {state?.success && (
         <p className="text-primary font-bold text-sm mb-4">
           Registration successful! Redirecting to login...
         </p>
-      )}
-      {/* Registration form renders first since success is false by default */}
+      )} 
+      {/* Registration form appears first since success is false by default */}
       {!state?.success && (
         <div>
           <div className="justify-items-center">
             <h1 className="text-primary text-2xl font-bold ">Create new account:</h1>
+
+            {/* prompt and redirect to login if already has account */}
             <p className="italic text-neutral text-xs">
               already have an account?{" "}
               <Link href="/"
@@ -43,7 +46,13 @@ export default function UserRegistrationForm() {
               </Link>
             </p>
           </div>
+
+
+          {/* Form to collect user data */}
+          
           <form action={action} className="bg-white px-8 pt-6 pb-8 mb-4">
+
+            {/***** Username field *****/}
             <div className="mb-4">
               <label className="block text-sm font-bold mb-2" htmlFor="username">
                 Username
@@ -54,11 +63,13 @@ export default function UserRegistrationForm() {
                 name="username"
                 required
               />
+              {/*****  Username Error Messages *****/}
               {state?.errors?.username && (
                 <p className="text-warning italic mt-1">{state.errors.username}</p>
               )}
             </div>
 
+             {/***** Email field *****/}
             <div className="mb-4">
               <label
                 className="block text-sm font-bold mb-2"
@@ -72,11 +83,13 @@ export default function UserRegistrationForm() {
                 name="email"
                 required
               />
+              {/*****  Email Error Messages *****/}
               {state?.errors?.email && (
                 <p className="text-warning italic mt-1">{state.errors.email}</p>
               )}
             </div>
 
+            {/***** Password field *****/}
             <div className="mb-4">
               <label
                 className="block text-sm font-bold mb-2"
@@ -91,6 +104,7 @@ export default function UserRegistrationForm() {
                 type="password"
                 required
               />
+              {/*****  Password Error Messages *****/}
               {state?.errors?.password && (
                 <div className="mt-1">
                   <p className="text-warning italic">Password must:</p>
@@ -103,6 +117,7 @@ export default function UserRegistrationForm() {
               )}
             </div>
 
+            {/***** Cofirm Password field *****/}
             <div className="mb-6">
               <label
                 className="block text-sm font-bold mb-2"
@@ -117,11 +132,13 @@ export default function UserRegistrationForm() {
                 type="password"
                 required
               />
+              {/***** Confirm Password Error Messages *****/}
               {state?.errors?.confirmPassword && (
                 <p className="text-warning italic mt-1">{state.errors.confirmPassword}</p>
               )}
             </div>
-            {/* display failed registration messasge */}
+
+            {/*****  Failed Registration Error Message *****/}
             <div className="flex justify-center">
               {state?.message && (
                 <p className="text-warning font-bold text-sm mb-4">
@@ -130,6 +147,7 @@ export default function UserRegistrationForm() {
               )}
             </div>
 
+            {/*****  Submit Button *****/}
             <div className="flex justify-end">
               <button
                 className="w-full bg-primary text-white py-4 px-4 font-bold text-sm rounded cursor-pointer focus:outline-none focus:shadow-outline hover:bg-primary-dark"
