@@ -29,11 +29,10 @@ export default function LoginForm() {
             Username
           </label>
           <input
-            className="w-full py-2 px-3 leading-tight shadow appearance-none border rounded border-neutral-dark focus:ring-primary focus:outline-none focus:shadow-outline"
+            className="w-full px-4 py-2 border border-neutral rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             id="username"
             name="username"
             type="text"
-            placeholder="Username"
             required
           />
         </div>
@@ -42,11 +41,10 @@ export default function LoginForm() {
             Password
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="w-full px-4 py-2 border border-neutral rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             id="password"
             name="password"
             type="password"
-            placeholder="password"
             required
           />
         </div>
