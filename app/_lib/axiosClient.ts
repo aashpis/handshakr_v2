@@ -16,6 +16,8 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use((config) => {
 
   if (config.url?.endsWith('/auth/register') || config.url?.endsWith('/auth/login')) {
+    console.log("Axios Config")
+    console.log(config)
     return config;
   }
 
