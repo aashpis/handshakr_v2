@@ -10,8 +10,8 @@ import { z } from 'zod'
 //TODO: replace placerholders
 export const API = {
   BASE: 'https://handshakr.duckdns.org/api/',
-  REGISTER: 'auth/register',
-  LOGIN: 'auth/login', 
+  REGISTER: '/auth/register',
+  LOGIN: '/auth/login', 
   LOGOUT: '/auth/logout',
   CHECK_EMAIL: '/auth/check-email-for-account',
   PROFILE: {
@@ -19,7 +19,7 @@ export const API = {
     UPDATE: '/auth/edit-user'
   },
   HANDSHAKE: {
-    CREATE: '/users/create-handshake',
+    CREATE: 'users/create-handshake',
     DELETE: '/users/delete-handshake',
     ACCEPT: '/handshake/complete-handshake', 
     REJECT: '/handshake/reject-handshake', 
