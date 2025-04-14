@@ -20,7 +20,6 @@ export default function Page() {
                 subTitle="Handshakes you have initiated"
             />
             <HandshakeCard {...handshake} />
-            <LoginForm />
         </div>
 
     );
