@@ -9,7 +9,7 @@ import { z } from 'zod'
 // API endpoints
 //TODO: replace placerholders
 export const API = {
-  BASE: 'https://handshakr.duckdns.org/api/',
+  BASE: 'https://handshakr.duckdns.org/api',
   REGISTER: '/auth/register',
   LOGIN: '/auth/login', 
   LOGOUT: '/auth/logout',
