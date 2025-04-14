@@ -15,7 +15,7 @@ export default function UserRegistrationForm() {
     if (state?.success === true) {
       const timeout = setTimeout(() => {
         router.push("/");
-      }, 5000); // wait 5000 ms before redirect
+      }, 3000); // wait 3000 ms before redirect
 
       return () => clearTimeout(timeout);
     }
