@@ -5,29 +5,18 @@ const publicRoutes = ['/', '/register'];
 
 // Protected routes that require authentication
 const protectedRoutes = [
-  '/dashboard', 
-  '/create', 
-  '/initiated-handshakes', 
-  '/received-handshakes',
-  '/history'
-];
-
-// Static files/extensions to bypass middleware
-const staticFiles = [
-  '/favicon.ico',
-  '/hs_icon.png',
-  '/handshakr-banner.png'
-];
-const staticExtensions = [
-  '.png', '.ico', '.svg', '.css', '.js', '.json'
+  '/dashboard',
+  '/initiated-handshakes',
+  '/create',
+  '/history',
+  '/received-handshakes'
 ];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Bypass middleware for static files
-  if (staticFiles.some(file => pathname === file) || 
-      staticExtensions.some(ext => pathname.endsWith(ext))) {
+  // Skip middleware for any file in public folder (has extension)
+  if (pathname.includes('.') && !pathname.endsWith('/')) {
     return NextResponse.next();
   }
 
@@ -37,7 +26,6 @@ export async function middleware(req: NextRequest) {
   if (publicRoutes.some(route => pathname === route || pathname.startsWith(`${route}/`))) {
     return NextResponse.next();
   }
-
   // // Check for protected routes
   // if (protectedRoutes.some(route => url.pathname === route || url.pathname.startsWith(`${route}/`))) {
   //   // Read JWT from cookies
@@ -56,12 +44,13 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+     * Match all request paths except for:
+     * - api/ (API routes)
+     * - _next/ (Next.js internals)
+     * - files in public/ folder (anything with an extension)
+     * - common metadata files
+     * - health check endpoints
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
-  ],
+    '/((?!api/|_next/|favicon.ico|sitemap.xml|robots.txt|.*\\..*$).*)',
+  ]
 }
