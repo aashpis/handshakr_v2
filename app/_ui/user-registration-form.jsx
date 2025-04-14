@@ -11,25 +11,36 @@ export default function UserRegistrationForm() {
   const [state, action, pending] = useActionState(registerNewUser, undefined);
 
   // Redirect when registration is successful
-  // useEffect(() => {
-  //   if (state?.success === true) {
-  //     const timeout = setTimeout(() => {
-  //       router.push("/");
-  //     }, 5000); // wait 5000 ms before redirect
-  
-  //     return () => clearTimeout(timeout);
-  //   }
-  // }, [state, router]);
+  useEffect(() => {
+    if (state?.success === true) {
+      const timeout = setTimeout(() => {
+        router.push("/");
+      }, 5000); // wait 5000 ms before redirect
+
+      return () => clearTimeout(timeout);
+    }
+  }, [state, router]);
 
   return (
     <div className="p-4">
       {/* Registration success message
       appears after successful response from registerNewUser */}
       {state?.success && (
-        <p className="text-primary font-bold text-sm mb-4">
-          Registration successful! Redirecting to login...
-        </p>
-      )} 
+        <div className="flex flex-col justify-center align-center">
+          <p className="text-primary font-bold text-md mb-2">
+            Registration successful! Redirecting to login...
+          </p>
+          <p className="italic text-neutral text-xs">
+              Not redirected?{" "}
+              <Link href="/"
+                className="text-primary hover:text-primary-dark not-italic font-bold"
+                aria-label="Log in to your account"
+              >Click to log in
+              </Link>
+            </p>
+        </div>
+      )}
+
       {/* Registration form appears first since success is false by default */}
       {!state?.success && (
         <div>
@@ -49,7 +60,7 @@ export default function UserRegistrationForm() {
 
 
           {/* Form to collect user data */}
-          
+
           <form action={action} className="bg-white px-8 pt-6 pb-8 mb-4">
 
             {/***** Username field *****/}
@@ -69,7 +80,7 @@ export default function UserRegistrationForm() {
               )}
             </div>
 
-             {/***** Email field *****/}
+            {/***** Email field *****/}
             <div className="mb-4">
               <label
                 className="block text-sm font-bold mb-2"
