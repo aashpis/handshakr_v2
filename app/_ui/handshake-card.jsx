@@ -19,7 +19,7 @@ export default function HandshakeCard({
   const STATUS_BG_STYLE = {
     completed: "bg-hs-completed/50",
     failed: "bg-hs-failed/50",
-    pending: "bg-hs-pending/50",
+    pending: "bg-hs-pending/25",
   }[sanitizedStatus] || "bg-neutral-light";
 
   return (
