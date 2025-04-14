@@ -11,18 +11,15 @@ export default function UserRegistrationForm() {
   const [state, action, pending] = useActionState(registerNewUser, undefined);
 
   // Redirect when registration is successful
-useEffect(() => {
-  if (state && 
-    !state.errors && 
-    !state.message && 
-    state.success === true) {
-    const timeout = setTimeout(() => {
-      router.push("/");
-    }, 5000); // wait 5000 ms before redirect
-
-    return () => clearTimeout(timeout);
-  }
-}, [state, router]);
+  // useEffect(() => {
+  //   if (state?.success === true) {
+  //     const timeout = setTimeout(() => {
+  //       router.push("/");
+  //     }, 5000); // wait 5000 ms before redirect
+  
+  //     return () => clearTimeout(timeout);
+  //   }
+  // }, [state, router]);
 
   return (
     <div className="p-4">
