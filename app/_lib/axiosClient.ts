@@ -40,7 +40,7 @@ axiosClient.interceptors.response.use(
     if (error.response?.status === 401 || error.response?.status === 403) {
       
       // Redirect if not already on login page
-      if (window.location.pathname !=='/') {
+      if (window.location.pathname !=='/' &&  window.location.pathname !=='/register' ) {
           window.location.href = "/"; 
       }
     }
