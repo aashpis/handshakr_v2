@@ -1,6 +1,14 @@
 import { UserRegisterFormSchema, UserAuthFormState, API, LoginFormSchema } from './definitions'
 import axiosClient from "./axiosClient"
 import { AxiosError } from 'axios'
+import axios from "axios";
+
+
+export const axiosPublic = axios.create({
+  baseURL: API.BASE,
+  timeout: 10000,
+  headers: { "Content-Type": "application/json" },
+});
 
 
 //********** REGISTRATION FUNCTIONS *********************/
@@ -12,7 +20,7 @@ export async function createUserRequest(
   password: string
 ) {
   try {
-    await axiosClient.post(API.REGISTER, {
+    await axiosPublic.post(API.REGISTER, {
       email,
       username,
       password,
@@ -69,7 +77,7 @@ export async function registerNewUser(state: UserAuthFormState, formData: FormDa
 // auth user login. 
 export async function authLoginDataRequest(username: string, password: string) {
   try {
-    const response = await axiosClient.post(API.LOGIN, { username, password });
+    const response = await axiosPublic.post(API.LOGIN, { username, password });
 
        console.log("authLoginDataRequest response:");
        console.log(response);
