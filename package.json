@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clean-build": "rm -rf .next && npm run build",
+    "restart-app": "pm2 restart handshakr_frontend"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
