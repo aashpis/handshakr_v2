@@ -12,7 +12,6 @@ const nextConfig: NextConfig = {
     unoptimized: true // Disable Image Optimization API
   },
 
-  output: 'standalone', 
   
 };
 
