@@ -34,7 +34,7 @@ export default function UserRegistrationForm() {
       {!state?.success && (
         <div>
           <div className="justify-items-center">
-            <h1 className="text-primary text-2xl font-bold ">Create new account:</h1>
+            <h1 className="text-primary text-2xl font-bold ">Create new account</h1>
 
             {/* prompt and redirect to login if already has account */}
             <p className="italic text-neutral text-xs">
