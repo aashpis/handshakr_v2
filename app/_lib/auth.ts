@@ -17,7 +17,7 @@ export async function createUserRequest(
       username,
       password,
     });
-
+    console.log("createUserRequest() success ");
     return { success: true };
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
@@ -26,7 +26,7 @@ export async function createUserRequest(
         error: error.response?.data?.message || "Account creation failed. Please try again.",
       };
     }
-
+    console.log("createUserRequest() fail ");
     return { success: false, error: "An unknown error occurred." };
   }
 }
@@ -71,9 +71,9 @@ export async function authLoginDataRequest(username: string, password: string) {
   try {
     const response = await axiosClient.post(API.LOGIN, { username, password });
 
-       console.log("authLoginData response:");
+       console.log("authLoginDataRequest response:");
        console.log(response);
-       console.log("Cookies after login:", document.cookie);
+       console.log("Cookies after authLoginDataRequest:", document.cookie);
 
     return { success: true, data: response.data };
   } catch (error: unknown) {

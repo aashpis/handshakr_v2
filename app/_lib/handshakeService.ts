@@ -11,7 +11,7 @@ import { AxiosError } from 'axios'; // Import AxiosError type
 //******* HANDSHAKE CREATION *********//
 
 // POST request to create new Handshake
-export async function NewHandshakeRequest(
+export async function newHandshakeRequest(
     handshakeName: string,
     encryptedDetails: string,
     receiverUsername: string
@@ -22,6 +22,7 @@ export async function NewHandshakeRequest(
             encryptedDetails,
             receiverUsername,
         });
+        console.log("newHandshakeRequest() response: " + response);
         return { success: true, data: response.data };
     } catch (error: unknown) {
         if (error instanceof AxiosError) {
@@ -49,7 +50,7 @@ export async function createHandshake(state: HandshakeFormState, formData: FormD
 
   const { handshakeName, receiverUsername, encryptedDetails } = validatedFields.data;
 
-  const result = await NewHandshakeRequest(
+  const result = await newHandshakeRequest(
     handshakeName,
     encryptedDetails,
     receiverUsername
