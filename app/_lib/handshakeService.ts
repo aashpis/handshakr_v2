@@ -57,6 +57,7 @@ export async function createHandshake(state: HandshakeFormState, formData: FormD
 );
 
   if (!result.success) {
+    console.log("failed to create handshake. error: ", result.error);
     return { message: result.error || "Error creating new handshake"};
   }
 
@@ -81,13 +82,14 @@ export async function AcceptHandshakeRequest(handshakeName: string) {
         if (error instanceof AxiosError) {
             return { success: false, error: error.response?.data?.message || "Failed to accept handshake" };
         }
+        console.log("failed to accept handshake. error: ", error);
         return { success: false, error: "An unknown error occurred" };
     }
 }
 
 //
 export async function acceptHandshake(){
-    const handshakeName = "Placeholder for gettter" // TODO: add method to get handshakeName
+    const handshakeName = "Placeholder for getter" // TODO: add method to get handshakeName
 
     const result = await AcceptHandshakeRequest(handshakeName);
   
@@ -118,12 +120,13 @@ export async function RejectHandshakeRequest(handshakeName: string) {
         if (error instanceof AxiosError) {
             return { success: false, error: error.response?.data?.message || "Failed to reject handshake" };
         }
+        console.log("failed to reject handshake. error: ", error);//FOR TESTING ONLY
         return { success: false, error: "An unknown error occurred" };
     }
 }
 
 export async function rejectHandshake(){
-    const handshakeName = "Placeholder for gettter" // TODO: add method to get handshakeName
+    const handshakeName = "Placeholder for getter" // TODO: add method to get handshakeName
 
     const result = await RejectHandshakeRequest(handshakeName);
   
