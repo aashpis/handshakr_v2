@@ -3,22 +3,22 @@ export default function HandshakeStatusBadge({ status }) {
    
     const STATUS_BADGE = {
       completed: (
-        <span className="bg-green-700 text-xs text-white text-center py-1 px-3 rounded uppercase">
+        <span className="bg-hs-completed text-xs text-white text-center py-1 px-3 rounded-full uppercase">
           Completed
         </span>
       ),
       failed: (
-        <span className="bg-red-700 text-xs text-white text-center py-1 px-3 rounded uppercase">
+        <span className="bg-hs-failed text-xs text-white text-center py-1 px-3 rounded-full uppercase">
           Failed
         </span>
       ),
       pending: (
-        <span className="bg-amber-500 text-xs text-white text-center py-1 px-3 rounded uppercase">
+        <span className="bg-hs-pending text-xs text-white text-center py-1 px-3 rounded-full uppercase">
           Pending
         </span>
       ),
     }[sanitiizedStatus] ?? (
-      <span className="bg-neutral-700 text-xs text-white text-center py-1 px-3 rounded uppercase">
+      <span className="bg-neutral text-xs text-white text-center py-1 px-3 -full uppercase">
         Status Unknown
       </span>
     );
