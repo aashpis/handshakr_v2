@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
 
+  images: {
+    unoptimized: true // Disable Image Optimization API
+  },
+
   output: 'standalone', 
   
 };
