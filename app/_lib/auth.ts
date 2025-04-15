@@ -190,7 +190,7 @@ export async function logoutUserRequest() {
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
 
   try {
-    const response = await fetch("https://handshakr.duckdns.org/auth/logout", {
+    const response = await fetch("https://handshakr.duckdns.org/api/auth/logout", {
       method: "POST",
       credentials: "include", // ⬅️ send cookies like jwtCookie, XSRF-TOKEN
       headers: {
