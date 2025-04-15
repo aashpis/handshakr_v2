@@ -1,4 +1,4 @@
-import HandshakeCard from "@/_ui/handshake-card"
+// import HandshakeCard from "@/_ui/handshake-card"
 import PageHeader from "@/_ui/page-header"
 
 export default function Page() {
