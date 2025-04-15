@@ -20,17 +20,17 @@ axiosClient.interceptors.request.use((config) => {
     return config;
   }
   
-  // // Extract CSRF token from cookies
+  // Extract CSRF token from cookies
   // const csrfToken = document.cookie
   // .split('; ')
   // .find(row => row.startsWith('XSRF-TOKEN='))
   // ?.split('=')[1];
   
   // FOR TESTING ONLY ********
-  // console.log("Axios Client Config: ", config);
-  // console.log("Cookies after axiosClient csrfToken: ", csrfToken);
+  console.log("[Axios Client] Config: ", config);
+  console.log("Cookies after axiosClient csrfToken: ", csrfToken);
 
-  const csrfToken = sessionStorage.getItem("XSRF-TOKEN");
+  const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
 
   // Attach to mutating requests
   if (csrfToken && ['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase() || '') ) {
