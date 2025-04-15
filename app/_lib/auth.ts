@@ -161,6 +161,7 @@ export async function loginUser(state: UserAuthFormState, formData: FormData) {
 export async function logoutUserRequest() {
   try {
     const csrfToken = sessionStorage.getItem("XSRF-TOKEN");
+    console.log("[LogoutUserRequest] getting XSRF-TOKEN:", csrfToken);
 
     await axiosClient.post(API.LOGOUT, null, {
       headers: { 'X-XSRF-TOKEN': csrfToken }
@@ -171,8 +172,10 @@ export async function logoutUserRequest() {
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
       console.error("Logout failed:", error.response?.data?.message || "Unknown error");
+      throw new Error(error.response?.data?.message || "Logout failed");
     } else {
       console.error("Logout failed: An unknown error occurred");
+      throw new Error("Logout failed: An unknown error occurred");
     }
   }
-};
+}
