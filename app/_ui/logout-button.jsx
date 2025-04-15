@@ -17,7 +17,7 @@ export default function LogoutButton() {
         window.location.href = '/'; // force middleware to run
       });
     } catch (err) {
-      console.error('Logout error:', err);
+      console.error('[logout-button] Logout error log:', err);
       setHasError(true);
     }
   };
