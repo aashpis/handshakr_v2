@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Public routes that don't require authentication
 const publicRoutes = ['/', '/register'];
-
-// Protected routes that require authentication
 const protectedRoutes = [
   '/dashboard',
   '/initiated-handshakes',
@@ -12,45 +9,58 @@ const protectedRoutes = [
   '/received-handshakes'
 ];
 
-export async function middleware(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Skip middleware for any file in public folder (has extension)
-  if (pathname.includes('.') && !pathname.endsWith('/')) {
+  // Skip middleware for static files and API routes
+  if (
+    pathname.startsWith('/_next') || 
+    pathname.startsWith('/api') || 
+    /\.(.*)$/.test(pathname)
+  ) {
     return NextResponse.next();
   }
 
-  console.log(`Middleware running for: ${pathname}`); // FOR TESTING ONLY
+  // Check cookies
+  const jwtCookie = req.cookies.get('jwtCookie')?.value;
+  const xsrfToken = req.cookies.get('XSRF-TOKEN')?.value;
 
-  // Allow public pages
-  if (publicRoutes.some(route => pathname === route || pathname.startsWith(`${route}/`))) {
-    return NextResponse.next();
-  }
-  // Check for protected routes
-  if (protectedRoutes.some(route => pathname === route || pathname.startsWith(`${route}/`))) {
-    // Read JWT from cookies
-    const jwt = req.cookies.get("jwtToken")?.value;
-    if (!jwt) {
-      // Redirect to login if no valid JWT is found
-      return NextResponse.redirect(new URL("/", req.url));
+  // Protected route: must have valid auth
+  if (protectedRoutes.some(route => pathname.startsWith(route))) {
+    console.log("[MIDDLEWARE] - protected route, checking cookies");
+
+    if (!jwtCookie || !xsrfToken) {
+      const loginUrl = new URL('/', req.url);
+      loginUrl.searchParams.set('redirect', pathname);
+
+      const res = NextResponse.redirect(loginUrl);
+
+      // Clear cookies
+      res.cookies.set('jwtCookie', '', {
+        path: '/',
+        expires: new Date(0),
+      });
+      res.cookies.set('XSRF-TOKEN', '', {
+        path: '/',
+        expires: new Date(0),
+      });
+
+      console.log("Emptied Cookies");
+
+      return res;
     }
-
   }
 
-  // For all other routes, proceed normally
+  // Public route: already logged in
+  if (publicRoutes.includes(pathname) && jwtCookie && xsrfToken) {
+    return NextResponse.redirect(new URL('/dashboard', req.url));
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for:
-     * - api/ (API routes)
-     * - _next/ (Next.js internals)
-     * - files in public/ folder (anything with an extension)
-     * - common metadata files
-     * - health check endpoints
-     */
-    '/((?!api/|_next/|favicon.ico|sitemap.xml|robots.txt|.*\\..*$).*)',
-  ]
-}
+    '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+  ],
+};
