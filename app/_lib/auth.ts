@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import axios from "axios";
 
 
-export const axiosPublic = axios.create({
+const axiosPublic = axios.create({
   baseURL: API.BASE,
   timeout: 10000,
   headers: { "Content-Type": "application/json" },
