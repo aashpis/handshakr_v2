@@ -31,10 +31,10 @@ export function middleware(req: NextRequest) {
 
     if (!jwtCookie || !xsrfToken) {
       const loginUrl = new URL('/', req.url);
+      
       loginUrl.searchParams.set('redirect', pathname);
-
       const res = NextResponse.redirect(loginUrl);
-
+      
       // Clear cookies
       res.cookies.set('jwtCookie', '', {
         path: '/',
@@ -44,13 +44,13 @@ export function middleware(req: NextRequest) {
         path: '/',
         expires: new Date(0),
       });
-
+      
       console.log("Emptied Cookies");
-
+      
       return res;
     }
   }
-
+  
   // Public route: already logged in
   if (publicRoutes.includes(pathname) && jwtCookie && xsrfToken) {
     return NextResponse.redirect(new URL('/dashboard', req.url));
