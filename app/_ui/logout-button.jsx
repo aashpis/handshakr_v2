@@ -13,11 +13,11 @@ export default function LogoutButton() {
 
     try {
       await logoutUserRequest(); 
+      sessionStorage.clear();
       startTransition(() => {
         window.location.href = '/'; // force middleware to run
       });
-      
-      sessionStorage.removeItem("X-XSRF-TOKEN");
+
     } catch (err) {
       console.error('[logout-button] Logout error log:', err);
       setHasError(true);
