@@ -1,7 +1,6 @@
 'use client'
 
-// Contains functions related to the creation and update of a Handshake
-// Does NOT contain functions related to pending handshake or handshake history  
+// Contains functions related to Handshakes
 
 import { API, HandshakeFormSchema, HandshakeFormState } from './definitions';
 import axiosClient from './axiosClient'; // Client-side axios
@@ -17,7 +16,7 @@ export async function newHandshakeRequest(
     receiverUsername: string
 ) {
     try {
-        const response = await axiosClient.post(API.HANDSHAKE.CREATE, {
+        const response = await axiosClient.post(API.CREATE_HANDSHAKE, {
             handshakeName,
             encryptedDetails,
             receiverUsername,
@@ -67,76 +66,4 @@ export async function createHandshake(state: HandshakeFormState, formData: FormD
   
   return { success: true }; 
     
-}
-
-//******* HANDSHAKE ACCEPTANCE *********//
-
-// Accept a handshake
-export async function AcceptHandshakeRequest(handshakeName: string) {
-    try {
-        const response = await axiosClient.put(
-            `${API.HANDSHAKE.ACCEPT}?handshakeName=${handshakeName}`
-        );
-        return { success: true, data: response.data };
-    } catch (error: unknown) {
-        if (error instanceof AxiosError) {
-            return { success: false, error: error.response?.data?.message || "Failed to accept handshake" };
-        }
-        console.log("failed to accept handshake. error: ", error);
-        return { success: false, error: "An unknown error occurred" };
-    }
-}
-
-//
-export async function acceptHandshake(){
-    const handshakeName = "Placeholder for getter" // TODO: add method to get handshakeName
-
-    const result = await AcceptHandshakeRequest(handshakeName);
-  
-    if (!result.success) {
-      return { message: result.error || "Error accepting handshake"};
-    }
-  
-    //FOR TESTING ONLY
-    console.log("Handshake Acceptance Sucessful");
-    console.log(handshakeName);
-    
-    return { success: true }; 
-}
-
-
-
-
-//******* HANDSHAKE REJECTION *********//
-
-// PUT request to rejectHandshake
-export async function RejectHandshakeRequest(handshakeName: string) {
-    try {
-        const response = await axiosClient.put(
-            `${API.HANDSHAKE.REJECT}?handshakeName=${handshakeName}`
-        );
-        return { success: true, data: response.data };
-    } catch (error: unknown) {
-        if (error instanceof AxiosError) {
-            return { success: false, error: error.response?.data?.message || "Failed to reject handshake" };
-        }
-        console.log("failed to reject handshake. error: ", error);//FOR TESTING ONLY
-        return { success: false, error: "An unknown error occurred" };
-    }
-}
-
-export async function rejectHandshake(){
-    const handshakeName = "Placeholder for getter" // TODO: add method to get handshakeName
-
-    const result = await RejectHandshakeRequest(handshakeName);
-  
-    if (!result.success) {
-      return { message: result.error || "Error rejecting handshake"};
-    }
-  
-    //FOR TESTING ONLY
-    console.log("Handshake Acceptance Sucessful");
-    console.log(handshakeName);
-    
-    return { success: true }; 
 }
