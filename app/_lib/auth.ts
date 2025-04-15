@@ -164,8 +164,12 @@ export async function logoutUserRequest() {
     console.log("[LogoutUserRequest] getting X-XSRF-TOKEN:", csrfToken);
 
     await axiosPublic.post(API.LOGOUT, null, {
-      headers: { 'X-XSRF-TOKEN': csrfToken }
-    });
+      headers: { 
+        'X-XSRF-TOKEN': csrfToken 
+      },
+      withCredentials: true
+    }
+  );
 
     sessionStorage.removeItem("X-XSRF-TOKEN");
     
