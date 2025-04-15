@@ -119,7 +119,7 @@ export async function authLoginDataRequest(username: string, password: string) {
     const csrfToken = response.headers["x-csrf-token"];
     console.log("csrfToken Stored: ", csrfToken);
     if(csrfToken){
-      sessionStorage.setItem("XSRF-TOKEN", csrfToken);
+      sessionStorage.setItem("X-XSRF-TOKEN", csrfToken);
     }
 
     return { success: true, data: response.data };
@@ -160,14 +160,14 @@ export async function loginUser(state: UserAuthFormState, formData: FormData) {
 
 export async function logoutUserRequest() {
   try {
-    const csrfToken = sessionStorage.getItem("XSRF-TOKEN");
-    console.log("[LogoutUserRequest] getting XSRF-TOKEN:", csrfToken);
+    const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
+    console.log("[LogoutUserRequest] getting X-XSRF-TOKEN:", csrfToken);
 
     await axiosPublic.post(API.LOGOUT, null, {
       headers: { 'X-XSRF-TOKEN': csrfToken }
     });
 
-    sessionStorage.removeItem("XSRF-TOKEN");
+    sessionStorage.removeItem("X-XSRF-TOKEN");
     
 
   } catch (error: unknown) {
