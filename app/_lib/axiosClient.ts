@@ -26,11 +26,11 @@ axiosClient.interceptors.request.use((config) => {
   // .find(row => row.startsWith('XSRF-TOKEN='))
   // ?.split('=')[1];
   
+  const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
   // FOR TESTING ONLY ********
   console.log("[Axios Client] Config: ", config);
   console.log("Cookies after axiosClient csrfToken: ", csrfToken);
 
-  const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
 
   // Attach to mutating requests
   if (csrfToken && ['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase() || '') ) {
