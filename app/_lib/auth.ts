@@ -119,7 +119,7 @@ export async function authLoginDataRequest(username: string, password: string) {
     const csrfToken = response.headers["x-csrf-token"];
     console.log("csrfToken Stored: ", csrfToken);
     if(csrfToken){
-      sessionStorage.setItem("XSRF-Token", csrfToken);
+      sessionStorage.setItem("XSRF-TOKEN", csrfToken);
     }
 
     return { success: true, data: response.data };
