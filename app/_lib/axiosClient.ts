@@ -20,20 +20,23 @@ axiosClient.interceptors.request.use((config) => {
     return config;
   }
   
-  // Extract CSRF token from cookies
-  const csrfToken = document.cookie
-  .split('; ')
-  .find(row => row.startsWith('XSRF-TOKEN='))
-  ?.split('=')[1];
+  // // Extract CSRF token from cookies
+  // const csrfToken = document.cookie
+  // .split('; ')
+  // .find(row => row.startsWith('XSRF-TOKEN='))
+  // ?.split('=')[1];
   
   // FOR TESTING ONLY ********
-  console.log("Axios Client Config: ", config);
-  console.log("Cookies after axiosClient csrfToken: ", csrfToken);
+  // console.log("Axios Client Config: ", config);
+  // console.log("Cookies after axiosClient csrfToken: ", csrfToken);
+
+  const csrfToken = sessionStorage.getItem("XSRF-TOKEN");
 
   // Attach to mutating requests
   if (csrfToken && ['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase() || '') ) {
+    console.log("AxiosClient] method: " , config.method)
     config.headers['X-XSRF-TOKEN'] = csrfToken; // TODO: Is this the right syntax to set headers? Is this the Correct header name?
-    console.log("csrfToken added to header"); //FOR TESTING ONLY
+    console.log("[AxiosClient]: csrfToken added to header"); //FOR TESTING ONLY
   }
   console.log("request config:");
   console.log(config);
