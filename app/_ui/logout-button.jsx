@@ -14,11 +14,11 @@ export default function LogoutButton() {
   //TODO: do we need to manually delete cookies on logout?
   const handleLogout = async () => {
     await logoutUserRequest();
-    // const cookieStore = cookies();
-    // // delete cookies
-    // cookieStore.getAll().forEach((cookie) => {
-    //   cookieStore.delete(cookie.name);
-    // });
+    const cookieStore = cookies();
+    // delete cookies
+    cookieStore.getAll().forEach((cookie) => {
+      cookieStore.delete(cookie.name);
+    });
 
     startTransition(() => {
       router.push('/');
