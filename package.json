@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "clean-build": "rm -rf .next && npm run build",
+    "clean-build": "rm -rf .next && pnpm run build",
     "restart-app": "pm2 restart handshakr_frontend"
   },
   "dependencies": {
