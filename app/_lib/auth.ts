@@ -192,10 +192,10 @@ export async function logoutUserRequest() {
   try {
     const response = await fetch("https://handshakr.duckdns.org/api/auth/logout", {
       method: "POST",
-      credentials: "include", // ⬅️ send cookies like jwtCookie, XSRF-TOKEN
+      credentials: "include", //send cookies like jwtCookie, XSRF-TOKEN
       headers: {
         "Content-Type": "application/json",
-        "X-XSRF-TOKEN": csrfToken ?? "", // ⬅️ send header value explicitly
+        "X-XSRF-TOKEN": csrfToken ?? "", //send header value explicitly
       },
     });
 
