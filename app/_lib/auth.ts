@@ -1,5 +1,4 @@
 import { UserRegisterFormSchema, UserAuthFormState, API, LoginFormSchema } from './definitions'
-// import axiosClient from "./axiosClient"
 import { AxiosError } from 'axios'
 import axios from "axios";
 
@@ -158,29 +157,57 @@ export async function loginUser(state: UserAuthFormState, formData: FormData) {
 }
 
 
-export async function logoutUserRequest() {
-  try {
-    const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
-    console.log("[LogoutUserRequest] getting X-XSRF-TOKEN:", csrfToken);
+// export async function logoutUserRequest() {
+//   try {
+//     const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
+//     console.log("[LogoutUserRequest] getting X-XSRF-TOKEN:", csrfToken);
 
-    await axiosPublic.post(API.LOGOUT, null, {
-      headers: { 
-        'X-XSRF-TOKEN': csrfToken 
-      },
-      withCredentials: true
-    }
-  );
+//     await axiosPublic.post(API.LOGOUT, {'X-XSRF-TOKEN': csrfToken }, {
+//       headers: { 
+//         'X-XSRF-TOKEN': csrfToken 
+//       },
+//       withCredentials: true
+//     }
+//   );
 
-    sessionStorage.removeItem("X-XSRF-TOKEN");
+//     sessionStorage.removeItem("X-XSRF-TOKEN");
     
 
-  } catch (error: unknown) {
-    if (error instanceof AxiosError) {
-      console.error("Logout failed:", error.response?.data?.message || "Unknown error");
-      throw new Error(error.response?.data?.message || "Logout failed");
-    } else {
-      console.error("Logout failed: An unknown error occurred");
-      throw new Error("Logout failed: An unknown error occurred");
+//   } catch (error: unknown) {
+//     if (error instanceof AxiosError) {
+//       console.error("Logout failed:", error.response?.data?.message || "Unknown error");
+//       throw new Error(error.response?.data?.message || "Logout failed");
+//     } else {
+//       console.error("Logout failed: An unknown error occurred");
+//       throw new Error("Logout failed: An unknown error occurred");
+//     }
+//   }
+// }
+
+
+//test a fetch request
+export async function logoutRequest() {
+  const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
+
+  try {
+    const response = await fetch("https://handshakr.duckdns.org/auth/logout", {
+      method: "POST",
+      credentials: "include", // ⬅️ send cookies like jwtCookie, XSRF-TOKEN
+      headers: {
+        "Content-Type": "application/json",
+        "X-XSRF-TOKEN": csrfToken ?? "", // ⬅️ send header value explicitly
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Logout failed:", errorData);
+      return { success: false, error: errorData.message || "Logout failed" };
     }
+
+    return { success: true };
+  } catch (err) {
+    console.error("Logout error:", err);
+    return { success: false, error: "An error occurred while logging out" };
   }
 }
