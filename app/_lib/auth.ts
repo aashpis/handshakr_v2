@@ -186,7 +186,7 @@ export async function loginUser(state: UserAuthFormState, formData: FormData) {
 
 
 //test a fetch request
-export async function logoutRequest() {
+export async function logoutUserRequest() {
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
 
   try {
