@@ -32,20 +32,9 @@ export function middleware(req: NextRequest) {
     if (!jwtCookie || !xsrfToken) {
       const loginUrl = new URL('/', req.url);
       
-      loginUrl.searchParams.set('redirect', pathname);
+      loginUrl.searchParams.set('redirect: ', pathname);
       const res = NextResponse.redirect(loginUrl);
       
-      // Clear cookies
-      res.cookies.set('jwtCookie', '', {
-        path: '/',
-        expires: new Date(0),
-      });
-      res.cookies.set('XSRF-TOKEN', '', {
-        path: '/',
-        expires: new Date(0),
-      });
-      
-      console.log("Emptied Cookies");
       
       return res;
     }
