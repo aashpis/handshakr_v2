@@ -31,6 +31,42 @@ export async function newHandshakeRequest(
     }
 }
 
+//test a fetch request
+export async function createHandshakeFetchRequest(
+  handshakeName: string,
+  encryptedDetails: string,
+  receiverUsername: string
+) {
+  const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
+
+  try {
+    const response = await fetch("https://handshakr.duckdns.org/api/users/create-handshake", {
+      method: "POST",
+      credentials: "include", //send cookies like jwtCookie, XSRF-TOKEN
+      headers: {
+        "Content-Type": "application/json",
+        "X-XSRF-TOKEN": csrfToken ?? "", //send header value explicitly
+      },
+      body: JSON.stringify({
+        handshakeName,
+        encryptedDetails, 
+        receiverUsername 
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Handshake creation failed:", errorData);
+      return { success: false, error: errorData.message || "Handshake Creation failed" };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error("Handshake creation error:", err);
+    return { success: false, error: "An error occurred while creating handshake" };
+  }
+}
+
 // New Handshake Creation flow
 export async function createHandshake(state: HandshakeFormState, formData: FormData) {
   //validate handshake fields according to schema 
@@ -49,7 +85,7 @@ export async function createHandshake(state: HandshakeFormState, formData: FormD
 
   const { handshakeName, receiverUsername, encryptedDetails } = validatedFields.data;
 
-  const result = await newHandshakeRequest(
+  const result = await createHandshakeFetchRequest(
     handshakeName,
     encryptedDetails,
     receiverUsername
@@ -67,3 +103,4 @@ export async function createHandshake(state: HandshakeFormState, formData: FormD
   return { success: true }; 
     
 }
+
