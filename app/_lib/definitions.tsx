@@ -7,27 +7,13 @@
 import { z } from 'zod'
 
 // API endpoints
-//TODO: replace placerholders
 export const API = {
   BASE: 'https://handshakr.duckdns.org/api',
   REGISTER: '/auth/register',
   LOGIN: '/auth/login', 
   LOGOUT: '/auth/logout',
-  CHECK_EMAIL: '/auth/check-email-for-account',
-  PROFILE: {
-    GET: '/auth/user-profile',
-    UPDATE: '/auth/edit-user'
-  },
-  HANDSHAKE: {
-    CREATE: '/users/create-handshake',
-    DELETE: '/users/delete-handshake',
-    ACCEPT: '/handshake/complete-handshake', 
-    REJECT: '/handshake/reject-handshake', 
-    CONNECT_AGREERER: '/users/connect-user',
-    ACTIVE: '/users/active-handshake',
-    HISTORY: '/users/history-handshake',
-    PENDING: '/users/pending-handshake',
-  },
+  PROFILE: '/users/me',
+  CREATE_HANDSHAKE:"users/create-handshake",
   GET_PRICE_STATS: '/get-price-stats',
   GRAPH: {
     ITEM_PRICE: '/graph-item-sales',
