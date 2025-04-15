@@ -2,57 +2,52 @@ import HandshakeCard from "@/_ui/handshake-card"
 import PageHeader from "@/_ui/page-header"
 
 const handshakes = [
-    {
-      id: "12345",
-      initiator: "Shankar",
-      agreerer: "Ari",
-      compensation: "$20",
-      terms: "I will sell you a used computer mouse for $20",
-      status: "completed",
-      notarized: false,
-      notary: null,
-    },
-    {
-      id: "12346",
-      initiator: "Lenny",
-      agreerer: "Mike",
-      compensation: "Lunch",
-      terms: "I will help you move furniture in exchange for lunch",
-      status: "completed",
-      notarized: false,
-      notary: null,
-    },
-    {
-      id: "12347",
-      initiator: "Jordan",
-      agreerer: "Casey",
-      compensation: "$50",
-      terms: "I will design a logo for your startup for $50",
-      status: "completed",
-      notarized: true,
-      notary: "John Doe",
-    },
-    {
-      id: "12348",
-      initiator: "Ari",
-      agreerer: "Mekky",
-      compensation: "Takis",
-      terms: "I will give you a bag Takis for a pizza",
-      status: "failed",
-      notarized: false,
-      notary: null,
-    },
-    {
-      id: "12349",
-      initiator: "Sam",
-      agreerer: "Morgan",
-      compensation: "$100",
-      terms: "I will develop a simple website for you for $100",
-      status: "completed",
-      notarized: true,
-      notary: "Jane Smith",
-    },
-  ];
+  {
+    handshakeName: "NDA Agreement",
+    encryptedDetails: "U2FsdGVkX1+Q92jsF84adU0zA9A=",
+    signedDate: "2025-04-10",
+    completedDate: "2025-04-12",
+    handshakeStatus: "Completed",
+    initiatorUsername: "alice_w",
+    acceptorUsername: "bob_m"
+  },
+  {
+    handshakeName: "Freelance Contract",
+    encryptedDetails: "U2FsdGVkX1+ZaBf78JqvDc9lPx8=",
+    signedDate: "2025-03-22",
+    completedDate: "2025-04-01",
+    handshakeStatus: "Failed",
+    initiatorUsername: "freelancer_john",
+    acceptorUsername: "client_emma"
+  },
+  {
+    handshakeName: "Partnership Terms",
+    encryptedDetails: "U2FsdGVkX1+ds9ak33qlkX3qg5s=",
+    signedDate: "2025-04-01",
+    completedDate: "",
+    handshakeStatus: "Pending",
+    initiatorUsername: "startup_xyz",
+    acceptorUsername: "angel_investor"
+  },
+  {
+    handshakeName: "Loan Agreement",
+    encryptedDetails: "U2FsdGVkX1+0nFSkf82rApl01sQ=",
+    signedDate: "2025-02-10",
+    completedDate: "2025-03-05",
+    handshakeStatus: "Completed",
+    initiatorUsername: "bank_admin",
+    acceptorUsername: "customer_123"
+  },
+  {
+    handshakeName: "Employment Contract",
+    encryptedDetails: "U2FsdGVkX1+lmZ19sa02nLKfdqM=",
+    signedDate: "2025-03-01",
+    completedDate: "2025-03-15",
+    handshakeStatus: "Completed",
+    initiatorUsername: "hr_dpt",
+    acceptorUsername: "new_employee"
+  }
+];
 
 
     export default function Page() {
@@ -63,7 +58,7 @@ const handshakes = [
             subTitle = "All verified handshakes - completed and failed"
             />
                 {handshakes.map((handshake) => (
-                    <HandshakeCard key={handshake.id} {...handshake} />
+                    <HandshakeCard key={handshake.handshakeName} {...handshake} />
                 ))}
             </div>
         );
