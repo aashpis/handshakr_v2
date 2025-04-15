@@ -1,25 +1,20 @@
-// import HandshakeRepsonseButtons from 'handshake-response-buttons'
 import HandshakeStatusBadge from './handshake-status-badge'
-import NotarizedBadge from './handshake-notarized-badge'
-
-
 
 export default function HandshakeCard({
-  id,
-  initiator,
-  agreerer,
-  compensation,
-  terms,
-  status,
-  notary,
-  notarized,
+  handshakeName,
+  encryptedDetails,
+  signedDate,
+  completedDate,
+  handshakeStatus,
+  initiatorUsername,
+  acceptorUsername
 }) {
-  const sanitizedStatus = status.toLowerCase();
+  const sanitizedStatus = handshakeStatus.toLowerCase();
 
   const STATUS_BG_STYLE = {
     completed: "bg-hs-completed/50",
     failed: "bg-hs-failed/50",
-    pending: "bg-hs-pending/65",
+    pending: "bg-hs-pending/75",
   }[sanitizedStatus] || "bg-neutral-light";
 
   return (
@@ -28,7 +23,7 @@ export default function HandshakeCard({
       <div className={`px-6 py-2 rounded-t-lg ${STATUS_BG_STYLE}`}>
         <div className="flex justify-between items-center">
           <h1 className="text-lg text-white font-semibold">
-            Handshake #{id}
+            {handshakeName}
           </h1>
           <HandshakeStatusBadge status={sanitizedStatus} />
         </div>
@@ -36,41 +31,48 @@ export default function HandshakeCard({
 
       {/* Body */}
       <div className="px-6 py-5 bg-white rounded-b-lg space-y-2">
-        {/* Parties */}
+        {/* Dates */}
         <div className="flex justify-between">
           <h2 className="font-medium">
             <span className="text-neutral font-bold">
-              Initiated by:
+              signedDate:
             </span>{" "}
-            {initiator}
+            {signedDate}
           </h2>
           <h2 className="font-medium">
             <span className="text-neutral font-bold">
-              Agreed by:
+              completedDate
             </span>{" "}
-            {agreerer}
+            {completedDate}
           </h2>
         </div>
 
-        {/* Notarization */}
-        {sanitizedStatus === "completed" && (
-          <div className="">
-            <NotarizedBadge notary={notary} />
+        <div className="px-6 py-5 bg-white rounded-b-lg space-y-2">
+          {/* Parties */}
+          <div className="flex justify-between">
+            <h2 className="font-medium">
+              <span className="text-neutral font-bold">
+                Initiated by:
+              </span>{" "}
+              {initiatorUsername}
+            </h2>
+            <h2 className="font-medium">
+              <span className="text-neutral font-bold">
+                For:
+              </span>{" "}
+              {acceptorUsername}
+            </h2>
           </div>
-        )}
 
-        {/* Terms */}
-        <div className="space-y-1 pt-2">
-          <p>
-            <span className="text-neutral font-bold">
-              Compensation:{" "}
-            </span>
-            {compensation}
-          </p>
-          <p>
-            <span className="text-neutral font-bold">Terms: </span>
-            {terms}
-          </p>
+          {/* Terms */}
+          <div className="space-y-1 pt-2">
+            <h2>
+              <span className="text-neutral font-bold">
+                Details (Encrypted):{" "}
+              </span>
+              {encryptedDetails}
+            </h2>
+          </div>
         </div>
       </div>
     </div>
