@@ -24,9 +24,12 @@ export default function NavLinks({clickHandler}) {
   useEffect(() => {
     const jwtCookie = document.cookie.includes('jwtCookie');
     const xsrfToken = document.cookie.includes('XSRF-TOKEN');
+    console.log("[NavLinks] jwtCookie", jwtCookie);
+    console.log("[NavLinks] xsrfToken", xsrfToken);
     const authed = jwtCookie && xsrfToken;
 
     setIsAuthenticated(authed);
+    console.log("is Authenticated: ", isAuthenticated);
 
     const authPath = paths.some((path) => pathname?.startsWith(path));
 
@@ -35,7 +38,7 @@ export default function NavLinks({clickHandler}) {
     }
   }, [pathname, router]);
 
-  if (!isAuthenticated) return null;
+  // if (!isAuthenticated) return null;
 
   return (
     <>
