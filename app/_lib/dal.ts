@@ -1,6 +1,3 @@
-'use server'
-
-import 'server-only'
 import { API } from './definitions'
 import axiosServer from './axiosServer'
 import { AxiosError } from 'axios' // Import AxiosError type
@@ -8,18 +5,32 @@ import { AxiosError } from 'axios' // Import AxiosError type
 // Get user profile data
 // Auth user login with fetch
 export async function fetchUserProfile() {
-
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
+
+  // Check if we have a CSRF token (basic check if user is authenticated)
+  if (!csrfToken) {
+    return { 
+      success: false, 
+      error: "Not authenticated" 
+    };
+  }
 
   try {
     const response = await fetch(`${API.BASE}${API.PROFILE}`, {
       method: "GET",
-      credentials: "include", // Include cookies
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        "X-XSRF-TOKEN": csrfToken ?? "NO X-XSRF-TOKEN",//send header value explicitly
+        "X-XSRF-TOKEN": csrfToken,
       }
     });
+
+    if (response.status === 401 || response.status === 403) {
+      return { 
+        success: false, 
+        error: "Authentication Error" 
+      };
+    }
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -29,10 +40,9 @@ export async function fetchUserProfile() {
       };
     }
 
-
     const data = await response.json();
     return { success: true, data };
-  } catch (error: unknown) {
+  } catch (error) {
     console.error("fetchUserProfile error:", error);
     return { 
       success: false, 
