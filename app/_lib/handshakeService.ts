@@ -83,6 +83,15 @@ export async function createHandshakeAxiosRequest(
   receiverUsername: string
 ) {
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
+  console.log("[createHandshakeAxiosRequest] current X-XSRF-TOKEN: ", csrfToken );
+
+  if (!csrfToken) {
+    return { 
+      success: false, 
+      error: "Missing X-XSRF-token" 
+    };
+  }
+
 
   try {
     const response = await axios.post(
