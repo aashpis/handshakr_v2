@@ -6,18 +6,40 @@ import axiosServer from './axiosServer'
 import { AxiosError } from 'axios' // Import AxiosError type
 
 // Get user profile data
-export async function getUserProfile() {
+// Auth user login with fetch
+export async function fetchUserProfile() {
+
+  const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
+
   try {
-    const response = await axiosServer.get(`${API.PROFILE}`);
-    return { success: true, data: response.data };
-  } catch (error: unknown) {
-    if (error instanceof AxiosError) {
-      return { success: false, error: error.response?.data?.message || "Failed to get profile" };
+    const response = await fetch(`${API.BASE}${API.PROFILE}`, {
+      method: "GET",
+      credentials: "include", // Include cookies
+      headers: {
+        "Content-Type": "application/json",
+        "X-XSRF-TOKEN": csrfToken ?? "NO X-XSRF-TOKEN",//send header value explicitly
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return { 
+        success: false, 
+        error: errorData.message || "Failed to get profile" 
+      };
     }
-    return { success: false, error: "An unknown error occurred" };
+
+
+    const data = await response.json();
+    return { success: true, data };
+  } catch (error: unknown) {
+    console.error("fetchUserProfile error:", error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : "An unknown error occurred" 
+    };
   }
 }
-
 // // Show which handshakes have not been completed
 // export async function getPendingHandshakes() {
 //   try {
