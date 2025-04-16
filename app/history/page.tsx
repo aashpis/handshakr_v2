@@ -1,65 +1,60 @@
-import HandshakeCard from "@/_ui/handshake-card"
-import PageHeader from "@/_ui/page-header"
+'use client';
 
-const handshakes = [
-  {
-    handshakeName: "NDA Agreement",
-    encryptedDetails: "U2FsdGVkX1+Q92jsF84adU0zA9A=",
-    signedDate: "2025-04-10",
-    completedDate: "2025-04-12",
-    handshakeStatus: "Completed",
-    initiatorUsername: "alice_w",
-    acceptorUsername: "bob_m"
-  },
-  {
-    handshakeName: "Freelance Contract",
-    encryptedDetails: "U2FsdGVkX1+ZaBf78JqvDc9lPx8=",
-    signedDate: "2025-03-22",
-    completedDate: "2025-04-01",
-    handshakeStatus: "Failed",
-    initiatorUsername: "freelancer_john",
-    acceptorUsername: "client_emma"
-  },
-  {
-    handshakeName: "Partnership Terms",
-    encryptedDetails: "U2FsdGVkX1+ds9ak33qlkX3qg5s=",
-    signedDate: "2025-04-01",
-    completedDate: "",
-    handshakeStatus: "Pending",
-    initiatorUsername: "startup_xyz",
-    acceptorUsername: "angel_investor"
-  },
-  {
-    handshakeName: "Loan Agreement",
-    encryptedDetails: "U2FsdGVkX1+0nFSkf82rApl01sQ=",
-    signedDate: "2025-02-10",
-    completedDate: "2025-03-05",
-    handshakeStatus: "Completed",
-    initiatorUsername: "bank_admin",
-    acceptorUsername: "customer_123"
-  },
-  {
-    handshakeName: "Employment Contract",
-    encryptedDetails: "U2FsdGVkX1+lmZ19sa02nLKfdqM=",
-    signedDate: "2025-03-01",
-    completedDate: "2025-03-15",
-    handshakeStatus: "Completed",
-    initiatorUsername: "hr_dpt",
-    acceptorUsername: "new_employee"
-  }
-];
+import { useEffect, useState } from 'react';
+import { fetchInitiatedHandshakes, fetchReceivedHandshakes } from "@/_lib/dal";
+import HandshakeCard from "@/_ui/handshake-card";
+import PageHeader from "@/_ui/page-header";
+import { Handshake } from '@/_lib/definitions';
 
+export default function Page() {
+  const [handshakes, setHandshakes] = useState<Handshake[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    export default function Page() {
-        return (
-            <div className="flex flex-col items-center justify-top min-h-screen">
-            <PageHeader
-            title = "Handshake History"
-            subTitle = "All verified handshakes - completed and failed"
-            />
-                {handshakes.map((handshake) => (
-                    <HandshakeCard key={handshake.handshakeName} {...handshake} />
-                ))}
-            </div>
-        );
-    }
+  useEffect(() => {
+    const loadHandshakes = async () => {
+      const username = sessionStorage.getItem("username");
+      if (!username) {
+        setError("No username found in session storage.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const [initiated, received] = await Promise.all([
+          fetchInitiatedHandshakes(username),
+          fetchReceivedHandshakes(username),
+        ]);
+
+        const initiatedData = initiated.success ? initiated.data : [];
+        const receivedData = received.success ? received.data : [];
+
+        setHandshakes([...initiatedData, ...receivedData]);
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : "Unknown error occurred";
+        setError(message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadHandshakes();
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center justify-top min-h-screen">
+      <PageHeader
+        title="Handshakes History"
+        subTitle="All handshakes initiated and received"
+      />
+      {loading && <p>Loading...</p>}
+      {error && <p className="text-warning">{error}</p>}
+      {handshakes.map((handshake) => (
+        <HandshakeCard
+          key={`${handshake.handshakeName}-${handshake.signedDate}`}
+          {...handshake}
+        />
+      ))}
+    </div>
+  );
+}
