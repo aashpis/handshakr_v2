@@ -199,12 +199,16 @@ export async function logoutUserRequest() {
       },
     });
 
+    
+    
     if (!response.ok) {
       const errorData = await response.json();
       console.error("Logout failed:", errorData);
       return { success: false, error: errorData.message || "Logout failed" };
     }
 
+    sessionStorage.clear();
+    
     return { success: true };
   } catch (err) {
     console.error("Logout error:", err);
