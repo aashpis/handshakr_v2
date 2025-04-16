@@ -61,12 +61,12 @@ export async function createHandshakeFetchRequest(
       return { success: false, error: errorData.message || "Handshake Creation failed" };
     }
 
-      // Extract CSRF Token from response headers
-      const newCsrfToken = response.headers.get("x-csrf-token");
-      if (newCsrfToken) {
-        sessionStorage.setItem("X-XSRF-TOKEN", newCsrfToken);
-        console.log("New CSRF token stored:", newCsrfToken);
-      }  
+      // // Extract CSRF Token from response headers
+      // const newCsrfToken = response.headers.get("x-csrf-token");
+      // if (newCsrfToken) {
+      //   sessionStorage.setItem("X-XSRF-TOKEN", newCsrfToken);
+      //   console.log("New CSRF token stored:", newCsrfToken);
+      // }  
 
     return { success: true };
   } catch (err) {
