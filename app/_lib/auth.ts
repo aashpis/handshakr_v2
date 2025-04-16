@@ -117,7 +117,7 @@ export async function createUserAxiosRequest(
       `${API.BASE}${API.REGISTER}`,
       { email, username, password },
       {
-        withCredentials: true,
+        // withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
@@ -242,7 +242,7 @@ export async function loginAxiosRequest(username: string, password: string) {
       `${API.BASE}${API.LOGIN}`,
       { username, password },
       {
-        withCredentials: true, // Include cookies
+        // withCredentials: true, // Include cookies
         headers: {
           "Content-Type": "application/json",
         },
