@@ -80,7 +80,7 @@ export async function createUserFetchRequest(
   password: string
 ) {
   try {
-    const response = await fetch(`${API.BASE}${API.REGISTER}`, {
+    const response = await fetch(`${API.BASE}/${API.REGISTER}`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -114,7 +114,7 @@ export async function createUserAxiosRequest(
 ) {
   try {
     const response = await axios.post(
-      `${API.BASE}${API.REGISTER}`,
+      `${API.BASE}/${API.REGISTER}`,
       { email, username, password },
       {
         // withCredentials: true,
@@ -200,7 +200,7 @@ export async function registerNewUser(state: UserAuthFormState, formData: FormDa
 // Auth user login with fetch
 export async function loginFetchRequest(username: string, password: string) {
   try {
-    const response = await fetch(`${API.BASE}${API.LOGIN}`, {
+    const response = await fetch(`${API.BASE}/${API.LOGIN}`, {
       method: "POST",
       credentials: "include", // Include cookies
       headers: {
@@ -239,7 +239,7 @@ export async function loginFetchRequest(username: string, password: string) {
 export async function loginAxiosRequest(username: string, password: string) {
   try {
     const response = await axios.post(
-      `${API.BASE}${API.LOGIN}`,
+      `${API.BASE}/${API.LOGIN}`,
       { username, password },
       {
         // withCredentials: true, // Include cookies
@@ -334,7 +334,7 @@ export async function logoutUserRequest() {
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
 
   try {
-    const response = await fetch("https://handshakr.duckdns.org/api/auth/logout", {
+    const response = await fetch(`${API.BASE}/${API.LOGOUT}`, {
       method: "POST",
       credentials: "include", //send cookies like jwtCookie, XSRF-TOKEN
       headers: {
