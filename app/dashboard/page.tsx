@@ -1,10 +1,10 @@
 'use client';
 
 import ProfileCard from '@/_ui/profile-card';
-import HandshakeAnalyticsCard from '@/_ui/handshake-analytics-card';
 import PageHeader from '@/_ui/page-header';
 import { fetchUserProfile } from '@/_lib/dal';
 import { useEffect, useState } from 'react';
+import HandshakeCreationForm from '@/_ui/handshake-creation-form';
 
 
 interface UserData {
@@ -63,7 +63,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col items-center justify-top min-h-screen">
-      <PageHeader title="Dashboard" subTitle="Welcome to Handshakr" />
+      <PageHeader title="Dashboard" subTitle />
       <div className="flex flex-col gap-2">
         {userData && (
           <ProfileCard
@@ -72,9 +72,7 @@ export default function Dashboard() {
             email={userData.email}
           />
         )}
-        <HandshakeAnalyticsCard count="10" status="pending" />
-        <HandshakeAnalyticsCard count="10" status="completed" />
-        <HandshakeAnalyticsCard count="10" status="failed" />
+      <HandshakeCreationForm/>
       </div>
     </div>
   );
