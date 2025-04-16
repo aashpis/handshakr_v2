@@ -41,9 +41,9 @@ export async function createHandshakeFetchRequest(
 
   
   try {
-    const response = await fetch("https://handshakr.duckdns.org/api/users/create-handshake", {
+    const response: Response = await fetch("https://handshakr.duckdns.org/api/users/create-handshake", {
       method: "POST",
-      credentials: "include", //send cookies like jwtCookie, XSRF-TOKEN
+      credentials: "include", 
       headers: {
         "Content-Type": "application/json",
         "X-XSRF-TOKEN": csrfToken ?? "NO X-XSRF-TOKEN", //send header value explicitly
@@ -60,6 +60,13 @@ export async function createHandshakeFetchRequest(
       console.error("Handshake creation failed:", errorData);
       return { success: false, error: errorData.message || "Handshake Creation failed" };
     }
+
+      // Extract CSRF Token from response headers
+      const newCsrfToken = response.headers.get("x-csrf-token");
+      if (newCsrfToken) {
+        sessionStorage.setItem("X-XSRF-TOKEN", newCsrfToken);
+        console.log("New CSRF token stored:", newCsrfToken);
+      }  
 
     return { success: true };
   } catch (err) {
