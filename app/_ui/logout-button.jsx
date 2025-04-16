@@ -8,7 +8,7 @@ export default function LogoutButton() {
   const [isPending, startTransition] = useTransition();
   const [hasError, setHasError] = useState(false);
 
-// In your LogoutButton component
+// handles logout and redirects
 const handleLogout = async () => {
   setHasError(false);
   
@@ -22,7 +22,10 @@ const handleLogout = async () => {
       document.cookie = c.trim().split('=')[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
     });
     
+    startTransition(() => {
     window.location.href = '/';
+    });
+
   } else {
     setHasError(true);
     console.error('Logout failed:', error);
