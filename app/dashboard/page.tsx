@@ -6,8 +6,15 @@ import PageHeader from '@/_ui/page-header';
 import { fetchUserProfile } from '@/_lib/dal';
 import { useEffect, useState } from 'react';
 
-export default function DashboardPage() {
-  const [userData, setUserData] = useState(null);
+
+interface UserData {
+  id: number;
+  username: string;
+  email: string;
+}
+
+export default function Dashboard() {
+  const [userData, setUserData] = useState<UserData | null>(null); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -73,11 +80,13 @@ useEffect(() => {
       />
       {/* Profile and Analytics Cards */}
       <div className="flex flex-col gap-2">
-        <ProfileCard
-          username={userData.username}
-          userId={userData.id}
-          email={userData.email}
-        />
+        {userData && (
+          <ProfileCard
+            username={userData.username}
+            userId={userData.id}
+            email={userData.email}
+          />
+        )}
         <HandshakeAnalyticsCard
           count="10"
           status="pending"
