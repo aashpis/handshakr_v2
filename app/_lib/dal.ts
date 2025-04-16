@@ -133,7 +133,7 @@ export async function fetchInitiatedHandshakes(username : string) {
     }
 
     const resData = await response.json();
-    return { success: true, handshakes : resData.data };
+    return { success: true, data : resData.data };
   } catch (error) {
     console.error("fetchInitiatedHandshakes() error:", error);
     return { 
@@ -182,7 +182,7 @@ export async function fetchReceivedHandshakes(username : string) {
     }
 
     const resData = await response.json();
-    return { success: true, handshakes : resData.data };
+    return { success: true, data : resData.data };
   } catch (error) {
     console.error("fetchInitiatedHandshakes() error:", error);
     return { 
