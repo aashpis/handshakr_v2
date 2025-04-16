@@ -113,11 +113,10 @@ export async function createUserAxiosRequest(
   password: string
 ) {
   try {
-    const response = await axios.post(
+    await axios.post(
       `${API.BASE}/${API.REGISTER}`,
       { email, username, password },
       {
-        // withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
@@ -141,7 +140,6 @@ export async function createUserAxiosRequest(
     };
   }
 }
-
 
 
 // validates new user input and posts to the server
