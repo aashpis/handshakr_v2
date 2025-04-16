@@ -34,8 +34,19 @@ export function middleware(req: NextRequest) {
       
       loginUrl.searchParams.set('redirect: ', pathname);
       const res = NextResponse.redirect(loginUrl);
+
       
-      
+      // Clear cookies
+       res.cookies.set('jwtCookie', '', {
+        path: '/',
+        expires: new Date(0),
+      });
+ 
+      res.cookies.set('XSRF-TOKEN', '', {
+        path: '/',
+        expires: new Date(0),
+      });
+
       return res;
     }
   }
