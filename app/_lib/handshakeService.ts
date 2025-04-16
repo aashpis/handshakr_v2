@@ -146,7 +146,7 @@ export async function createHandshake(state: HandshakeFormState, formData: FormD
 
   const { handshakeName, receiverUsername, encryptedDetails } = validatedFields.data;
 
-  const result = await createHandshakeAxiosRequest(
+  const result = await createHandshakeFetchRequest(
     handshakeName,
     encryptedDetails,
     receiverUsername
