@@ -1,4 +1,4 @@
-import HandshakeStatusBadge from './handshake-status-badge'
+import HandshakeStatusBadge from './handshake-status-badge';
 
 export default function HandshakeCard({
   handshakeName,
@@ -13,8 +13,10 @@ export default function HandshakeCard({
 
   const STATUS_BG_STYLE = {
     completed: "bg-hs-completed/50",
+    accepted: "bg-hs-completed/50",
     failed: "bg-hs-failed/50",
     pending: "bg-hs-pending/75",
+    created: "bg-hs-pending/75",
   }[sanitizedStatus] || "bg-neutral-light";
 
   return (
@@ -30,49 +32,35 @@ export default function HandshakeCard({
       </div>
 
       {/* Body */}
-      <div className="px-6 py-5 bg-white rounded-b-lg space-y-2">
+      <div className="px-6 py-5 bg-white rounded-b-lg space-y-4">
         {/* Dates */}
-        <div className="flex justify-between">
+        <div className="space-y-1">
           <h2 className="font-medium">
-            <span className="text-neutral font-bold">
-              signedDate:
-            </span>{" "}
+            <span className="text-neutral font-bold">Signed Date:</span>{" "}
             {signedDate}
           </h2>
           <h2 className="font-medium">
-            <span className="text-neutral font-bold">
-              completedDate
-            </span>{" "}
-            {completedDate}
+            <span className="text-neutral font-bold">Completed Date:</span>{" "}
+            {completedDate ? completedDate : <span className="text-warning">NOT COMPLETED</span>}
           </h2>
         </div>
 
-        <div className="px-6 py-5 bg-white rounded-b-lg space-y-2">
-          {/* Parties */}
-          <div className="flex justify-between">
-            <h2 className="font-medium">
-              <span className="text-neutral font-bold">
-                Initiated by:
-              </span>{" "}
-              {initiatorUsername}
-            </h2>
-            <h2 className="font-medium">
-              <span className="text-neutral font-bold">
-                For:
-              </span>{" "}
-              {acceptorUsername}
-            </h2>
-          </div>
+        {/* Parties */}
+        <div className="space-y-1">
+          <h2 className="font-medium">
+            <span className="text-neutral font-bold">Initiated by:</span>{" "}
+            {initiatorUsername}
+          </h2>
+          <h2 className="font-medium">
+            <span className="text-neutral font-bold">For:</span>{" "}
+            {acceptorUsername}
+          </h2>
+        </div>
 
-          {/* Terms */}
-          <div className="space-y-1 pt-2">
-            <h2>
-              <span className="text-neutral font-bold">
-                Details (Encrypted):{" "}
-              </span>
-              {encryptedDetails}
-            </h2>
-          </div>
+        {/* Terms */}
+        <div className="pt-2">
+          <h2 className="text-neutral font-bold">Details:</h2>
+          <p>{encryptedDetails}</p>
         </div>
       </div>
     </div>
