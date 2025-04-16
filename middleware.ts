@@ -10,51 +10,51 @@ const protectedRoutes = [
 ];
 
 export function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
+  // const { pathname } = req.nextUrl;
 
-  // Skip middleware for static files and API routes
-  if (
-    pathname.startsWith('/_next') || 
-    pathname.startsWith('/api') || 
-    /\.(.*)$/.test(pathname)
-  ) {
-    return NextResponse.next();
-  }
+  // // Skip middleware for static files and API routes
+  // if (
+  //   pathname.startsWith('/_next') || 
+  //   pathname.startsWith('/api') || 
+  //   /\.(.*)$/.test(pathname)
+  // ) {
+  //   return NextResponse.next();
+  // }
 
-  // Check cookies
-  const jwtCookie = req.cookies.get('jwtCookie')?.value;
-  const xsrfToken = req.cookies.get('XSRF-TOKEN')?.value;
+  // // Check cookies
+  // const jwtCookie = req.cookies.get('jwtCookie')?.value;
+  // const xsrfToken = req.cookies.get('XSRF-TOKEN')?.value;
 
-  // Protected route: must have valid auth
-  if (protectedRoutes.some(route => pathname.startsWith(route))) {
-    console.log("[MIDDLEWARE] - protected route, checking cookies");
+  // // Protected route: must have valid auth
+  // if (protectedRoutes.some(route => pathname.startsWith(route))) {
+  //   console.log("[MIDDLEWARE] - protected route, checking cookies");
 
-    if (!jwtCookie || !xsrfToken) {
-      const loginUrl = new URL('/', req.url);
+  //   if (!jwtCookie || !xsrfToken) {
+  //     const loginUrl = new URL('/', req.url);
       
-      loginUrl.searchParams.set('redirect', pathname);
-      const res = NextResponse.redirect(loginUrl);
+  //     loginUrl.searchParams.set('redirect', pathname);
+  //     const res = NextResponse.redirect(loginUrl);
 
       
-      // Clear cookies
-       res.cookies.set('jwtCookie', '', {
-        path: '/',
-        expires: new Date(0),
-      });
+  //     // // Clear cookies
+  //     //  res.cookies.set('jwtCookie', '', {
+  //     //   path: '/',
+  //     //   expires: new Date(0),
+  //     // });
  
-      res.cookies.set('XSRF-TOKEN', '', {
-        path: '/',
-        expires: new Date(0),
-      });
+  //     // res.cookies.set('XSRF-TOKEN', '', {
+  //     //   path: '/',
+  //     //   expires: new Date(0),
+  //     // });
 
-      return res;
-    }
-  }
+  //     return res;
+  //   }
+  // }
   
-  // Public route: already logged in
-  if (publicRoutes.includes(pathname) && jwtCookie && xsrfToken) {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
-  }
+  // // Public route: already logged in
+  // if (publicRoutes.includes(pathname) && jwtCookie && xsrfToken) {
+  //   return NextResponse.redirect(new URL('/dashboard', req.url));
+  // }
 
   return NextResponse.next();
 }
