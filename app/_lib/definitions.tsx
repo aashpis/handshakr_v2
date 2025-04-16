@@ -119,3 +119,13 @@ export type UserAuthFormState =
       message?: string;
     }
   | undefined;
+
+
+  
+export type UserData =
+| {
+  id: string;
+  username: string;
+  email: string;
+} 
+| undefined;
