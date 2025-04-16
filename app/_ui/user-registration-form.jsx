@@ -17,6 +17,7 @@ export default function UserRegistrationForm() {
         router.push("/");
       }, 2000); // wait 2000 ms before redirect
 
+      sessionStorage.clear(); //clear sessionStorage for login
       return () => clearTimeout(timeout);
     }
   }, [state, router]);
