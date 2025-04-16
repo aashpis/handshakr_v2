@@ -44,7 +44,9 @@ export default function LoginForm() {
 
         {/***** Password field *****/}
         <div className="mb-6">
-          <label className="block text-neutral-dark text-sm font-bold mb-2" htmlFor="password">
+          <label className="block text-neutral-dark text-sm font-bold mb-2" 
+          htmlFor="password"
+          >
             Password
           </label>
           <input
