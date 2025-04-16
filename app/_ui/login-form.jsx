@@ -18,10 +18,10 @@ export default function LoginForm() {
 
   return (
 
-    <div className="w-full bg- white max-w-xs rounded-lg">
+    <div className="w-full max-w-xs rounded-lg">
 
        {/* Form to collect login data */}
-      <form action={action} className="bg-white px-8 pt-6">
+      <form action={action} className="px-8 pt-6">
 
         {/***** Username field *****/}
         <div className="mb-4">
