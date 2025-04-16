@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 
 interface UserData {
-  id: number;
+  id: string;
   username: string;
   email: string;
 }
@@ -26,7 +26,7 @@ export default function Dashboard() {
       try {
         const res = await fetchUserProfile();
         if (res.success) {
-          setUserData(res.data);
+          setUserData(res.data.data);
         } else {
           setError(res.error || 'Failed to load profile');
         }
@@ -58,6 +58,8 @@ export default function Dashboard() {
       </div>
     );
   }
+
+  console.log(userData);
 
   return (
     <div className="flex flex-col items-center justify-top min-h-screen">
