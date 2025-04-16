@@ -1,17 +1,17 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import ProfileCard from '@/_ui/profile-card';
 import PageHeader from '@/_ui/page-header';
 import {  getUserProfileAxiosRequest } from '@/_lib/dal';
-import { useEffect, useState } from 'react';
 import HandshakeCreationForm from '@/_ui/handshake-creation-form';
+import { UserData } from '@/_lib/definitions';
 
-
-interface UserData {
-  id: string;
-  username: string;
-  email: string;
-}
+// interface UserData {
+//   id: string;
+//   username: string;
+//   email: string;
+// }
 
 export default function Dashboard() {
   const [userData, setUserData] = useState<UserData | null>(null); 
@@ -26,7 +26,9 @@ export default function Dashboard() {
       try {
         const res = await getUserProfileAxiosRequest();
         if (res.success) {
-          setUserData(res.data.data);
+          const user = res.data.data;
+          setUserData(user);
+          sessionStorage.setItem("username", user.username);
         } else {
           setError(res.error || 'Failed to load profile');
         }
@@ -37,10 +39,11 @@ export default function Dashboard() {
         setLoading(false);
       }
     };
-
+    
     loadProfile();
   }, []);
-
+  
+  
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
