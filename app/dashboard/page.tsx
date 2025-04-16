@@ -2,7 +2,7 @@
 
 import ProfileCard from '@/_ui/profile-card';
 import PageHeader from '@/_ui/page-header';
-import { fetchUserProfile } from '@/_lib/dal';
+import { fetchUserProfile, getUserProfileAxiosRequest } from '@/_lib/dal';
 import { useEffect, useState } from 'react';
 import HandshakeCreationForm from '@/_ui/handshake-creation-form';
 
@@ -24,7 +24,7 @@ export default function Dashboard() {
     const loadProfile = async () => {
       setLoading(true);
       try {
-        const res = await fetchUserProfile();
+        const res = await getUserProfileAxiosRequest();
         if (res.success) {
           setUserData(res.data.data);
         } else {

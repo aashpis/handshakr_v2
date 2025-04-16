@@ -1,6 +1,5 @@
 import { API } from './definitions'
-import axiosServer from './axiosServer'
-import { AxiosError } from 'axios' // Import AxiosError type
+import axios  from 'axios'
 
 // Get user profile data
 // Auth user login with fetch
@@ -43,6 +42,52 @@ export async function fetchUserProfile() {
     const data = await response.json();
     return { success: true, data };
   } catch (error) {
+    console.error("fetchUserProfile error:", error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : "An unknown error occurred" 
+    };
+  }
+}
+
+
+//axios version
+export async function getUserProfileAxiosRequest() {
+  const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
+
+
+  if (!csrfToken) {
+    return { 
+      success: false, 
+      error: "Not authenticated" 
+    };
+  }
+
+  try {
+    const response = await axios.get(`${API.BASE}${API.PROFILE}`, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+        "X-XSRF-TOKEN": csrfToken,
+      }
+    });
+
+    return { success: true, data: response.data };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        return { 
+          success: false, 
+          error: "Authentication Error" 
+        };
+      }
+      
+      return { 
+        success: false, 
+        error: error.response?.data?.message || "Failed to get profile" 
+      };
+    }
+    
     console.error("fetchUserProfile error:", error);
     return { 
       success: false, 

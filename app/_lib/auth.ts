@@ -1,6 +1,6 @@
 import { UserRegisterFormSchema, UserAuthFormState, API, LoginFormSchema } from './definitions'
 // import { AxiosError } from 'axios'
-// import axios from "axios";
+import axios from "axios";
 
 
 // const axiosPublic = axios.create({
@@ -107,6 +107,40 @@ export async function createUserFetchRequest(
   }
 }
 
+export async function createUserAxiosRequest(
+  email: string,
+  username: string,
+  password: string
+) {
+  try {
+    const response = await axios.post(
+      `${API.BASE}${API.REGISTER}`,
+      { email, username, password },
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return { success: true };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Account creation failed:", error.response?.data);
+      return {
+        success: false,
+        error: error.response?.data?.message || "Account creation failed. Please try again.",
+      };
+    }
+
+    console.error("createUserRequest error:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "An unknown error occurred."
+    };
+  }
+}
 
 
 
@@ -128,7 +162,7 @@ export async function registerNewUser(state: UserAuthFormState, formData: FormDa
 
   const { username, email, password } = validatedFields.data;
   
-  const result = await createUserFetchRequest(email, username, password);
+  const result = await createUserAxiosRequest(email, username, password);
   
   if (!result.success) {
     console.log("user registration failed");
@@ -202,6 +236,45 @@ export async function loginFetchRequest(username: string, password: string) {
 }
 
 
+export async function loginAxiosRequest(username: string, password: string) {
+  try {
+    const response = await axios.post(
+      `${API.BASE}${API.LOGIN}`,
+      { username, password },
+      {
+        withCredentials: true, // Include cookies
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    // Extract CSRF Token from response headers
+    const csrfToken = response.headers['x-csrf-token'];
+    if (csrfToken) {
+      sessionStorage.setItem("X-XSRF-TOKEN", csrfToken);
+      console.log("CSRF token stored:", csrfToken);
+    }
+
+    return { success: true, data: response.data };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Login failed:", error.response?.data);
+      return {
+        success: false,
+        error: error.response?.data?.message || "Failed to login"
+      };
+    }
+
+    console.error("authLoginDataRequest error:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "An unknown error occurred"
+    };
+  }
+}
+
+
 export async function loginUser(state: UserAuthFormState, formData: FormData) {
   const validatedFields = LoginFormSchema.safeParse({
     username: formData.get("username"),
@@ -215,7 +288,7 @@ export async function loginUser(state: UserAuthFormState, formData: FormData) {
 
   const { username, password } = validatedFields.data;
 
-  const result = await loginFetchRequest(username, password);
+  const result = await loginAxiosRequest(username, password);
 
 
   if (!result.success) {

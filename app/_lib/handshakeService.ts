@@ -3,9 +3,9 @@
 // Contains functions related to Handshakes
 
 import { API, HandshakeFormSchema, HandshakeFormState } from './definitions';
-import axiosClient from './axiosClient'; // Client-side axios
-import { AxiosError } from 'axios'; // Import AxiosError type
-
+// import axiosClient from './axiosClient'; // Client-side axios
+// import { AxiosError } from 'axios'; // Import AxiosError type
+import axios  from 'axios'
 
 //******* HANDSHAKE CREATION *********//
 
@@ -37,9 +37,9 @@ export async function createHandshakeFetchRequest(
   encryptedDetails: string,
   receiverUsername: string
 ) {
+
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
 
-  
   try {
     const response: Response = await fetch("https://handshakr.duckdns.org/api/users/create-handshake", {
       method: "POST",
@@ -75,6 +75,50 @@ export async function createHandshakeFetchRequest(
   }
 }
 
+
+//axios version
+export async function createHandshakeAxiosRequest(
+  handshakeName: string,
+  encryptedDetails: string,
+  receiverUsername: string
+) {
+  const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
+
+  try {
+    const response = await axios.post(
+      "https://handshakr.duckdns.org/api/users/create-handshake",
+      {
+        handshakeName,
+        encryptedDetails,
+        receiverUsername
+      },
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          "X-XSRF-TOKEN": csrfToken ?? "NO X-XSRF-TOKEN",
+        }
+      }
+    );
+
+    return { success: true };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Handshake creation failed:", error.response?.data);
+      return { 
+        success: false, 
+        error: error.response?.data?.message || "Handshake Creation failed" 
+      };
+    }
+    
+    console.error("Handshake creation error:", error);
+    return { 
+      success: false, 
+      error: "An error occurred while creating handshake" 
+    };
+  }
+}
+
 // New Handshake Creation flow
 export async function createHandshake(state: HandshakeFormState, formData: FormData) {
   //validate handshake fields according to schema 
@@ -93,7 +137,7 @@ export async function createHandshake(state: HandshakeFormState, formData: FormD
 
   const { handshakeName, receiverUsername, encryptedDetails } = validatedFields.data;
 
-  const result = await createHandshakeFetchRequest(
+  const result = await createHandshakeAxiosRequest(
     handshakeName,
     encryptedDetails,
     receiverUsername
