@@ -11,39 +11,39 @@ const axiosPublic = axios.create({
 });
 
 
-// ***** REQUEST INTERCEPTOR ********
-axiosPublic.interceptors.request.use((config) => {
-  console.log(
-    `[Axios Public] Request: ${config.method?.toUpperCase()} ${config.url}`
-  );
-  console.log("[Axios Public] Headers:", config.headers);
-  console.log("[Axios Public] Data:", config.data);
-  return config;
-}, (error) => {
-  console.error("[Axios Public] Request Error:", error);
-  return Promise.reject(error);
-});
+// // ***** REQUEST INTERCEPTOR ********
+// axiosPublic.interceptors.request.use((config) => {
+//   console.log(
+//     `[Axios Public] Request: ${config.method?.toUpperCase()} ${config.url}`
+//   );
+//   console.log("[Axios Public] Headers:", config.headers);
+//   console.log("[Axios Public] Data:", config.data);
+//   return config;
+// }, (error) => {
+//   console.error("[Axios Public] Request Error:", error);
+//   return Promise.reject(error);
+// });
 
-// **** RESPONSE INTERCEPTOR ****
-axiosPublic.interceptors.response.use((response) => {
-  console.log(
-    `[Axios Public] Response: ${response.status} ${response.config.method?.toUpperCase()} ${response.config.url}`
-  );
-  console.log("[Axios Public] Response Data:", response.data);
-  console.log("[Axios Public] Response Headers:", response.headers);
-  return response;
-}, (error) => {
-  if (error.response) {
-    console.error(
-      `[Axios Public] Response Error: ${error.response.status} ${error.config.method?.toUpperCase()} ${error.config.url}`
-    );
-    console.error("[Axios Public] Error Data:", error.response.data);
-    console.error("[Axios Public] Error Headers:", error.response.headers);
-  } else {
-    console.error("[Axios Public] Network/Config Error:", error.message);
-  }
-  return Promise.reject(error);
-});
+// // **** RESPONSE INTERCEPTOR ****
+// axiosPublic.interceptors.response.use((response) => {
+//   console.log(
+//     `[Axios Public] Response: ${response.status} ${response.config.method?.toUpperCase()} ${response.config.url}`
+//   );
+//   console.log("[Axios Public] Response Data:", response.data);
+//   console.log("[Axios Public] Response Headers:", response.headers);
+//   return response;
+// }, (error) => {
+//   if (error.response) {
+//     console.error(
+//       `[Axios Public] Response Error: ${error.response.status} ${error.config.method?.toUpperCase()} ${error.config.url}`
+//     );
+//     console.error("[Axios Public] Error Data:", error.response.data);
+//     console.error("[Axios Public] Error Headers:", error.response.headers);
+//   } else {
+//     console.error("[Axios Public] Network/Config Error:", error.message);
+//   }
+//   return Promise.reject(error);
+// });
 
 
 //********** REGISTRATION FUNCTIONS *********************/
