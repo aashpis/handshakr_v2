@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import {LayoutDashboard, Handshake, ArrowRightFromLine, ArrowLeftFromLine, GalleryVerticalEnd} from 'lucide-react';
 
@@ -39,7 +40,7 @@ export default function NavLinks({clickHandler}) {
   return (
     <>
       {paths.map((path) => {
-        const LinkIcon = link.icon;
+        const LinkIcon = path.icon;
         return (
           <Link
             key={path.name}
