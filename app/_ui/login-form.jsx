@@ -18,7 +18,7 @@ export default function LoginForm() {
 
   return (
 
-    <div className="w-full max-w-xs rounded-lg">
+    <div className="w-full bg- white max-w-xs rounded-lg">
 
        {/* Form to collect login data */}
       <form action={action} className="bg-white px-8 pt-6">
@@ -26,7 +26,7 @@ export default function LoginForm() {
         {/***** Username field *****/}
         <div className="mb-4">
           <label
-            className="block text-sm font-bold mb-2"
+            className="block text-neutral-dark text-sm font-bold mb-2"
             htmlFor="username"
           >
             Username
@@ -43,7 +43,7 @@ export default function LoginForm() {
 
         {/***** Password field *****/}
         <div className="mb-6">
-          <label className="block text-sm font-bold mb-2" htmlFor="password">
+          <label className="block text-neutral-dark text-sm font-bold mb-2" htmlFor="password">
             Password
           </label>
           <input
