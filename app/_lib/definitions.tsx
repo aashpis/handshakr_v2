@@ -33,6 +33,7 @@ export const UserRegisterFormSchema = z.object({
   
   username: z
     .string()
+    .regex(/^\S*$/, { message: 'Username cannot contain whitespace' }) 
     .min(5, { message: 'Name must be at least 5 characters long.' })
     .max(30, )
     .trim(),
@@ -83,7 +84,6 @@ export const HandshakeFormSchema = z.object({
     .trim(),
   receiverUsername: z
     .string()
-    .min(10, { message: 'Description must be at least 10 characters long.' })
     .trim(),
   encryptedDetails: z
     .string()
