@@ -60,12 +60,6 @@ export async function createHandshakeFetchRequest(
       return { success: false, error: errorData.message || "Handshake Creation failed" };
     }
 
-    const newCsrfToken = response.headers.get("X-XSRF-TOKEN");
-    if (newCsrfToken) {
-      sessionStorage.setItem("X-XSRF-TOKEN", newCsrfToken);
-    }
-
-
     return { success: true };
   } catch (err) {
     console.error("Handshake creation error:", err);
