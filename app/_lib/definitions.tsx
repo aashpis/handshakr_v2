@@ -9,16 +9,18 @@ import { z } from 'zod'
 // API endpoints
 export const API = {
   BASE: 'https://handshakr.duckdns.org/api',
-  REGISTER: '/auth/register',
-  LOGIN: '/auth/login', 
-  LOGOUT: '/auth/logout',
-  PROFILE: '/users/me',
+  REGISTER: 'auth/register',
+  LOGIN: 'auth/login', 
+  LOGOUT: 'auth/logout',
+  PROFILE: 'users/me',
   CREATE_HANDSHAKE:"users/create-handshake",
-  GET_PRICE_STATS: '/get-price-stats',
+  GET_MY_INITIATED_HS: "handshake/get-handshakes-by-initiator",
+  GET_MY_RECEIVED_HS: "handshake/get-handshakes-by-acceptor",
+  GET_PRICE_STATS: 'get-price-stats',
   GRAPH: {
-    ITEM_PRICE: '/graph-item-sales',
-    ITEM_PRICE_HISTOGRAM: '/graph-item-price-histogram',
-    WEEKLY_MEDIAN_PRICE: '/graph-item-weekly-median-price',
+    ITEM_PRICE: 'graph-item-sales',
+    ITEM_PRICE_HISTOGRAM: 'graph-item-price-histogram',
+    WEEKLY_MEDIAN_PRICE: 'graph-item-weekly-median-price',
   }
 }
 
@@ -129,3 +131,15 @@ export type UserData =
   email: string;
 } 
 | undefined;
+
+
+export type Handshake = {
+  handshakeName: string;
+  encryptedDetails: string;
+  signedDate: string;
+  completedDate: string | null;
+  handshakeStatus: string;
+  initiatorUsername: string;
+  acceptorUsername: string;
+}
+
