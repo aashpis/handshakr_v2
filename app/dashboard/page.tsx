@@ -18,43 +18,33 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const csrfToken = typeof window !== 'undefined'
-  ? sessionStorage.getItem('X-XSRF-TOKEN')
-  : null;
 
-useEffect(() => {
-  if (!csrfToken) return; // don't fetch if not logged in
-
-  const loadProfile = async () => {
-    setLoading(true);
-    try {
-      const res = await fetchUserProfile();
-      if (res.success) {
-        setUserData(res.data);
-      } else {
-        setError(res.error || 'Failed to load profile');
+  useEffect(() => {
+    
+    const loadProfile = async () => {
+      setLoading(true);
+      try {
+        const res = await fetchUserProfile();
+        if (res.success) {
+          setUserData(res.data);
+        } else {
+          setError(res.error || 'Failed to load profile');
+        }
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : 'An unknown error occurred';
+        setError(message);
+      } finally {
+        setLoading(false);
       }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('An unknown error occurred');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  loadProfile();
-}, [csrfToken]);
+    loadProfile();
+  }, []);
 
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <PageHeader
-          title="Dashboard"
-          subTitle="Welcome to Handshakr"
-        />
+        <PageHeader title="Dashboard" subTitle="Welcome to Handshakr" />
         <p>Loading profile...</p>
       </div>
     );
@@ -63,10 +53,7 @@ useEffect(() => {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <PageHeader
-          title="Dashboard"
-          subTitle="Welcome to Handshakr"
-        />
+        <PageHeader title="Dashboard" subTitle="Welcome to Handshakr" />
         <p className="text-warning">Error: {error}</p>
       </div>
     );
@@ -74,11 +61,7 @@ useEffect(() => {
 
   return (
     <div className="flex flex-col items-center justify-top min-h-screen">
-      <PageHeader
-        title="Dashboard"
-        subTitle="Welcome to Handshakr"
-      />
-      {/* Profile and Analytics Cards */}
+      <PageHeader title="Dashboard" subTitle="Welcome to Handshakr" />
       <div className="flex flex-col gap-2">
         {userData && (
           <ProfileCard
@@ -87,18 +70,9 @@ useEffect(() => {
             email={userData.email}
           />
         )}
-        <HandshakeAnalyticsCard
-          count="10"
-          status="pending"
-        />
-        <HandshakeAnalyticsCard
-          count="10"
-          status="completed"
-        />
-        <HandshakeAnalyticsCard
-          count="10"
-          status="failed"
-        />
+        <HandshakeAnalyticsCard count="10" status="pending" />
+        <HandshakeAnalyticsCard count="10" status="completed" />
+        <HandshakeAnalyticsCard count="10" status="failed" />
       </div>
     </div>
   );
