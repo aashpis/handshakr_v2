@@ -1,11 +1,11 @@
 import  ProfileCard  from '@/_ui/profile-card'
 import HandshakeAnalyticsCard from '@/_ui/handshake-analytics-card'
 import PageHeader from '@/_ui/page-header'
-const user = {
-  username: "jSmith",
-  userID: "123456",
-  email: "jsmith@gmail.com"
-}
+import { fetchUserProfile } from '@/_lib/dal'
+
+
+const res = await fetchUserProfile();
+const { id, username, email } = res.data;
 
 // const userProfile = getUserProfile() 
 export default function Page() {
@@ -18,9 +18,9 @@ export default function Page() {
       {/* Profile and Analytics Cards */}
       <div className="flex flex-col gap-2">
         <ProfileCard
-          username={user.username}
-          userId={user.userID}
-          email={user.email}
+          username={username}
+          userId={id}
+          email={email}
         />
           <HandshakeAnalyticsCard
             count="10"
