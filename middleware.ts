@@ -32,7 +32,7 @@ export function middleware(req: NextRequest) {
     if (!jwtCookie || !xsrfToken) {
       const loginUrl = new URL('/', req.url);
       
-      loginUrl.searchParams.set('redirect: ', pathname);
+      loginUrl.searchParams.set('redirect', pathname);
       const res = NextResponse.redirect(loginUrl);
 
       

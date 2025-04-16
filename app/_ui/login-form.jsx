@@ -12,7 +12,8 @@ export default function LoginForm() {
   // Redirect after successful login
   useEffect(() => {
     if (state?.success) {
-      router.push('/dashboard');
+      const redirect = new URLSearchParams(window.location.search).get('redirect');
+      router.push(redirect || '/dashboard');
     }
   }, [state, router]);
 
