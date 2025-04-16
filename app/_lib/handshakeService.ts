@@ -9,29 +9,7 @@ import axios  from 'axios'
 
 //******* HANDSHAKE CREATION *********//
 
-// POST request to create new Handshake
-// export async function newHandshakeRequest(
-//     handshakeName: string,
-//     encryptedDetails: string,
-//     receiverUsername: string
-// ) {
-//     try {
-//         const response = await axiosClient.post(API.CREATE_HANDSHAKE, {
-//             handshakeName,
-//             encryptedDetails,
-//             receiverUsername,
-//         });
-//         console.log("newHandshakeRequest() response: " + response);
-//         return { success: true, data: response.data };
-//     } catch (error: unknown) {
-//         if (error instanceof AxiosError) {
-//             return { success: false, error: error.response?.data?.message || "Failed to create handshake" };
-//         }
-//         return { success: false, error: "An unknown error occurred" };
-//     }
-// }
-
-//test a fetch request
+// fetch request
 export async function createHandshakeFetchRequest(
   handshakeName: string,
   encryptedDetails: string,
@@ -41,7 +19,8 @@ export async function createHandshakeFetchRequest(
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
 
   try {
-    const response: Response = await fetch("https://handshakr.duckdns.org/api/users/create-handshake", {
+    const response: Response = await fetch(`${API.BASE}/${API.CREATE_HANDSHAKE}`, {
+
       method: "POST",
       credentials: "include", 
       headers: {
@@ -61,13 +40,6 @@ export async function createHandshakeFetchRequest(
       return { success: false, error: errorData.message || "Handshake Creation failed" };
     }
 
-      // // Extract CSRF Token from response headers
-      // const newCsrfToken = response.headers.get("x-csrf-token");
-      // if (newCsrfToken) {
-      //   sessionStorage.setItem("X-XSRF-TOKEN", newCsrfToken);
-      //   console.log("New CSRF token stored:", newCsrfToken);
-      // }  
-
     return { success: true };
   } catch (err) {
     console.error("Handshake creation error:", err);
@@ -83,7 +55,7 @@ export async function createHandshakeAxiosRequest(
   receiverUsername: string
 ) {
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
-  console.log("[createHandshakeAxiosRequest] current X-XSRF-TOKEN: ", csrfToken );
+  console.log("[createHandshakeAxiosRequest] current X-XSRF-TOKEN: ", csrfToken);
 
   if (!csrfToken) {
     return { 
@@ -92,10 +64,9 @@ export async function createHandshakeAxiosRequest(
     };
   }
 
-
   try {
-    const response = await axios.post(
-      "https://handshakr.duckdns.org/api/users/create-handshake",
+    await axios.post(
+      `${API.BASE}/${API.CREATE_HANDSHAKE}`,
       {
         handshakeName,
         encryptedDetails,
@@ -119,7 +90,7 @@ export async function createHandshakeAxiosRequest(
         error: error.response?.data?.message || "Handshake Creation failed" 
       };
     }
-    
+
     console.error("Handshake creation error:", error);
     return { 
       success: false, 
