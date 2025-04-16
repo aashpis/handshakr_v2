@@ -49,8 +49,8 @@ export async function createHandshakeFetchRequest(
       },
       body: JSON.stringify({
         handshakeName,
-        encryptedDetails, 
-        receiverUsername 
+        encryptedDetails,
+        receiverUsername
       })
     });
 
@@ -58,6 +58,11 @@ export async function createHandshakeFetchRequest(
       const errorData = await response.json();
       console.error("Handshake creation failed:", errorData);
       return { success: false, error: errorData.message || "Handshake Creation failed" };
+    }
+
+    const newCsrfToken = response.headers.get("X-XSRF-TOKEN");
+    if (newCsrfToken) {
+      sessionStorage.setItem("X-XSRF-TOKEN", newCsrfToken);
     }
 
 
@@ -90,18 +95,18 @@ export async function createHandshake(state: HandshakeFormState, formData: FormD
     handshakeName,
     encryptedDetails,
     receiverUsername
-);
+  );
 
   if (!result.success) {
     console.log("failed to create handshake. error: ", result.error);
-    return { message: result.error || "Error creating new handshake"};
+    return { message: result.error || "Error creating new handshake" };
   }
 
   //FOR TESTING ONLY
   console.log("Handshake Creation Sucessful");
   console.log(validatedFields);
-  
-  return { success: true }; 
-    
+
+  return { success: true };
+
 }
 
