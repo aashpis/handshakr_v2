@@ -10,26 +10,26 @@ import { AxiosError } from 'axios'; // Import AxiosError type
 //******* HANDSHAKE CREATION *********//
 
 // POST request to create new Handshake
-export async function newHandshakeRequest(
-    handshakeName: string,
-    encryptedDetails: string,
-    receiverUsername: string
-) {
-    try {
-        const response = await axiosClient.post(API.CREATE_HANDSHAKE, {
-            handshakeName,
-            encryptedDetails,
-            receiverUsername,
-        });
-        console.log("newHandshakeRequest() response: " + response);
-        return { success: true, data: response.data };
-    } catch (error: unknown) {
-        if (error instanceof AxiosError) {
-            return { success: false, error: error.response?.data?.message || "Failed to create handshake" };
-        }
-        return { success: false, error: "An unknown error occurred" };
-    }
-}
+// export async function newHandshakeRequest(
+//     handshakeName: string,
+//     encryptedDetails: string,
+//     receiverUsername: string
+// ) {
+//     try {
+//         const response = await axiosClient.post(API.CREATE_HANDSHAKE, {
+//             handshakeName,
+//             encryptedDetails,
+//             receiverUsername,
+//         });
+//         console.log("newHandshakeRequest() response: " + response);
+//         return { success: true, data: response.data };
+//     } catch (error: unknown) {
+//         if (error instanceof AxiosError) {
+//             return { success: false, error: error.response?.data?.message || "Failed to create handshake" };
+//         }
+//         return { success: false, error: "An unknown error occurred" };
+//     }
+// }
 
 //test a fetch request
 export async function createHandshakeFetchRequest(
@@ -59,6 +59,7 @@ export async function createHandshakeFetchRequest(
       console.error("Handshake creation failed:", errorData);
       return { success: false, error: errorData.message || "Handshake Creation failed" };
     }
+
 
     return { success: true };
   } catch (err) {
