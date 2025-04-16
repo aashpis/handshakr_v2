@@ -54,7 +54,7 @@ export default function Dashboard() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <PageHeader title="Dashboard" subTitle="Welcome to Handshakr" />
-        <p className="text-warning">Error: {error}</p>
+        <p className="text-warning font-bold">Error: {error}</p>
       </div>
     );
   }
