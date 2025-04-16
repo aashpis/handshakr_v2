@@ -1,65 +1,57 @@
 'use client';
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import clsx from 'clsx';
-import {LayoutDashboard, Handshake, ArrowRightFromLine, ArrowLeftFromLine, GalleryVerticalEnd} from 'lucide-react';
+import {
+  LayoutDashboard,
+  Handshake,
+  ArrowRightFromLine,
+  ArrowLeftFromLine,
+  GalleryVerticalEnd,
+} from 'lucide-react';
 
 // Map of links to display in the side navigation.
-const paths = [
+const links = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Create Handshake', href: '/create', icon: Handshake },
   { name: 'Initiated Handshakes', href: '/initiated-handshakes', icon: ArrowRightFromLine },
   { name: 'Received Handshakes', href: '/received-handshakes', icon: ArrowLeftFromLine },
   { name: 'History', href: '/history', icon: GalleryVerticalEnd },
 ];
-export default function NavLinks({clickHandler}) {
 
+export default function NavLinks({ clickHandler }) {
   const pathname = usePathname();
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // default true 
 
-  useEffect(() => {
-    const xsrfCookie = document.cookie.includes('XSRF-TOKEN');
-    const xsrfToken = sessionStorage.getItem('X-XSRF-TOKEN');
-    console.log("[NavLinks] xsrfToken", xsrfToken);
-    const authed = xsrfCookie && xsrfToken;
-
-    setIsAuthenticated(authed);
-    console.log("is Authenticated: ", isAuthenticated);
-
-    const authPath = paths.some((path) => pathname?.startsWith(path));
-
-    if (!authed && authPath) {
-      router.replace('/');
+  const handleNav = (href: string) => {
+    if (pathname === href) {
+      // Same page — force reload
+      router.refresh();
+    } else {
+      router.push(href);
     }
-  }, [pathname, router]);
 
-  if (!isAuthenticated) return null;
+    if (clickHandler) clickHandler(); // Close hamburger menu
+  };
 
   return (
     <>
-      {paths.map((path) => {
-        const LinkIcon = path.icon;
+      {links.map((link) => {
+        const LinkIcon = link.icon;
         return (
-          <Link
-            key={path.name}
-            href={path.href}
-            // for closing hamburger nav menu 
-            onClick={clickHandler} 
-            //highlights link when user is on the page
+          <button
+            key={link.name}
+            onClick={() => handleNav(link.href)}
             className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 text-sm font-medium hover:bg-blue-100 md:flex-none md:justify-start md:p-2 md:px-3',
+              'flex h-[48px] w-full grow items-center justify-center gap-2 text-sm font-medium hover:bg-blue-100 md:flex-none md:justify-start md:p-2 md:px-3',
               {
-                'bg-primary-light ': pathname === path.href,
+                'bg-primary-light': pathname === link.href,
               },
             )}
           >
             <LinkIcon className="w-6" />
-            <p className="block pl-1 md:pl-5">{path.name}</p>
-          </Link>
+            <p className="block pl-1 md:pl-5">{link.name}</p>
+          </button>
         );
       })}
     </>
