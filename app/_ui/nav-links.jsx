@@ -24,7 +24,6 @@ export default function NavLinks({clickHandler}) {
   useEffect(() => {
     const xsrfCookie = document.cookie.includes('XSRF-TOKEN');
     const xsrfToken = sessionStorage.getItem('X-XSRF-TOKEN');
-    console.log("[NavLinks] jwtCookie", jwtCookie);
     console.log("[NavLinks] xsrfToken", xsrfToken);
     const authed = xsrfCookie && xsrfToken;
 
