@@ -8,17 +8,17 @@ import { z } from 'zod'
 
 // API endpoints
 export const API = {
-  BASE: 'https://handshakr.duckdns.org/api',
-  REGISTER: 'auth/register',
-  LOGIN: 'auth/login',
-  LOGOUT: 'auth/logout',
-  PROFILE: 'users/me',
+  BASE: 'https://handshakr.duckdns.org',
+  REGISTER: 'api/auth/register',
+  LOGIN: 'api/auth/login',
+  LOGOUT: 'api/auth/logout',
+  PROFILE: 'api/users/me',
   CREATE_HANDSHAKE: "users/create-handshake",
   GET_MY_INITIATED_HS: "handshake/get-handshakes-by-initiator",
   GET_MY_RECEIVED_HS: "handshake/get-handshakes-by-acceptor",
   GET_PRICE_STATS: 'scraper/get-price-stats',
   GET_PRICE_HISTOGRAM: 'scraper/graph-item-price-histogram',
-  GET_WEEKLY_MEDIAN_PRICE: 'graph-item-weekly-median-price',
+  GET_WEEKLY_MEDIAN_PRICE: 'scraper/graph-item-weekly-median-price',
 }
 
 /**********  SCHEMA DEFINTIONS  *******************
