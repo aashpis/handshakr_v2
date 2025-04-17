@@ -16,7 +16,7 @@ export default function HandshakeCard({
     accepted: "bg-primary",
     failed: "bg-hs-failed/50",
     pending: "bg-hs-pending/75",
-  }[sanitizedStatus] || "bg-neutral-light";
+  }[sanitizedStatus] || "bg-neutral";
 
   return (
     <div className="mb-10 w-full max-w-md rounded-lg shadow-md">
