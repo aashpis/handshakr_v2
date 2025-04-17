@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import {LayoutDashboard, Handshake, ArrowRightFromLine, ArrowLeftFromLine, GalleryVerticalEnd, ChartColumn} from 'lucide-react';
+import {LayoutDashboard, Handshake, ArrowRightFromLine, ArrowLeftFromLine, GalleryVerticalEnd, BadgeDollarSign} from 'lucide-react';
 
 // Map of links to display in the side navigation.
 const links = [
@@ -12,7 +12,7 @@ const links = [
   { name: 'Initiated Handshakes', href: '/initiated-handshakes', icon: ArrowRightFromLine },
   { name: 'Received Handshakes', href: '/received-handshakes', icon: ArrowLeftFromLine },
   { name: 'History', href: '/history', icon: GalleryVerticalEnd },
-  { name: 'Price Checker', href: '/price-checker', icon: ChartColumn },
+  { name: 'Price Analyzer', href: '/price-analyzer', icon: BadgeDollarSign },
 ];
 export default function NavLinks({clickHandler}) {
   const pathname = usePathname();
