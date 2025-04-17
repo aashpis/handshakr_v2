@@ -10,13 +10,12 @@ export default function HandshakeCard({
   acceptorUsername
 }) {
   const sanitizedStatus = handshakeStatus.toLowerCase();
-
+  
   const STATUS_BG_STYLE = {
     completed: "bg-hs-completed/50",
-    accepted: "bg-hs-completed/50",
+    accepted: "bg-primary",
     failed: "bg-hs-failed/50",
     pending: "bg-hs-pending/75",
-    created: "bg-hs-pending/75",
   }[sanitizedStatus] || "bg-neutral-light";
 
   return (
