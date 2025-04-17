@@ -1,5 +1,5 @@
 export default function HandshakeStatusBadge({ status }) {
-  const sanitizedStatus = (status || "").toLowerCase(); // Normalize with fallback
+  const sanitizedStatus = status.toLowerCase(); // Normalize with fallback
 
   const STATUS_BADGE = {
     completed: (
@@ -24,7 +24,7 @@ export default function HandshakeStatusBadge({ status }) {
     ),
   }[sanitizedStatus] ?? (
     <span className="bg-neutral text-xs text-white text-center py-1 px-3 rounded-full uppercase">
-      {sanitizedStatus || "Unknown"}
+      {sanitizedStatus}
     </span>
   );
 

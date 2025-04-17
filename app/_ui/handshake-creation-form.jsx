@@ -23,7 +23,7 @@ export default function HandshakeCreationForm() {
             id="handshakeName"
             name="handshakeName"
             required
-            className="w-full px-4 py-2 border border-neutral-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light focus:border-transparent"
+            className="w-full px-4 py-2 border border-neutral-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
         </div>
         {state?.errors?.handshakeName && (
