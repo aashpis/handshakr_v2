@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { fetchPriceStats, fetchMedianPriceGraph, fetchPriceHistogram } from '@/_lib/dal';
+import { fetchPriceStats, fetchPriceStatsTest, fetchMedianPriceGraph, fetchPriceHistogram } from '@/_lib/dal';
 import PriceInputForm from '@/_ui/price-input-form';
 import PriceStatsCard from '@/_ui/price-stats-card';
 import PriceGraphs from '@/_ui/price-graphs';
@@ -21,32 +21,65 @@ export default function Page() {
         setPriceData(null);
         setItemName(itemName);
         try {
-            const [statsRes, histRes, medianRes] = await Promise.all([
-                fetchPriceStats(itemName),
-                fetchPriceHistogram(itemName),
-                fetchMedianPriceGraph(itemName),
-            ]);
-
-            if (!statsRes.success || !histRes.success || !medianRes.success) {
-                throw new Error('One or more requests failed');
+            // Execute API calls individually for easier debugging
+            const statsRes = await fetchPriceStatsTest(itemName);
+            console.log("Stats response:", statsRes);
+            
+            const histRes = await fetchPriceHistogram(itemName);
+            console.log("Histogram response:", histRes);
+            
+            const medianRes = await fetchMedianPriceGraph(itemName);
+            console.log("Median response:", medianRes);
+    
+            if (!statsRes.success) {
+                throw new Error(`Stats request failed: ${statsRes.error}`);
             }
-
-
-            const [name, stats] = statsRes.data; //unpack array
-
+            
+            if (!histRes.success) {
+                throw new Error(`Histogram request failed: ${histRes.error}`);
+            }
+            
+            if (!medianRes.success) {
+                throw new Error(`Median graph request failed: ${medianRes.error}`);
+            }
+    
+            // Add checks to ensure data exists and has the expected format
+            if (!statsRes.data || !Array.isArray(statsRes.data) || statsRes.data.length < 2) {
+                throw new Error('Invalid price stats data format');
+            }
+    
+            const [name, stats] = statsRes.data;
+            
+            // Verify stats object has required properties
+            if (!stats || typeof stats !== 'object' || 
+                !('max' in stats) || !('mean' in stats) || 
+                !('median' in stats) || !('min' in stats)) {
+                throw new Error('Invalid price stats data structure');
+            }
+    
             setItemName(name);
             setPriceData({
-              max: stats.max,
-              mean: stats.mean,
-              median: stats.median,
-              min: stats.min,
+                max: stats.max,
+                mean: stats.mean,
+                median: stats.median,
+                min: stats.min,
             });
-
-            setHistogramUrl(histRes.data || '');
-            setMedianGraphUrl(medianRes.data || '');
+    
+            // Check if histogram and median graph data exists
+            if (histRes.data) {
+                setHistogramUrl(histRes.data);
+            } else {
+                console.warn('Histogram URL is empty');
+            }
+    
+            if (medianRes.data) {
+                setMedianGraphUrl(medianRes.data);
+            } else {
+                console.warn('Median graph URL is empty');
+            }
         } catch (err) {
-            console.error(err);
-            setError('Failed to fetch analysis.');
+            console.error("Error details:", err);
+            setError('Failed to fetch analysis: ' + (err instanceof Error ? err.message : String(err)));
         } finally {
             setLoading(false);
         }
