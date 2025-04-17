@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { fetchPriceStats, fetchMedianPriceGraph, fetchPriceHistogram } from '@/_lib/dal';
+import { fetchMedianPriceGraph, fetchPriceHistogram } from '@/_lib/dal';
 import PriceInputForm from '@/_ui/price-input-form';
 import PriceStatsCard from '@/_ui/price-stats-card';
 import PriceGraphs from '@/_ui/price-graphs';
@@ -24,25 +24,7 @@ export default function Page() {
     setMedianGraphUrl('');
   
     try {
-      // Fetch price stats
-    //   const statsRes = await fetchPriceStats(inputItemName);
-    //   if (!statsRes.success || !Array.isArray(statsRes.data)) {
-    //     throw new Error(statsRes.error || 'Failed to fetch price stats.');
-    //   }
-  
-    //   const [resolvedName, stats] = statsRes.data;
-    //   if (!stats || typeof stats !== 'object') {
-    //     throw new Error('Malformed stats object.');
-    //   }
-  
-    //   setItemName(resolvedName);
-    //   setPriceData({
-    //     max: stats.max,
-    //     mean: stats.mean,
-    //     median: stats.median,
-    //     min: stats.min,
-    //   });
-  
+
       // Fetch histogram
       const histRes = await fetchPriceHistogram(inputItemName);
       if (!histRes.success) {
@@ -75,15 +57,7 @@ export default function Page() {
         </p>
       )}
 
-      {priceData && (
-        <PriceStatsCard
-          itemName={itemName}
-          max={priceData.max}
-          mean={priceData.mean}
-          median={priceData.median}
-          min={priceData.min}
-        />
-      )}
+
 
       <PriceGraphs
         histogramUrl={histogramUrl}
