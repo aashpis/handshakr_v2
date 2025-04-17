@@ -22,45 +22,44 @@ export default function Page() {
     setPriceData(null);
     setHistogramUrl('');
     setMedianGraphUrl('');
-
+  
     try {
-      const [statsRes, histRes, medianRes] = await Promise.all([
-        fetchPriceStats(inputItemName),
-        fetchPriceHistogram(inputItemName),
-        fetchMedianPriceGraph(inputItemName),
-      ]);
-
-      // Check if all requests were successful
-      if (!statsRes.success || !histRes.success || !medianRes.success) {
-        const errorMessage = statsRes.error || histRes.error || medianRes.error || 'One or more requests failed';
-        throw new Error(errorMessage);
+      // Fetch price stats
+    //   const statsRes = await fetchPriceStats(inputItemName);
+    //   if (!statsRes.success || !Array.isArray(statsRes.data)) {
+    //     throw new Error(statsRes.error || 'Failed to fetch price stats.');
+    //   }
+  
+    //   const [resolvedName, stats] = statsRes.data;
+    //   if (!stats || typeof stats !== 'object') {
+    //     throw new Error('Malformed stats object.');
+    //   }
+  
+    //   setItemName(resolvedName);
+    //   setPriceData({
+    //     max: stats.max,
+    //     mean: stats.mean,
+    //     median: stats.median,
+    //     min: stats.min,
+    //   });
+  
+      // Fetch histogram
+      const histRes = await fetchPriceHistogram(inputItemName);
+      if (!histRes.success) {
+        throw new Error(histRes.error || 'Failed to fetch histogram graph.');
       }
-
-
-      console.log("[statsRes.data]", statsRes.data);
-      const [itemName, stats] = statsRes.data;
-      
-      console.log("itemName" , itemName);
-      console.log("stats.max" ,stats.max);
-      console.log("stats.mean" ,stats.mean);
-      console.log("stats.median" ,stats.median);
-      console.log("stats.min" ,stats.min);
-
-      setItemName(itemName);
-      setPriceData({
-        max: stats.max,
-        mean: stats.mean,
-        median: stats.median,
-        min: stats.min,
-      });
-
-      // Set graph URLs
       setHistogramUrl(histRes.data || '');
+  
+      // Fetch median price graph
+      const medianRes = await fetchMedianPriceGraph(inputItemName);
+      if (!medianRes.success) {
+        throw new Error(medianRes.error || 'Failed to fetch median graph.');
+      }
       setMedianGraphUrl(medianRes.data || '');
-
+  
     } catch (err) {
       console.error(err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch analysis. Please try again.');
+      setError(err instanceof Error ? err.message : 'Failed to fetch analysis.');
     } finally {
       setLoading(false);
     }
