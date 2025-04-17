@@ -22,9 +22,9 @@ export default function HandshakeStatusBadge({ status }) {
         Failed
       </span>
     ),
-    canceled: (
+    cancelled: (
       <span className="bg-hs-failed text-xs text-white text-center py-1 px-3 rounded-full uppercase">
-        Canceled
+        Cancelled
       </span>
     ),
     pending: (
