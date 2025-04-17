@@ -2,7 +2,7 @@ export default function PriceStatsCard({ itemName, max, mean, median, min }) {
   return (
     <div className="bg-white p-6 text-sm rounded-lg shadow-md w-full max-w-md mx-auto">
       <div>
-        <h2 className="text-lg font-bold mb-4 text-center">{itemName} Recent Sale Price Stats</h2>
+        <h2 className="text-lg font-bold mb-4 text-center"> <span className ="italics text-primary">{itemName}</span> recent sale price stats</h2>
         <div className="space-y-2">
           <div className="flex justify-between">
             <span>Average:</span>
