@@ -34,7 +34,7 @@ export default function LogoutButton() {
       <button
         onClick={handleLogout}
         disabled={isPending}
-        className="w-full flex items-center justify-center md:justify-start gap-2 p-2 rounded-md text-white bg-primary hover:bg-warning transition-colors text-sm font-semibold disabled:opacity-50"
+        className="w-full flex items-center justify-center md:justify-start gap-2 p-2 text-white bg-primary hover:bg-warning transition-colors text-sm font-semibold disabled:opacity-50"
       >
         <LogOut className="w-4 h-4" />
         <span>{isPending ? 'Logging out...' : 'Log Out'}</span>
