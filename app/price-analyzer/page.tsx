@@ -40,6 +40,9 @@ export default function Page() {
 
       const [resolvedName, stats] = statsRes.data;
 
+      setHistogramUrl(histRes.data || '');
+      setMedianGraphUrl(medianRes.data || '');
+ 
       setItemName(resolvedName);
       setPriceData({
         max: stats.max,
@@ -48,8 +51,6 @@ export default function Page() {
         min: stats.min,
       });
 
-      setHistogramUrl(histRes.data || '');
-      setMedianGraphUrl(medianRes.data || '');
     } catch (err) {
       console.error(err);
       setError('Failed to fetch analysis. Please check the item name and try again.');
