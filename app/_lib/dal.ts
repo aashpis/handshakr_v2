@@ -301,7 +301,7 @@ export async function fetchPriceStats(itemName : string) {
 
     const rawData = await response.json(); 
     console.log("[fetchPriceStats] rawData:", rawData);
-    return { success: true, data : rawData.data };
+    return { success: true, data : rawData };
   } catch (error) {
     console.error("fetchInitiatedHandshakes() error:", error);
     return { 
