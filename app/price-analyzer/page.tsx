@@ -31,7 +31,18 @@ export default function Page() {
                 throw new Error('One or more requests failed');
             }
 
-            setPriceData(statsRes.data.data);
+            const [fetchedItemName, statsObj] = statsRes.data.data;
+
+            setItemName(fetchedItemName); 
+        
+            setPriceData({
+              itemName: fetchedItemName,
+              max: statsObj.max,
+              mean: statsObj.mean,
+              median: statsObj.median,
+              min: statsObj.min,
+            });
+
             setHistogramUrl(histRes.data || '');
             setMedianGraphUrl(medianRes.data || '');
         } catch (err) {
