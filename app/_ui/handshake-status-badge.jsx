@@ -7,7 +7,7 @@ export default function HandshakeStatusBadge({ status }) {
         Completed
       </span>
     ),
-    accepted: (
+    created: (
       <span className="bg-primary text-xs text-white text-center py-1 px-3 rounded-full uppercase">
         Created
       </span>
