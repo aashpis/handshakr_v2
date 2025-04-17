@@ -11,7 +11,7 @@ export default function HandshakeCreationForm() {
       <form
         action={action}
       >
-        <h2 className="text-2xl font-semibold text-center mb-6">Create a Handshake</h2>
+        <h2 className="text-2xl font-semibold text-center mb-6">Enter Handshake Details:</h2>
 
         <div className="mb-4">
           <label

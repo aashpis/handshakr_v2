@@ -75,7 +75,7 @@ export default function Dashboard() {
             email={userData.email}
           />
         )}
-      <HandshakeCreationForm/>
+   
       </div>
     </div>
   );

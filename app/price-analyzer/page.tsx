@@ -6,6 +6,7 @@ import PriceInputForm from '@/_ui/price-input-form';
 import PriceStatsCard from '@/_ui/price-stats-card';
 import PriceGraphs from '@/_ui/price-graphs';
 import { PriceStats } from '@/_lib/definitions';
+import PageHeader from "@/_ui/page-header";
 
 export default function Page() {
   const [priceData, setPriceData] = useState<PriceStats | null>(null);
@@ -66,7 +67,8 @@ export default function Page() {
   }
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-3xl">
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <PageHeader title = "Price Analyzer" subTitle=""/>
       <PriceInputForm onSubmit={handleSubmit} loading={loading} />
 
       {error && (
