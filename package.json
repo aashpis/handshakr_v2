@@ -11,7 +11,6 @@
     "restart-app": "pm2 restart handshakr_frontend"
   },
   "dependencies": {
-    "@vercel/analytics": "^1.5.0",
     "axios": "^1.8.4",
     "clsx": "^2.1.1",
     "lucide-react": "^0.487.0",

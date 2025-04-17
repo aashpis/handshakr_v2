@@ -18,7 +18,7 @@ export default function HandshakeStatusBadge({ status }) {
         </span>
       ),
     }[sanitiizedStatus] ?? (
-      <span className="bg-neutral text-xs text-white text-center py-1 px-3 -full uppercase">
+      <span className="bg-neutral text-xs text-white text-center py-1 px-3 rounded-full uppercase">
         Status Unknown
       </span>
     );
