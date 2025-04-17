@@ -16,12 +16,9 @@ export const API = {
   CREATE_HANDSHAKE:"users/create-handshake",
   GET_MY_INITIATED_HS: "handshake/get-handshakes-by-initiator",
   GET_MY_RECEIVED_HS: "handshake/get-handshakes-by-acceptor",
-  GET_PRICE_STATS: 'get-price-stats',
-  GRAPH: {
-    ITEM_PRICE: 'graph-item-sales',
-    ITEM_PRICE_HISTOGRAM: 'graph-item-price-histogram',
-    WEEKLY_MEDIAN_PRICE: 'graph-item-weekly-median-price',
-  }
+  GET_PRICE_STATS: 'scraper/get-price-stats',
+  ITEM_PRICE_HISTOGRAM: 'scraper/graph-item-price-histogram',
+  WEEKLY_MEDIAN_PRICE: 'graph-item-weekly-median-price',
 }
 
 /**********  SCHEMA DEFINTIONS  *******************
