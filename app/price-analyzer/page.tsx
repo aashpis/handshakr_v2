@@ -13,7 +13,7 @@ export default function Page() {
     const [medianGraphUrl, setMedianGraphUrl] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [itemName , setItemName] = useState(''); // ✅ Correct casing
+    const [itemName , setItemName] = useState('');
 
     async function handleSubmit(itemName: string) {
         setLoading(true);
@@ -33,14 +33,14 @@ export default function Page() {
 
             const [fetchedItemName, statsObj] = statsRes.data.data;
 
-            setItemName(fetchedItemName); 
-        
+            const [name, stats] = statsRes.data; //unpack array
+
+            setItemName(name);
             setPriceData({
-              itemName: fetchedItemName,
-              max: statsObj.max,
-              mean: statsObj.mean,
-              median: statsObj.median,
-              min: statsObj.min,
+              max: stats.max.toFixed(2),
+              mean: stats.mean.toFixed(2),
+              median: stats.median.toFixed(2),
+              min: stats.min.toFixed(2),
             });
 
             setHistogramUrl(histRes.data || '');
@@ -57,7 +57,7 @@ export default function Page() {
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-3xl">
             <PriceInputForm onSubmit={handleSubmit} loading={loading} />
             {error && <p className="text-warning text-center mt-4">{error}</p>}
-            {priceData && ( // ✅ Use correct state variable
+            {priceData && (
                 <PriceStatsCard
                     itemName={itemName}
                     max={priceData.max}
