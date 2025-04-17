@@ -68,7 +68,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen flex flex-col flex-start items-center gap-4 px-4">
-      <PageHeader title = "Price Analyzer" subTitle=""/>
+      <PageHeader title = "Price Analyzer" subTitle="Get statistics about the price of an item"/>
       <PriceInputForm onSubmit={handleSubmit} loading={loading} />
 
       {error && (
