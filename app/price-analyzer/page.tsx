@@ -1,11 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  fetchPriceStats,
-  fetchMedianPriceGraph,
-  fetchPriceHistogram,
-} from '@/_lib/dal';
+import { fetchPriceStats, fetchMedianPriceGraph, fetchPriceHistogram } from '@/_lib/dal';
 import PriceInputForm from '@/_ui/price-input-form';
 import PriceStatsCard from '@/_ui/price-stats-card';
 import PriceGraphs from '@/_ui/price-graphs';
@@ -34,15 +30,15 @@ export default function Page() {
         fetchMedianPriceGraph(inputItemName),
       ]);
 
+      // Check if all requests were successful
       if (!statsRes.success || !histRes.success || !medianRes.success) {
-        throw new Error('One or more requests failed');
+        const errorMessage = statsRes.error || histRes.error || medianRes.error || 'One or more requests failed';
+        throw new Error(errorMessage);
       }
+
 
       const [resolvedName, stats] = statsRes.data;
 
-      setHistogramUrl(histRes.data || '');
-      setMedianGraphUrl(medianRes.data || '');
- 
       setItemName(resolvedName);
       setPriceData({
         max: stats.max,
@@ -51,9 +47,13 @@ export default function Page() {
         min: stats.min,
       });
 
+      // Set graph URLs
+      setHistogramUrl(histRes.data || '');
+      setMedianGraphUrl(medianRes.data || '');
+
     } catch (err) {
       console.error(err);
-      setError('Failed to fetch analysis. Please check the item name and try again.');
+      setError(err instanceof Error ? err.message : 'Failed to fetch analysis. Please try again.');
     } finally {
       setLoading(false);
     }

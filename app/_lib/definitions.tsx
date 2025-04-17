@@ -140,10 +140,9 @@ export type Handshake = {
   acceptorUsername: string;
 }
 
-
 export type PriceStats = {
-  max: string;
-  mean: string;
-  median: string;
-  min: string;
+  max: number;
+  mean: number;
+  median: number;
+  min: number;
 };

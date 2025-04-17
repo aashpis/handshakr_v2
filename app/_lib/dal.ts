@@ -273,8 +273,8 @@ export async function fetchReceivedHandshakes(username : string) {
 
 // get price stats of param
 // return data shape - "item name", { "max": 123, "mean": 123, "median":123, "min":123}
-export async function fetchPriceStats(itemName : string) {
-
+// Price stats fetch
+export async function fetchPriceStats(itemName: string) {
   try {
     const response = await fetch(`${API.BASE}/${API.GET_PRICE_STATS}/${encodeURIComponent(itemName)}`, {
       method: "GET",
@@ -292,95 +292,41 @@ export async function fetchPriceStats(itemName : string) {
     }
 
     if (!response.ok) {
-      const errorData = await response.json();
-      return { 
-        success: false, 
-        error: errorData.message || "Failed to fetch Price Stats" 
-      };
+      try {
+        const errorData = await response.json();
+        return { 
+          success: false, 
+          error: errorData.message || "Failed to fetch Price Stats" 
+        };
+      } catch {
+        return {
+          success: false,
+          error: "Failed to fetch Price Stats"
+        };
+      }
     }
 
     const rawData = await response.json(); 
     console.log("[fetchPriceStats] rawData:", rawData);
-    return { success: true, data : rawData };
+    return { success: true, data: rawData };
   } catch (error) {
-    console.error("fetchInitiatedHandshakes() error:", error);
+    console.error("fetchPriceStats() error:", error);
     return { 
       success: false, 
       error: error instanceof Error ? error.message : "An unknown error occurred" 
     };
   }
 }
-export async function fetchPriceStatsTest(itemName: string) {
-  try {
-    const response = await fetch(`${API.BASE}/${API.GET_PRICE_STATS}/${encodeURIComponent(itemName)}`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      }
-    });
 
-    if (response.status === 401 || response.status === 403) {
-      return { 
-        success: false, 
-        error: "Authentication Error" 
-      };
-    }
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      return { 
-        success: false, 
-        error: errorData.message || "Failed to fetch price stats" 
-      };
-    }
-
-    const rawData = await response.json();
-    console.log("[fetchPriceStats] rawData type:", typeof rawData, Array.isArray(rawData));
-    console.log("[fetchPriceStats] rawData structure:", rawData);
-    
-    // Ensure the data is in the expected format before returning
-    if (Array.isArray(rawData) && rawData.length >= 2) {
-      // Data is in expected format
-      return { success: true, data: rawData };
-    } else {
-      // If data is not in the expected format, try to transform it
-      // This is a fallback in case the backend returns a different structure
-      console.warn("[fetchPriceStats] Unexpected data format, attempting to transform");
-      
-      if (typeof rawData === 'object' && rawData !== null) {
-        // If it's an object with a data property that's an array
-        if (rawData.data && Array.isArray(rawData.data) && rawData.data.length >= 2) {
-          return { success: true, data: rawData.data };
-        }
-        
-        // If it has item name and stats properties
-        if (rawData.itemName && rawData.stats) {
-          return { success: true, data: [rawData.itemName, rawData.stats] };
-        }
-      }
-      
-      // If we can't transform it into the expected format
-      return { 
-        success: false, 
-        error: "Invalid data format returned from server" 
-      };
-    }
-  } catch (error) {
-    console.error("[fetchPriceStats] error:", error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : "An unknown error occurred" 
-    };
-  }
-}
-// get price historgram of sales prices
-// returns .png
+// Price histogram fetch
 export async function fetchPriceHistogram(itemName: string) {
   try {
     const response = await fetch(`${API.BASE}/${API.GET_PRICE_HISTOGRAM}/${encodeURIComponent(itemName)}`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        "Accept": "image/png",
+      }
     });
 
     if (response.status === 401 || response.status === 403) {
@@ -393,14 +339,14 @@ export async function fetchPriceHistogram(itemName: string) {
     if (!response.ok) {
       return {
         success: false,
-        error: "Failed to fetch price histogram",
+        error: `Failed to fetch price histogram (Status: ${response.status})`,
       };
     }
 
     const blob = await response.blob();
     const imageUrl = URL.createObjectURL(blob);
-    console.log("[fetchPriceHistogram]blob" ,blob);
-    console.log("[fetchPriceHistogram]imageURL" ,imageUrl);
+    console.log("[fetchPriceHistogram] blob:", blob);
+    console.log("[fetchPriceHistogram] imageURL:", imageUrl);
 
     return { success: true, data: imageUrl };
   } catch (error) {
@@ -412,28 +358,17 @@ export async function fetchPriceHistogram(itemName: string) {
   }
 }
 
-
-// get graph of median weekly sales price of item
-// return .png
-export async function fetchMedianPriceGraph(itemName : string) {
-
+// Median price graph fetch
+export async function fetchMedianPriceGraph(itemName: string) {
   try {
     const response = await fetch(`${API.BASE}/${API.GET_WEEKLY_MEDIAN_PRICE}/${encodeURIComponent(itemName)}`, {
       method: "GET",
       credentials: "include",
       headers: {
-        "Content-Type": "application/json",
+        "Accept": "image/png",
       }
     });
 
-    if (response.status === 401 || response.status === 403) {
-      return { 
-        success: false, 
-        error: "Authentication Error" 
-      };
-    }
-
- 
     if (response.status === 401 || response.status === 403) {
       return {
         success: false,
@@ -444,22 +379,21 @@ export async function fetchMedianPriceGraph(itemName : string) {
     if (!response.ok) {
       return {
         success: false,
-        error: "Failed to fetch price histogram",
+        error: `Failed to fetch median price graph (Status: ${response.status})`,
       };
     }
 
     const blob = await response.blob();
     const imageUrl = URL.createObjectURL(blob);
-    console.log("[fetchPriceHistogram]blob" ,blob);
-    console.log("[fetchPriceHistogram]imageURL" ,imageUrl);
+    console.log("[fetchMedianPriceGraph] blob:", blob);
+    console.log("[fetchMedianPriceGraph] imageURL:", imageUrl);
 
     return { success: true, data: imageUrl };
   } catch (error) {
-    console.error("fetchPriceHistogram() error:", error);
+    console.error("fetchMedianPriceGraph() error:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "An unknown error occurred",
     };
   }
 }
-
