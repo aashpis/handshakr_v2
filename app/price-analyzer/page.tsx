@@ -67,7 +67,7 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-screen flex flex-col justify-center px-4">
       <PageHeader title = "Price Analyzer" subTitle=""/>
       <PriceInputForm onSubmit={handleSubmit} loading={loading} />
 
