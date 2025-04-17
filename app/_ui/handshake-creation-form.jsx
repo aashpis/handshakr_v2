@@ -49,8 +49,8 @@ export default function HandshakeCreationForm() {
         )}
 
         <div className="mb-6">
-          <label 
-            className="block text-sm font-medium  mb-2" 
+          <label
+            className="block text-sm font-medium  mb-2"
             htmlFor="encryptedDetails">
             Details
           </label>
@@ -58,7 +58,7 @@ export default function HandshakeCreationForm() {
             id="encryptedDetails"
             name="encryptedDetails"
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full px-4 py-2 border border-neutral-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
         </div>
         {state?.errors?.encryptedDetails && (
@@ -73,11 +73,19 @@ export default function HandshakeCreationForm() {
           {pending ? 'Creating Handshake...' : 'Create Handshake'}
         </button>
 
-        {state?.error && 
-        (<p className="text-warning text-center font-semibold my-3">
-          Handshake Creation Failed
-          </p>)
-        }
+        {/* sucess message */}
+        {state?.success && (
+          <p className="text-success text-center font-semibold my-3">
+            Handshake created successfully!
+          </p>
+        )}
+
+        {/* error message */}
+        {state?.message && !state.success && (
+          <p className="text-warning text-center font-semibold my-3">
+            {state.message}
+          </p>
+        )}
       </form>
     </div>
   )
