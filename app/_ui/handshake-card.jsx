@@ -58,7 +58,9 @@ export default function HandshakeCard({
 
         {/* Terms */}
         <div className="pt-2">
-          <h2 className="text-neutral font-bold">Details:</h2>
+          <h2 className="text-neutral font-bold break-words whitespace-pre-line overflow-hidden">
+            Details:
+          </h2>
           <p>{encryptedDetails}</p>
         </div>
       </div>
