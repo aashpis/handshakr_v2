@@ -37,9 +37,16 @@ export default function Page() {
       }
 
 
-      const [resolvedName, stats] = statsRes.data;
+      console.log("[statsRes.data]", statsRes.data);
+      const [itemName, stats] = statsRes.data;
+      
+      console.log("itemName" , itemName);
+      console.log("stats.max" ,stats.max);
+      console.log("stats.mean" ,stats.mean);
+      console.log("stats.median" ,stats.median);
+      console.log("stats.min" ,stats.min);
 
-      setItemName(resolvedName);
+      setItemName(itemName);
       setPriceData({
         max: stats.max,
         mean: stats.mean,
