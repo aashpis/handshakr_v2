@@ -15,6 +15,7 @@ export default function HandshakeCard({
     completed: "bg-hs-completed/50",
     accepted: "bg-primary",
     failed: "bg-hs-failed/50",
+    cancelled: "bg-hs-failed/50",
     pending: "bg-hs-pending/75",
   }[sanitizedStatus] || "bg-neutral";
 
