@@ -13,6 +13,7 @@ export default function HandshakeCard({
   
   const STATUS_BG_STYLE = {
     completed: "bg-hs-completed/50",
+    created: "bg-primary-dark",
     accepted: "bg-primary",
     failed: "bg-hs-failed/50",
     cancelled: "bg-hs-failed/50",
