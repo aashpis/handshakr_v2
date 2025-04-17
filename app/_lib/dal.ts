@@ -132,8 +132,8 @@ export async function fetchInitiatedHandshakes(username : string) {
       };
     }
 
-    const resData = await response.json();
-    return { success: true, data : resData.data };
+    const rawData = await response.json();
+    return { success: true, data : rawData.data };
   } catch (error) {
     console.error("fetchInitiatedHandshakes() error:", error);
     return { 
@@ -181,8 +181,8 @@ export async function fetchReceivedHandshakes(username : string) {
       };
     }
 
-    const resData = await response.json();
-    return { success: true, data : resData.data };
+    const rawData = await response.json();
+    return { success: true, data : rawData.data };
   } catch (error) {
     console.error("fetchInitiatedHandshakes() error:", error);
     return { 
@@ -232,10 +232,10 @@ export async function fetchReceivedHandshakes(username : string) {
 
 /*************** PRICE ANALYZER METHODS ****************/
 
-// gets price object with properties: median, mean, min, max
-// export async function getPriceStats(itemName: string) {
+// // gets price object with properties: median, mean, min, max
+// export async function priceStatsAxios(itemName: string) {
 //   try {
-//     const response = await axiosServer.get(`${API.GET_PRICE_STATS}/${itemName}`);
+//     const response = await axios.get(`${API.BASE}/${API.GET_PRICE_STATS}/${itemName}`);
 //     return { success: true, data: response.data };
 //   } catch (error: unknown) {
 //     if (error instanceof AxiosError) {
@@ -245,23 +245,10 @@ export async function fetchReceivedHandshakes(username : string) {
 //   }
 // }
 
-// // gets .png graph of final sales prices 
-// export async function getPriceSalesGraph(itemName: string) {
-//   try {
-//     const response = await axiosServer.get(`${API.GRAPH.ITEM_PRICE}/${itemName}`);
-//     return { success: true, data: response.data };
-//   } catch (error: unknown) {
-//     if (error instanceof AxiosError) {
-//       return { success: false, error: error.response?.data?.message || "Failed to get sales graph" };
-//     }
-//     return { success: false, error: "An unknown error occurred" };
-//   }
-// }
-
 // // gets .png graph of price histogram 
 // export async function getPriceHistogramGraph(itemName: string) {
 //   try {
-//     const response = await axiosServer.get(`${API.GRAPH.ITEM_PRICE_HISTOGRAM}/${itemName}`);
+//     const response = await axios.get(`${API.BASE}/${API.GET_PRICE_STATS}/${itemName}`);
 //     return { success: true, data: response.data };
 //   } catch (error: unknown) {
 //     if (error instanceof AxiosError) {
@@ -271,15 +258,140 @@ export async function fetchReceivedHandshakes(username : string) {
 //   }
 // }
 
-// // gets .png graph of median prices 
+// // gets .png graph of median prices of weekly sales
 // export async function getMedianPriceGraph(itemName: string) {
 //   try {
-//     const response = await axiosServer.get(`${API.GRAPH.ITEM_PRICE_HISTOGRAM}/${itemName}`);
+//     const response = await axios.get(`${API.GRAPH.ITEM_PRICE_HISTOGRAM}/${itemName}`);
 //     return { success: true, data: response.data };
 //   } catch (error: unknown) {
 //     if (error instanceof AxiosError) {
 //       return { success: false, error: error.response?.data?.message || "Failed to get median price graph" };
 //     }
-//     return { success: false, error: "An unknown error occurred" };
+//     return { success: false, error: "An unknown error occurred" }
 //   }
 // }
+
+// get price stats of param
+// return data shape - "item name", { "max": 123, "mean": 123, "median":123, "min":123}
+export async function fetchPriceStats(itemName : string) {
+
+  try {
+    const response = await fetch(`${API.BASE}/${API.GET_PRICE_STATS}/${itemName}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    if (response.status === 401 || response.status === 403) {
+      return { 
+        success: false, 
+        error: "Authentication Error" 
+      };
+    }
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return { 
+        success: false, 
+        error: errorData.message || "Failed to Price Stats handshakes" 
+      };
+    }
+
+    const rawData = await response.json(); 
+    console.log("[fetchPriceStats] rawData:", rawData);
+    return { success: true, data : rawData.data };
+  } catch (error) {
+    console.error("fetchInitiatedHandshakes() error:", error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : "An unknown error occurred" 
+    };
+  }
+}
+// get price historgram of sales prices
+// returns .png
+export async function fetchPriceHistogram(itemName: string) {
+  try {
+    const response = await fetch(`${API.BASE}/${API.GET_PRICE_HISTOGRAM}/${encodeURIComponent(itemName)}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (response.status === 401 || response.status === 403) {
+      return {
+        success: false,
+        error: "Authentication Error",
+      };
+    }
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: "Failed to fetch price histogram",
+      };
+    }
+
+    const blob = await response.blob();
+    const imageUrl = URL.createObjectURL(blob);
+
+    return { success: true, data: imageUrl };
+  } catch (error) {
+    console.error("fetchPriceHistogram() error:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "An unknown error occurred",
+    };
+  }
+}
+
+
+// get graph of median weekly sales price of item
+// return .png
+export async function fetchMedianPriceGraph(itemName : string) {
+
+  try {
+    const response = await fetch(`${API.BASE}/${API.GET_WEEKLY_MEDIAN_PRICE}/${encodeURIComponent(itemName)}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    if (response.status === 401 || response.status === 403) {
+      return { 
+        success: false, 
+        error: "Authentication Error" 
+      };
+    }
+
+ 
+    if (response.status === 401 || response.status === 403) {
+      return {
+        success: false,
+        error: "Authentication Error",
+      };
+    }
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: "Failed to fetch price histogram",
+      };
+    }
+
+    const blob = await response.blob();
+    const imageUrl = URL.createObjectURL(blob);
+
+    return { success: true, data: imageUrl };
+  } catch (error) {
+    console.error("fetchPriceHistogram() error:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "An unknown error occurred",
+    };
+  }
+}
+
