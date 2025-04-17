@@ -8,9 +8,9 @@ export default function PriceInputForm({ onSubmit, loading }) {
   
     return (
       <form onSubmit={handleSubmit}>
-        <h2 className="text-primary text-2xl font-semibold text-center mb-6">Enter Item to analyze</h2>
+        <h2 className="text-2xl font-semibold text-center mb-6">Enter Item to analyze</h2>
         <label className="block text-sm font-medium mb-2" htmlFor="itemName">
-          Item Name
+          Name:
         </label>
         <input
           id="itemName"
