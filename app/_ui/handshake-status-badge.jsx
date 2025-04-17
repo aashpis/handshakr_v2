@@ -12,6 +12,11 @@ export default function HandshakeStatusBadge({ status }) {
         Created
       </span>
     ),
+    accepted: (
+      <span className="bg-primary-dark text-xs text-white text-center py-1 px-3 rounded-full uppercase">
+        Accepted
+      </span>
+    ),
     failed: (
       <span className="bg-hs-failed text-xs text-white text-center py-1 px-3 rounded-full uppercase">
         Failed
