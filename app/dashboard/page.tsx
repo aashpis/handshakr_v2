@@ -28,7 +28,6 @@ export default function Dashboard() {
         if (res.success) {
           const user = res.data.data;
           setUserData(user);
-          sessionStorage.setItem("username", user.username);
         } else {
           setError(res.error || 'Failed to load profile');
         }
