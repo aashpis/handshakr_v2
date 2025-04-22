@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchInitiatedHandshakes, fetchReceivedHandshakes } from "@/_lib/dal";
+import { fetchInitiatedHandshakes, fetchReceivedHandshakes, getUserProfileAxiosRequest } from "@/_lib/dal";
 import HandshakeCard from "@/_ui/handshake-card";
 import PageHeader from "@/_ui/page-header";
 import { Handshake } from '@/_lib/definitions';
@@ -13,14 +13,23 @@ export default function Page() {
 
   useEffect(() => {
     const loadHandshakes = async () => {
-      const username = sessionStorage.getItem("username");
-      if (!username) {
-        setError("No username found in session storage.");
-        setLoading(false);
-        return;
-      }
 
       try {
+
+        const userRes = await getUserProfileAxiosRequest();
+        if (!userRes.success) {
+          setError(userRes.error || "Failed to load profile");
+          return;
+        }
+
+        const username = userRes.data.data.username;
+
+        if (!username) {
+          setError("Failed to get user profile");
+          return;
+        }
+
+
         const [initiated, received] = await Promise.all([
           fetchInitiatedHandshakes(username),
           fetchReceivedHandshakes(username),
@@ -30,6 +39,13 @@ export default function Page() {
         const receivedData = received.success ? received.data : [];
 
         setHandshakes([...initiatedData, ...receivedData]);
+
+        setHandshakes(
+          [...initiatedData, ...receivedData].sort((a, b) => 
+            new Date(b.signedDate).getTime() - new Date(a.signedDate).getTime()
+          )
+        );
+        
       } catch (err: unknown) {
         const message = err instanceof Error ? err.message : "Unknown error occurred";
         setError(message);

@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchInitiatedHandshakes } from "@/_lib/dal";
+import { fetchInitiatedHandshakes, getUserProfileAxiosRequest } from "@/_lib/dal";
 import HandshakeCard from "@/_ui/handshake-card";
 import PageHeader from "@/_ui/page-header";
 import { Handshake } from '@/_lib/definitions';
+
 
 export default function Page() {
   const [handshakes, setHandshakes] = useState<Handshake[]>([]);
@@ -12,31 +13,38 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadHandshakes = async () => {
-      const username = sessionStorage.getItem("username");
-
-      if (!username) {
-        setError("No username found in session storage.");
-        setLoading(false);
-        return;
-      }
-
+    const loadData = async () => {
+      setLoading(true);
+  
       try {
-        const response = await fetchInitiatedHandshakes(username);
-        if (response.success) {
-          setHandshakes(response.data);
+        const userRes = await getUserProfileAxiosRequest();
+        if (!userRes.success) {
+          setError(userRes.error || "Failed to load profile");
+          return;
+        }
+  
+        const username = userRes.data.data.username;
+  
+        if (!username) {
+          setError("Failed to get user profile");
+          return;
+        }
+  
+        const hsRes = await fetchInitiatedHandshakes(username);
+        if (hsRes.success) {
+          setHandshakes(hsRes.data);
         } else {
-          setError(response.error || "Failed to fetch handshakes.");
+          setError(hsRes.error || "Failed to fetch handshakes.");
         }
       } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : "Unknown error occurred";
+        const message = err instanceof Error ? err.message : "An unknown error occurred";
         setError(message);
       } finally {
         setLoading(false);
       }
     };
-
-    loadHandshakes();
+  
+    loadData();
   }, []);
 
   return (

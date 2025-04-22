@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchReceivedHandshakes } from "@/_lib/dal";
+import { fetchReceivedHandshakes, getUserProfileAxiosRequest } from "@/_lib/dal";
 import HandshakeCard from "@/_ui/handshake-card";
 import PageHeader from "@/_ui/page-header";
 import { Handshake } from '@/_lib/definitions';
@@ -12,31 +12,38 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadHandshakes = async () => {
-      const username = sessionStorage.getItem("username");
-
-      if (!username) {
-        setError("No username found in session storage.");
-        setLoading(false);
-        return;
-      }
-
+    const loadData = async () => {
+      setLoading(true);
+  
       try {
-        const response = await fetchReceivedHandshakes(username);
-        if (response.success) {
-          setHandshakes(response.data);
+        const userRes = await getUserProfileAxiosRequest();
+        if (!userRes.success) {
+          setError(userRes.error || "Failed to get user profile");
+          return;
+        }
+  
+        const username = userRes.data.data.username;
+  
+        if (!username) {
+          setError("No username found error");
+          return;
+        }
+  
+        const hsRes = await fetchReceivedHandshakes(username);
+        if (hsRes.success) {
+          setHandshakes(hsRes.data);
         } else {
-          setError(response.error || "Failed to fetch handshakes.");
+          setError(hsRes.error || "Failed to fetch handshakes.");
         }
       } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : "Unknown error occurred";
+        const message = err instanceof Error ? err.message : "An unknown error occurred";
         setError(message);
       } finally {
         setLoading(false);
       }
     };
-
-    loadHandshakes();
+  
+    loadData();
   }, []);
 
   return (
