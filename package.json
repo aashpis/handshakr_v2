@@ -9,7 +9,7 @@
     "lint": "next lint",
     "clean-build": "rm -rf .next && pnpm run build",
     "restart-app": "pm2 restart handshakr_frontend",
-    "docs": "typedoc --entryPoints src --out docs"
+    "docs": "typedoc"
   },
   "dependencies": {
     "axios": "^1.8.4",
