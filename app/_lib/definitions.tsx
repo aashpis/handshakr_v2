@@ -148,7 +148,7 @@ export type Handshake = {
   handshakeName: string;
   encryptedDetails: string;
   signedDate: string;
-  completedDate: string | null;
+  completedDate: string;
   handshakeStatus: string;
   initiatorUsername: string;
   acceptorUsername: string;
