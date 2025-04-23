@@ -3,9 +3,18 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import {LayoutDashboard, Handshake, ArrowRightFromLine, ArrowLeftFromLine, GalleryVerticalEnd, BadgeDollarSign} from 'lucide-react';
+import {
+  LayoutDashboard,
+  Handshake,
+  ArrowRightFromLine,
+  ArrowLeftFromLine,
+  GalleryVerticalEnd,
+  BadgeDollarSign
+} from 'lucide-react';
 
-// Map of links to display in the side navigation.
+/**
+ * List of navigation links used in the side navigation bar.
+ */
 const links = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Create Handshake', href: '/create', icon: Handshake },
@@ -14,24 +23,33 @@ const links = [
   { name: 'History', href: '/history', icon: GalleryVerticalEnd },
   { name: 'Price Analyzer', href: '/price-analyzer', icon: BadgeDollarSign },
 ];
-export default function NavLinks({clickHandler}) {
+
+/**
+ * NavLinks component
+ *
+ * Renders navigation links with icons, highlighting the active route.
+ *
+ * @param {Object} props - Component props
+ * @param {Function} [props.clickHandler] - Optional function to call when a link is clicked (e.g. to close mobile nav)
+ * @returns {JSX.Element} Navigation links
+ */
+export default function NavLinks({ clickHandler }) {
   const pathname = usePathname();
+
   return (
     <>
       {links.map((link) => {
         const LinkIcon = link.icon;
+        const isActive = pathname === link.href;
+
         return (
           <Link
             key={link.name}
             href={link.href}
-            // for closing hamburger nav menu 
-            onClick={clickHandler} 
-            //highlights link when user is on the page
+            onClick={clickHandler}
             className={clsx(
               'flex h-[48px] grow items-center justify-center gap-2 text-sm font-medium hover:bg-blue-100 md:flex-none md:justify-start md:p-2 md:px-3',
-              {
-                'bg-primary-light ': pathname === link.href,
-              },
+              { 'bg-primary-light': isActive }
             )}
           >
             <LinkIcon className="w-6" />

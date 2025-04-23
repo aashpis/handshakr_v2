@@ -1,5 +1,31 @@
 import HandshakeStatusBadge from './handshake-status-badge';
 
+/**
+ * HandshakeCard component
+ *
+ * This component renders a card displaying details about a handshake:
+ * - Handshake name
+ * - Status with a badge
+ * - Signed and completed dates
+ * - Initiator and acceptor usernames
+ * - Encrypted handshake details
+ *
+ * The card dynamically adjusts its appearance based on the status of the handshake.
+ * The status is color-coded, and the details section includes encrypted data.
+ *
+ * @param {Object} props - The props for this component.
+ * @param {string} props.handshakeName - The name of the handshake.
+ * @param {string} props.encryptedDetails - The encrypted details of the handshake.
+ * @param {string} props.signedDate - The date the handshake was signed.
+ * @param {string} props.completedDate - The date the handshake was completed.
+ * @param {string} props.handshakeStatus - The current status of the handshake.
+ * @param {string} props.initiatorUsername - The username of the initiator of the handshake.
+ * @param {string} props.acceptorUsername - The username of the acceptor of the handshake.
+ *
+ * @returns {JSX.Element} A card displaying all the handshake details.
+ */
+
+
 export default function HandshakeCard({
   handshakeName,
   encryptedDetails,

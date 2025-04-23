@@ -6,12 +6,29 @@ import HandshakeCard from "@/_ui/handshake-card";
 import PageHeader from "@/_ui/page-header";
 import { Handshake } from '@/_lib/definitions';
 
+/**
+ * Received Handshakes Page
+ * 
+ * Fetches and displays all handshakes received by the current user.
+ * Handles loading, error, and empty state UI.
+ *
+ * @returns A component that renders received handshakes in card format.
+ */
 export default function Page() {
+  /** List of received handshakes for the logged-in user */
   const [handshakes, setHandshakes] = useState<Handshake[]>([]);
+
+  /** Whether the handshake data is currently being loaded */
   const [loading, setLoading] = useState(true);
+
+  /** Holds any error messages encountered during data fetching */
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    /**
+     * Fetches the user profile and received handshakes from the backend.
+     * Sets appropriate error or handshake state based on result.
+     */
     const loadData = async () => {
       setLoading(true);
   
@@ -21,14 +38,13 @@ export default function Page() {
           setError(userRes.error || "Failed to get user profile");
           return;
         }
-  
+
         const username = userRes.data.data.username;
-  
         if (!username) {
           setError("No username found error");
           return;
         }
-  
+
         const hsRes = await fetchReceivedHandshakes(username);
         if (hsRes.success) {
           setHandshakes(hsRes.data);

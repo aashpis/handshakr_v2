@@ -1,3 +1,16 @@
+/**
+ * HandshakeStatusBadge component
+ *
+ * This component renders a badge based on the provided handshake status. 
+ * It sanitizes the status (converts to lowercase) and checks it against predefined 
+ * status values to render an appropriate badge with a specific background color 
+ * and label. If the status is unrecognized, it will display a neutral badge 
+ * with the raw status name.
+ *
+ * @param {Object} props - The component props
+ * @param {string} props.status - The status of the handshake (e.g., "completed", "pending", etc.)
+ * @returns {JSX.Element} A badge indicating the current handshake status.
+ */
 export default function HandshakeStatusBadge({ status }) {
   const sanitizedStatus = status.toLowerCase(); // Normalize with fallback
 

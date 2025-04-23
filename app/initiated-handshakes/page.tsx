@@ -6,10 +6,24 @@ import HandshakeCard from "@/_ui/handshake-card";
 import PageHeader from "@/_ui/page-header";
 import { Handshake } from '@/_lib/definitions';
 
-
+/**
+ * Page component to display all handshakes initiated by the current user.
+ * 
+ * Fetches the user's profile and initiated handshakes on mount. Displays a loading 
+ * message while fetching data, an error message if the fetch fails, or a list of 
+ * handshakes initiated by the user if the fetch is successful.
+ * 
+ * @returns A page displaying a list of initiated handshakes with corresponding cards.
+ */
 export default function Page() {
-  const [handshakes, setHandshakes] = useState<Handshake[]>([]);
+  
+/** List of initiated handshakes for the logged-in user */
+const [handshakes, setHandshakes] = useState<Handshake[]>([]);
+  
+  /** Whether data is being loaded */
   const [loading, setLoading] = useState(true);
+
+   /** Holds any error message encountered during data fetching */
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {

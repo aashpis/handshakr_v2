@@ -1,12 +1,15 @@
 import { API } from './definitions'
-import axios  from 'axios'
+import axios from 'axios'
 
-// Get user profile data
-// Auth user login with fetch
+/**
+ * Fetches the user's profile data from the server.
+ * 
+ * @returns A result object containing either a success flag and data or an error message.
+ */
 export async function fetchUserProfile() {
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
 
-  // Basic auth check CSRF token 
+  // Basic auth check for CSRF token
   if (!csrfToken) {
     return { 
       success: false, 
@@ -24,6 +27,7 @@ export async function fetchUserProfile() {
       }
     });
 
+    // Handle authentication errors
     if (response.status === 401 || response.status === 403) {
       return { 
         success: false, 
@@ -50,11 +54,13 @@ export async function fetchUserProfile() {
   }
 }
 
-
-//axios version
+/**
+ * Fetches the user's profile data using Axios.
+ * 
+ * @returns A result object containing either a success flag and data or an error message.
+ */
 export async function getUserProfileAxiosRequest() {
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
-
 
   if (!csrfToken) {
     return { 
@@ -95,11 +101,17 @@ export async function getUserProfileAxiosRequest() {
     };
   }
 }
-// Get User Initiated Handshakes 
-export async function fetchInitiatedHandshakes(username : string) {
+
+/**
+ * Fetches the handshakes initiated by a user.
+ * 
+ * @param username - The username of the user whose initiated handshakes are being fetched.
+ * @returns A result object containing either a success flag and data or an error message.
+ */
+export async function fetchInitiatedHandshakes(username: string) {
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
 
-  // Check if we have a CSRF token (basic check if user is authenticated)
+  // Basic check if user is authenticated
   if (!csrfToken) {
     return { 
       success: false, 
@@ -117,6 +129,7 @@ export async function fetchInitiatedHandshakes(username : string) {
       }
     });
 
+    // Handle authentication errors
     if (response.status === 401 || response.status === 403) {
       return { 
         success: false, 
@@ -133,7 +146,7 @@ export async function fetchInitiatedHandshakes(username : string) {
     }
 
     const rawData = await response.json();
-    return { success: true, data : rawData.data };
+    return { success: true, data: rawData.data };
   } catch (error) {
     console.error("fetchInitiatedHandshakes() error:", error);
     return { 
@@ -143,12 +156,16 @@ export async function fetchInitiatedHandshakes(username : string) {
   }
 }
 
-
-// Get User Received Handshakes 
-export async function fetchReceivedHandshakes(username : string) {
+/**
+ * Fetches the handshakes received by a user.
+ * 
+ * @param username - The username of the user whose received handshakes are being fetched.
+ * @returns A result object containing either a success flag and data or an error message.
+ */
+export async function fetchReceivedHandshakes(username: string) {
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
 
-  // Check if we have a CSRF token (basic check if user is authenticated)
+  // Basic check if user is authenticated
   if (!csrfToken) {
     return { 
       success: false, 
@@ -166,6 +183,7 @@ export async function fetchReceivedHandshakes(username : string) {
       }
     });
 
+    // Handle authentication errors
     if (response.status === 401 || response.status === 403) {
       return { 
         success: false, 
@@ -177,14 +195,14 @@ export async function fetchReceivedHandshakes(username : string) {
       const errorData = await response.json();
       return { 
         success: false, 
-        error: errorData.message || "Failed to get my initiated handshakes" 
+        error: errorData.message || "Failed to get my received handshakes" 
       };
     }
 
     const rawData = await response.json();
-    return { success: true, data : rawData.data };
+    return { success: true, data: rawData.data };
   } catch (error) {
-    console.error("fetchInitiatedHandshakes() error:", error);
+    console.error("fetchReceivedHandshakes() error:", error);
     return { 
       success: false, 
       error: error instanceof Error ? error.message : "An unknown error occurred" 
@@ -192,88 +210,12 @@ export async function fetchReceivedHandshakes(username : string) {
   }
 }
 
-
-//axios version
-
-
-
-
-
-// // Show which handshakes have not been completed
-// export async function getPendingHandshakes() {
-//   try {
-//     const response = await axiosServer.get(`${API.HANDSHAKE.PENDING}`);
-//     return { success: true, data: response.data };
-//   } catch (error: unknown) {
-//     if (error instanceof AxiosError) {
-//       return { success: false, error: error.response?.data?.message || "Failed to get your pending handshakes" };
-//     }
-//     return { success: false, error: "An unknown error occurred" };
-//   }
-// }
-
-// // Get encrypted handshake history data
-// export async function getHandshakeHistory() {
-//   try {
-//     const response = await axiosServer.get(`${API.HANDSHAKE.HISTORY}`);
-//     return { success: true, data: response.data };
-//   } catch (error: unknown) {
-//     if (error instanceof AxiosError) {
-//       return { success: false, error: error.response?.data?.message || "Failed to get handshakes history" };
-//     }
-//     return { success: false, error: "An unknown error occurred" };
-//   }
-// }
-
-
-
-
-
-
-/*************** PRICE ANALYZER METHODS ****************/
-
-// // gets price object with properties: median, mean, min, max
-// export async function priceStatsAxios(itemName: string) {
-//   try {
-//     const response = await axios.get(`${API.BASE}/${API.GET_PRICE_STATS}/${itemName}`);
-//     return { success: true, data: response.data };
-//   } catch (error: unknown) {
-//     if (error instanceof AxiosError) {
-//       return { success: false, error: error.response?.data?.message || "Failed to get price stats" };
-//     }
-//     return { success: false, error: "An unknown error occurred" };
-//   }
-// }
-
-// // gets .png graph of price histogram 
-// export async function getPriceHistogramGraph(itemName: string) {
-//   try {
-//     const response = await axios.get(`${API.BASE}/${API.GET_PRICE_STATS}/${itemName}`);
-//     return { success: true, data: response.data };
-//   } catch (error: unknown) {
-//     if (error instanceof AxiosError) {
-//       return { success: false, error: error.response?.data?.message || "Failed to get price histogram" };
-//     }
-//     return { success: false, error: "An unknown error occurred" };
-//   }
-// }
-
-// // gets .png graph of median prices of weekly sales
-// export async function getMedianPriceGraph(itemName: string) {
-//   try {
-//     const response = await axios.get(`${API.GRAPH.ITEM_PRICE_HISTOGRAM}/${itemName}`);
-//     return { success: true, data: response.data };
-//   } catch (error: unknown) {
-//     if (error instanceof AxiosError) {
-//       return { success: false, error: error.response?.data?.message || "Failed to get median price graph" };
-//     }
-//     return { success: false, error: "An unknown error occurred" }
-//   }
-// }
-
-// get price stats of param
-// return data shape - "item name", { "max": 123, "mean": 123, "median":123, "min":123}
-// Price stats fetch
+/**
+ * Fetches the price statistics for a given item.
+ * 
+ * @param itemName - The name of the item whose price statistics are being fetched.
+ * @returns A result object containing either a success flag and data or an error message.
+ */
 export async function fetchPriceStats(itemName: string) {
   try {
     const response = await fetch(`${API.BASE}/${API.GET_PRICE_STATS}/${encodeURIComponent(itemName)}`, {
@@ -284,6 +226,7 @@ export async function fetchPriceStats(itemName: string) {
       }
     });
 
+    // Handle authentication errors
     if (response.status === 401 || response.status === 403) {
       return { 
         success: false, 
@@ -318,7 +261,12 @@ export async function fetchPriceStats(itemName: string) {
   }
 }
 
-// Price histogram fetch
+/**
+ * Fetches the price histogram for a given item.
+ * 
+ * @param itemName - The name of the item whose price histogram is being fetched.
+ * @returns A result object containing either a success flag and the image URL or an error message.
+ */
 export async function fetchPriceHistogram(itemName: string) {
   try {
     const response = await fetch(`${API.BASE}/${API.GET_PRICE_HISTOGRAM}/${encodeURIComponent(itemName)}`, {
@@ -329,6 +277,7 @@ export async function fetchPriceHistogram(itemName: string) {
       }
     });
 
+    // Handle authentication errors
     if (response.status === 401 || response.status === 403) {
       return {
         success: false,
@@ -358,7 +307,12 @@ export async function fetchPriceHistogram(itemName: string) {
   }
 }
 
-// Median price graph fetch
+/**
+ * Fetches the median price graph for a given item.
+ * 
+ * @param itemName - The name of the item whose median price graph is being fetched.
+ * @returns A result object containing either a success flag and the image URL or an error message.
+ */
 export async function fetchMedianPriceGraph(itemName: string) {
   try {
     const response = await fetch(`${API.BASE}/${API.GET_WEEKLY_MEDIAN_PRICE}/${encodeURIComponent(itemName)}`, {
@@ -369,6 +323,7 @@ export async function fetchMedianPriceGraph(itemName: string) {
       }
     });
 
+    // Handle authentication errors
     if (response.status === 401 || response.status === 403) {
       return {
         success: false,

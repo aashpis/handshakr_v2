@@ -3,6 +3,21 @@
 import { useActionState } from 'react'
 import { createHandshake } from '@/_lib/handshakeService'
 
+/**
+ * HandshakeCreationForm component
+ *
+ * This component renders a form that allows the user to create a new handshake.
+ * It collects the following information:
+ * - Handshake Name
+ * - Receiver Username
+ * - Encrypted Details
+ *
+ * It uses the `useActionState` hook to handle form submission, errors, success, and pending states.
+ * The form includes validation and displays messages for both errors and successful submissions.
+ *
+ * @returns {JSX.Element} The form for creating a handshake with error and success handling.
+ */
+
 export default function HandshakeCreationForm() {
   const [state, action, pending] = useActionState(createHandshake, undefined)
 

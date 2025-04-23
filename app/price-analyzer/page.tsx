@@ -8,14 +8,44 @@ import PriceGraphs from '@/_ui/price-graphs';
 import { PriceStats } from '@/_lib/definitions';
 import PageHeader from "@/_ui/page-header";
 
+/**
+ * Price Analyzer Page
+ * 
+ * A page where users can input an item name and view price statistics, 
+ * a histogram of prices, and a median price graph for that item.
+ * 
+ * Handles loading, error, and state management for fetching price stats, 
+ * histogram, and median graph data.
+ * 
+ * @returns A component that displays price analysis results.
+ */
 export default function Page() {
+  /** Holds the price statistics (max, mean, median, min) of the item */
   const [priceData, setPriceData] = useState<PriceStats | null>(null);
+
+  /** Holds the URL for the price histogram graph */
   const [histogramUrl, setHistogramUrl] = useState('');
+
+  /** Holds the URL for the median price graph */
   const [medianGraphUrl, setMedianGraphUrl] = useState('');
+
+  /** Whether data is being loaded */
   const [loading, setLoading] = useState(false);
+
+  /** Holds any error message encountered during data fetching */
   const [error, setError] = useState('');
+
+  /** Holds the name of the item being analyzed */
   const [itemName, setItemName] = useState('');
 
+  /**
+   * Handles form submission to fetch price analysis data for a given item.
+   * 
+   * Fetches price stats, histogram, and median price graph for the item name.
+   * Updates component state based on the fetched data or errors.
+   * 
+   * @param inputItemName - The name of the item to fetch price data for.
+   */
   async function handleSubmit(inputItemName: string) {
     setLoading(true);
     setError('');

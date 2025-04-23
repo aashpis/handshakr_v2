@@ -4,22 +4,39 @@ import { logoutUserRequest } from '@/_lib/auth';
 import { useTransition, useState } from 'react';
 import { LogOut } from 'lucide-react';
 
+/**
+ * LogoutButton component
+ *
+ * A button to log the user out of the application. Upon logout, it clears session storage, deletes cookies, 
+ * and redirects the user to the homepage. If the logout request fails, an error message is displayed.
+ *
+ * @returns {JSX.Element} The button for logging out with a loading state and potential error message.
+ */
+
 export default function LogoutButton() {
   const [isPending, startTransition] = useTransition();
   const [hasError, setHasError] = useState(false);
 
+  /**
+   * handleLogout function
+   * 
+   * This function handles the process of logging the user out. It sends a request to the logout API, 
+   * clears session storage and cookies, and then redirects the user to the homepage. If there is an 
+   * error during the logout process, an error message is displayed.
+   */
   const handleLogout = async () => {
     setHasError(false);
 
     const { success, error } = await logoutUserRequest();
 
     if (success) {
-      sessionStorage.clear();
-
+      // Clear session storage and cookies
+      sessionStorage.clear()
       document.cookie.split(';').forEach(c => {
         document.cookie = c.trim().split('=')[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
       });
 
+      // Transition to the homepage
       startTransition(() => {
         window.location.href = '/';
       });

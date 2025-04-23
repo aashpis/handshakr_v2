@@ -3,60 +3,76 @@
 // Contains functions related to Handshakes
 
 import { API, HandshakeFormSchema, HandshakeFormState } from './definitions';
-// import axiosClient from './axiosClient'; // Client-side axios
-// import { AxiosError } from 'axios'; // Import AxiosError type
 import axios  from 'axios'
 
 //******* HANDSHAKE CREATION *********//
 
-// fetch request
+/**
+ * Sends a POST request to create a handshake using the `fetch` API.
+ * 
+ * @param handshakeName - The name of the handshake.
+ * @param encryptedDetails - The encrypted details of the handshake.
+ * @param receiverUsername - The username of the receiver.
+ * @returns A promise that resolves to an object indicating success or failure, along with an optional error message.
+ */
 export async function createHandshakeFetchRequest(
   handshakeName: string,
   encryptedDetails: string,
   receiverUsername: string
 ) {
 
+  // Retrieve the CSRF token from sessionStorage to protect against cross-site request forgery
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
 
   try {
+    // Perform a POST request to the API endpoint to create a handshake
     const response: Response = await fetch(`${API.BASE}/${API.CREATE_HANDSHAKE}`, {
-
-      method: "POST",
-      credentials: "include", 
+      method: "POST", // HTTP method
+      credentials: "include", // Include credentials (cookies) with the request
       headers: {
-        "Content-Type": "application/json",
-        "X-XSRF-TOKEN": csrfToken ?? "NO X-XSRF-TOKEN", //send header value explicitly
+        "Content-Type": "application/json", // Set the content type to JSON
+        "X-XSRF-TOKEN": csrfToken ?? "NO X-XSRF-TOKEN", // Include the CSRF token in the header
       },
       body: JSON.stringify({
-        handshakeName,
-        encryptedDetails,
-        receiverUsername
+        handshakeName, // Handshake name
+        encryptedDetails, // Encrypted details of the handshake
+        receiverUsername // Receiver's username
       })
     });
 
+    // Check if the response is OK (status 200-299), otherwise handle the error
     if (!response.ok) {
       const errorData = await response.json();
       console.error("Handshake creation failed:", errorData);
       return { success: false, error: errorData.message || "Handshake Creation failed" };
     }
 
-    return { success: true };
+    return { success: true }; // Return success if the handshake creation is successful
   } catch (err) {
+    // Catch any error during the fetch request
     console.error("Handshake creation error:", err);
     return { success: false, error: "An error occurred while creating handshake" };
   }
 }
 
-
-//axios version
+/**
+ * Sends a POST request to create a handshake using the `axios` library.
+ * 
+ * @param handshakeName - The name of the handshake.
+ * @param encryptedDetails - The encrypted details of the handshake.
+ * @param receiverUsername - The username of the receiver.
+ * @returns A promise that resolves to an object indicating success or failure, along with an optional error message.
+ */
 export async function createHandshakeAxiosRequest(
   handshakeName: string,
   encryptedDetails: string,
   receiverUsername: string
 ) {
+  // Retrieve the CSRF token from sessionStorage
   const csrfToken = sessionStorage.getItem("X-XSRF-TOKEN");
   console.log("[createHandshakeAxiosRequest] current X-XSRF-TOKEN: ", csrfToken);
 
+  // If CSRF token is missing, return an error
   if (!csrfToken) {
     return { 
       success: false, 
@@ -65,24 +81,26 @@ export async function createHandshakeAxiosRequest(
   }
 
   try {
+    // Use axios to send a POST request to create the handshake
     await axios.post(
       `${API.BASE}/${API.CREATE_HANDSHAKE}`,
       {
-        handshakeName,
-        encryptedDetails,
-        receiverUsername
+        handshakeName, // Handshake name
+        encryptedDetails, // Encrypted details
+        receiverUsername // Receiver's username
       },
       {
-        withCredentials: true,
+        withCredentials: true, // Include credentials (cookies) with the request
         headers: {
-          "Content-Type": "application/json",
-          "X-XSRF-TOKEN": csrfToken ?? "NO X-XSRF-TOKEN",
+          "Content-Type": "application/json", // Set the content type to JSON
+          "X-XSRF-TOKEN": csrfToken ?? "NO X-XSRF-TOKEN", // Include the CSRF token in the header
         }
       }
     );
 
-    return { success: true };
+    return { success: true }; // Return success if the handshake is created
   } catch (error) {
+    // If an error occurs during the axios request, handle it
     if (axios.isAxiosError(error)) {
       console.error("Handshake creation failed:", error.response?.data);
       return { 
@@ -99,40 +117,42 @@ export async function createHandshakeAxiosRequest(
   }
 }
 
-// New Handshake Creation flow
+/**
+ * Handles the entire handshake creation flow by validating the form data and making the appropriate request.
+ * 
+ * @param state - The current state of the handshake form.
+ * @param formData - The form data submitted by the user.
+ * @returns A promise that resolves to an object containing either the validation errors or success message.
+ */
 export async function createHandshake(state: HandshakeFormState, formData: FormData) {
-  //validate handshake fields according to schema 
+  // Validate handshake fields according to the defined schema
   const validatedFields = HandshakeFormSchema.safeParse({
     handshakeName: formData.get("handshakeName"),
     encryptedDetails: formData.get("encryptedDetails"),
     receiverUsername: formData.get("receiverUsername")
   });
 
-  // return schema validation errors to display in form
+  // If validation fails, return the field validation errors to display in the form
   if (!validatedFields.success) {
-    console.log("HandshakeFormSchema errors: ") // FOR TESTING
-    console.log(validatedFields.error.flatten().fieldErrors); // FOR TESTING
     return { errors: validatedFields.error.flatten().fieldErrors };
   };
 
+  // Destructure validated data for further use
   const { handshakeName, receiverUsername, encryptedDetails } = validatedFields.data;
 
+  // Call the fetch request function to create the handshake
   const result = await createHandshakeFetchRequest(
     handshakeName,
     encryptedDetails,
     receiverUsername
   );
 
+  // If handshake creation fails, log the error and return a failure message
   if (!result.success) {
     console.log("failed to create handshake. error: ", result.error);
     return { message: result.error || "Error creating new handshake" };
   }
 
-  //FOR TESTING ONLY
-  console.log("Handshake Creation Sucessful");
-  console.log(validatedFields);
-
+  // Return success if handshake creation was successful
   return { success: true };
-
 }
-

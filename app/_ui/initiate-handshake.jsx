@@ -1,3 +1,13 @@
+/**
+ * InitiateHandshake component
+ *
+ * This component allows users to initiate a new handshake. If the user clicks the 
+ * "Initiate New Handshake" button, it reveals a form (`HandshakeCreationForm`) for creating a handshake. 
+ * The form also includes a cancel button to hide the form and go back to the initial state.
+ *
+ * @returns {JSX.Element} The component renders a button to initiate a new handshake or 
+ * the handshake creation form along with a cancel button.
+ */
 import { useState } from "react";
 import HandshakeCreationForm from "../ui/handshake-creation-form";
 

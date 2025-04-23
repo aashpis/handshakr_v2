@@ -1,31 +1,43 @@
 "use client";
 
-import { registerNewUser } from "@/_lib/auth";
-import { useActionState } from "react";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Link from 'next/link';
+import { registerNewUser } from "@/_lib/auth"; // Import the registerNewUser function to handle user registration
+import { useActionState } from "react"; // Import useActionState hook for managing state transitions
+import { useEffect } from "react"; // Import useEffect hook to manage side effects
+import { useRouter } from "next/navigation"; // Import useRouter hook to manage page navigation
+import Link from 'next/link'; // Import Link component for navigation between pages
 
+/**
+ * UserRegistrationForm component for registering a new user.
+ * 
+ * This component handles the registration form, including username, email,
+ * password, and confirm password fields, and displays success or error messages 
+ * based on the registration outcome.
+ *
+ * @returns {JSX.Element}  The rendered user registration form component.
+ */
 export default function UserRegistrationForm() {
-  const router = useRouter();
-  const [state, action, pending] = useActionState(registerNewUser, undefined);
+  const router = useRouter(); // Initialize the router for page redirection
+  const [state, action, pending] = useActionState(registerNewUser, undefined); // Hook to manage action state
 
-  // Redirect when registration is successful
+  /**
+   * Effect to handle redirection after successful registration.
+   * 
+   * If registration is successful, the user is redirected to the home page
+   * after a 2-second delay.
+   */
   useEffect(() => {
     if (state?.success === true) {
       const timeout = setTimeout(() => {
-        router.push("/");
-      }, 2000); // wait 2000 ms before redirect
+        router.push("/"); // Redirect to the homepage
+      }, 2000); // Wait 2 seconds before redirecting
 
-      // sessionStorage.clear(); //clear sessionStorage for login
-      return () => clearTimeout(timeout);
+      return () => clearTimeout(timeout); // Clear the timeout on component unmount
     }
-  }, [state, router]);
+  }, [state, router]); // Dependency on state and router
 
   return (
     <div className="p-4">
-      {/* Registration success message
-      appears after successful response from registerNewUser */}
+      {/* Registration success message */}
       {state?.success && (
         <div className="flex flex-col justify-center align-center">
           <p className="text-primary font-bold text-md mb-2">
@@ -36,35 +48,31 @@ export default function UserRegistrationForm() {
               <Link href="/"
                 className="text-primary hover:text-primary-dark not-italic font-bold"
                 aria-label="Log in to your account"
-              >Click to log in
-              </Link>
-            </p>
+              >Click to log in</Link>
+          </p>
         </div>
       )}
 
-      {/* Registration form appears first since success is false by default */}
+      {/* Registration form if registration is not successful */}
       {!state?.success && (
         <div>
           <div className="justify-items-center">
-            <h1 className="text-primary text-2xl font-bold ">Create new account</h1>
+            <h1 className="text-primary text-2xl font-bold">Create new account</h1>
 
-            {/* prompt and redirect to login if already has account */}
+            {/* Prompt to redirect to login page if the user already has an account */}
             <p className="italic text-neutral text-xs">
               already have an account?{" "}
               <Link href="/"
                 className="text-primary hover:text-primary-dark not-italic font-bold"
                 aria-label="Log in to your account"
-              >Log in
-              </Link>
+              >Log in</Link>
             </p>
           </div>
 
-
           {/* Form to collect user data */}
-
           <form action={action} className="bg-white px-8 pt-6 pb-8 mb-4">
 
-            {/***** Username field *****/}
+            {/* Username field */}
             <div className="mb-4">
               <label className="block text-sm font-bold mb-2" htmlFor="username">
                 Username
@@ -75,18 +83,15 @@ export default function UserRegistrationForm() {
                 name="username"
                 required
               />
-              {/*****  Username Error Messages *****/}
+              {/* Username error message */}
               {state?.errors?.username && (
                 <p className="text-warning italic mt-1">{state.errors.username}</p>
               )}
             </div>
 
-            {/***** Email field *****/}
+            {/* Email field */}
             <div className="mb-4">
-              <label
-                className="block text-sm font-bold mb-2"
-                htmlFor="email"
-              >
+              <label className="block text-sm font-bold mb-2" htmlFor="email">
                 Email
               </label>
               <input
@@ -95,18 +100,15 @@ export default function UserRegistrationForm() {
                 name="email"
                 required
               />
-              {/*****  Email Error Messages *****/}
+              {/* Email error message */}
               {state?.errors?.email && (
                 <p className="text-warning italic mt-1">{state.errors.email}</p>
               )}
             </div>
 
-            {/***** Password field *****/}
+            {/* Password field */}
             <div className="mb-4">
-              <label
-                className="block text-sm font-bold mb-2"
-                htmlFor="password"
-              >
+              <label className="block text-sm font-bold mb-2" htmlFor="password">
                 Password
               </label>
               <input
@@ -116,7 +118,7 @@ export default function UserRegistrationForm() {
                 type="password"
                 required
               />
-              {/*****  Password Error Messages *****/}
+              {/* Password error messages */}
               {state?.errors?.password && (
                 <div className="mt-1">
                   <p className="text-warning italic">Password must:</p>
@@ -129,12 +131,9 @@ export default function UserRegistrationForm() {
               )}
             </div>
 
-            {/***** Cofirm Password field *****/}
+            {/* Confirm Password field */}
             <div className="mb-6">
-              <label
-                className="block text-sm font-bold mb-2"
-                htmlFor="confirmPassword"
-              >
+              <label className="block text-sm font-bold mb-2" htmlFor="confirmPassword">
                 Confirm Password
               </label>
               <input
@@ -144,13 +143,13 @@ export default function UserRegistrationForm() {
                 type="password"
                 required
               />
-              {/***** Confirm Password Error Messages *****/}
+              {/* Confirm Password error message */}
               {state?.errors?.confirmPassword && (
                 <p className="text-warning italic mt-1">{state.errors.confirmPassword}</p>
               )}
             </div>
 
-            {/*****  Failed Registration Error Message *****/}
+            {/* Registration failure error message */}
             <div className="flex justify-center">
               {state?.message && (
                 <p className="text-warning font-bold text-sm mb-4">
@@ -159,7 +158,7 @@ export default function UserRegistrationForm() {
               )}
             </div>
 
-            {/*****  Submit Button *****/}
+            {/* Submit button */}
             <div className="flex justify-end">
               <button
                 className="w-full bg-primary text-white py-4 px-4 font-bold text-sm rounded cursor-pointer focus:outline-none focus:shadow-outline hover:bg-primary-dark"

@@ -1,14 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+/**
+ * Public routes that do not require authentication.
+ */
 const publicRoutes = ['/', '/register'];
+
+/**
+ * Routes that require authentication.
+ */
 const protectedRoutes = [
   '/dashboard',
   '/initiated-handshakes',
   '/create',
   '/history',
-  '/received-handshakes'
+  '/received-handshakes',
+  'price-analyzer'
 ];
 
+/**
+ * Middleware function that handles route-based authentication logic.
+ * 
+ * - Allows static files and API routes to bypass middleware.
+ * - Redirects unauthenticated users away from protected routes.
+ * - Redirects authenticated users away from public routes (e.g. login/register).
+ * 
+ * @param req - The incoming Next.js request object.
+ * @returns A `NextResponse` to continue or redirect the request.
+ */
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
@@ -35,22 +53,10 @@ export function middleware(req: NextRequest) {
       loginUrl.searchParams.set('redirect', pathname);
       const res = NextResponse.redirect(loginUrl);
 
-      
-      // // Clear cookies
-      //  res.cookies.set('jwtCookie', '', {
-      //   path: '/',
-      //   expires: new Date(0),
-      // });
- 
-      // res.cookies.set('XSRF-TOKEN', '', {
-      //   path: '/',
-      //   expires: new Date(0),
-      // });
-
       return res;
     }
   }
-  
+
   // Public route: already logged in
   if (publicRoutes.includes(pathname) && jwtCookie && xsrfToken) {
     return NextResponse.redirect(new URL('/dashboard', req.url));
@@ -59,6 +65,10 @@ export function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
+/**
+ * Middleware matcher config used by Next.js to determine which routes
+ * this middleware applies to.
+ */
 export const config = {
   matcher: [
     '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',

@@ -3,24 +3,23 @@
 import { useEffect, useState } from 'react';
 import ProfileCard from '@/_ui/profile-card';
 import PageHeader from '@/_ui/page-header';
-import {  getUserProfileAxiosRequest } from '@/_lib/dal';
-import HandshakeCreationForm from '@/_ui/handshake-creation-form';
+import { getUserProfileAxiosRequest } from '@/_lib/dal';
 import { UserData } from '@/_lib/definitions';
 
-// interface UserData {
-//   id: string;
-//   username: string;
-//   email: string;
-// }
-
+/**
+ * Dashboard component that displays the user's profile information.
+ * 
+ * It fetches the user's profile data when the component is mounted and displays it on the page.
+ * It also handles loading and error states.
+ * 
+ * @returns The dashboard page with the user's profile data or an error message.
+ */
 export default function Dashboard() {
   const [userData, setUserData] = useState<UserData | null>(null); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-
   useEffect(() => {
-    
     const loadProfile = async () => {
       setLoading(true);
       try {
@@ -42,7 +41,7 @@ export default function Dashboard() {
     loadProfile();
   }, []);
   
-  
+  // data loading message
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -52,6 +51,7 @@ export default function Dashboard() {
     );
   }
 
+  // error message
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -61,11 +61,10 @@ export default function Dashboard() {
     );
   }
 
-  console.log(userData);
-
+  // display profile info
   return (
     <div className="flex flex-col items-center justify-top min-h-screen">
-      <PageHeader title="Dashboard" subTitle />
+      <PageHeader title="Dashboard" subTitle="Welcome to Handshakr" />
       <div className="flex flex-col gap-2">
         {userData && (
           <ProfileCard
@@ -74,10 +73,7 @@ export default function Dashboard() {
             email={userData.email}
           />
         )}
-   
       </div>
     </div>
   );
-// }
-
 }
