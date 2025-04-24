@@ -2,6 +2,20 @@ import { API } from './definitions'
 import axios from 'axios'
 
 /**
+ * userDataAccess
+ *
+ * This module handles API calls related to user profiles and handshakes.
+ * It includes functions to:
+ * - Fetch the user's own profile data
+ * - Retrieve handshakes initiated or received by the user
+ *
+ * All requests include CSRF token handling and basic authentication error checks.
+ * Each function returns a standardized result object indicating success or failure.
+ *
+ * @module userDataAccess
+ */
+
+/**
  * Fetches the user's profile data from the server.
  * 
  * @returns A result object containing either a success flag and data or an error message.

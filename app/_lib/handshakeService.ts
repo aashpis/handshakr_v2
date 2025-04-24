@@ -1,6 +1,11 @@
 'use client'
-
-// Contains functions related to Handshakes
+/**
+ * Handshake creation functions for making requests to the backend API
+ * These functions handle handshake creation
+ * and also provide error handling and CSRF token management.
+ * 
+ * @module handshakeService
+ */
 
 import { API, HandshakeFormSchema, HandshakeFormState } from './definitions';
 import axios  from 'axios'

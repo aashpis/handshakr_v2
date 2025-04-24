@@ -1,6 +1,6 @@
 /**
  * User authentication and registration helper functions for making requests to the backend API
- * using both `fetch` and `axios`. These functions handle user creation, login, and logout,
+ * These functions handle user creation, login, and logout,
  * and also provide error handling and CSRF token management.
  * 
  * @module userAuth
