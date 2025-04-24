@@ -32,3 +32,5 @@ describe('Home Page', () => {
     expect(screen.getByTestId('create-account-button')).toBeInTheDocument();
   });
 });
+
+
