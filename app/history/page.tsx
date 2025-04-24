@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchInitiatedHandshakes, fetchReceivedHandshakes, getUserProfileAxiosRequest } from "@/_lib/userDataAccess";
+import { fetchInitiatedHandshakes, fetchReceivedHandshakes, fetchUserProfile } from "@/_lib/userDataAccess";
 import HandshakeCard from "@/_ui/handshake-card";
 import PageHeader from "@/_ui/page-header";
 import { Handshake } from '@/_lib/definitions';
@@ -34,7 +34,7 @@ export default function Page() {
     const loadHandshakes = async () => {
       try {
         // Fetch user profile
-        const userRes = await getUserProfileAxiosRequest();
+        const userRes = await fetchUserProfile();
         if (!userRes.success) {
           setError(userRes.error || "Failed to load profile");
           return;

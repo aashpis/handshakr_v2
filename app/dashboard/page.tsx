@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import ProfileCard from '@/_ui/profile-card';
 import PageHeader from '@/_ui/page-header';
-import { fetchUserProfile, getUserProfileAxiosRequest } from '@/_lib/userDataAccess';
+import { fetchUserProfile } from '@/_lib/userDataAccess';
 import { UserData } from '@/_lib/definitions';
 
 /**
