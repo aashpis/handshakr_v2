@@ -14,7 +14,7 @@
 import { useActionState } from 'react';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { loginUser } from '@/_lib/auth';
+import { loginUser } from '@/_lib/userAuthService';
 
 export default function LoginForm() {
   const router = useRouter();

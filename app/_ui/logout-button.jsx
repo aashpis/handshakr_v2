@@ -1,6 +1,6 @@
 'use client';
 
-import { logoutUserRequest } from '@/_lib/auth';
+import { logoutUserRequest } from '@/_lib/userAuthService';
 import { useTransition, useState } from 'react';
 import { LogOut } from 'lucide-react';
 

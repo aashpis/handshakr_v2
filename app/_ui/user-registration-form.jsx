@@ -1,6 +1,6 @@
 "use client";
 
-import { registerNewUser } from "@/_lib/auth"; // Import the registerNewUser function to handle user registration
+import { registerNewUser } from "@/_lib/userAuthService"; // Import the registerNewUser function to handle user registration
 import { useActionState } from "react"; // Import useActionState hook for managing state transitions
 import { useEffect } from "react"; // Import useEffect hook to manage side effects
 import { useRouter } from "next/navigation"; // Import useRouter hook to manage page navigation
