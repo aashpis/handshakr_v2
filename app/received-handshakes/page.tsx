@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchReceivedHandshakes, getUserProfileAxiosRequest } from "@/_lib/dal";
+import { fetchReceivedHandshakes, getUserProfileAxiosRequest } from "@/_lib/userDataAccess";
 import HandshakeCard from "@/_ui/handshake-card";
 import PageHeader from "@/_ui/page-header";
 import { Handshake } from '@/_lib/definitions';

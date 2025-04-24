@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import ProfileCard from '@/_ui/profile-card';
 import PageHeader from '@/_ui/page-header';
-import { getUserProfileAxiosRequest } from '@/_lib/dal';
+import { fetchUserProfile, getUserProfileAxiosRequest } from '@/_lib/userDataAccess';
 import { UserData } from '@/_lib/definitions';
 
 /**
@@ -23,7 +23,7 @@ export default function Dashboard() {
     const loadProfile = async () => {
       setLoading(true);
       try {
-        const res = await getUserProfileAxiosRequest();
+        const res = await fetchUserProfile();
         if (res.success) {
           const user = res.data.data;
           setUserData(user);

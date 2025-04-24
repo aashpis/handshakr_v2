@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { fetchPriceStats, fetchMedianPriceGraph, fetchPriceHistogram } from '@/_lib/dal';
+import { fetchPriceStats, fetchMedianPriceGraph, fetchPriceHistogram } from '@/_lib/priceAnalyzerService';
 import PriceInputForm from '@/_ui/price-input-form';
 import PriceStatsCard from '@/_ui/price-stats-card';
 import PriceGraphs from '@/_ui/price-graphs';
