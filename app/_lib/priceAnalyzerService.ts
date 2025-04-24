@@ -1,4 +1,16 @@
 import { API } from './definitions'
+/**
+ * priceAnalyzerService
+ *
+ * This service provides utility functions for analyzing item price statistics.
+ * It may include operations such as calculating mean, median, min, max, and other
+ * data aggregation or normalization methods related to item pricing.
+ *
+ * Used throughout the application to support data visualization, historical price tracking,
+ * and item value estimation in the UI.
+ *
+ * @module priceAnalyzerService
+ */
 
 
 /**
