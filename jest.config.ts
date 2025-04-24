@@ -12,11 +12,14 @@ const config: Config = {
   collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
-  setupFilesAfterEnv: ['./jest.setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testEnvironment: 'jsdom',
   testMatch: [
     '**/__test__/**/*.[jt]s?(x)' // Match files in __test__ directory
-  ]
+  ],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/app/$1', // Use <rootDir>/app/ to resolve paths from the root
+  },
 };
 
 export default createJestConfig(config);
