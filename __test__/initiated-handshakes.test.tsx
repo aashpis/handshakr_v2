@@ -22,7 +22,7 @@ jest.mock('@/_lib/userDataAccess', () => ({
 }));
 
 import {
-  getUserProfileAxiosRequest,
+  getUserProfileAxiosRequest as fetchUserProfile,
   fetchInitiatedHandshakes,
 } from '@/_lib/userDataAccess';
 
@@ -53,7 +53,7 @@ describe('Initiated Handshakes Page', () => {
   });
 
   it('renders header and loading state initially', async () => {
-    (getUserProfileAxiosRequest as jest.Mock).mockResolvedValueOnce({
+    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
       success: true,
       data: { data: { username: 'alice' } },
     });
@@ -70,7 +70,7 @@ describe('Initiated Handshakes Page', () => {
   });
 
   it('displays error if user profile fails', async () => {
-    (getUserProfileAxiosRequest as jest.Mock).mockResolvedValueOnce({
+    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
       success: false,
       error: 'Profile error',
     });
@@ -82,7 +82,7 @@ describe('Initiated Handshakes Page', () => {
   });
 
   it('displays error if handshake fetch fails', async () => {
-    (getUserProfileAxiosRequest as jest.Mock).mockResolvedValueOnce({
+    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
       success: true,
       data: { data: { username: 'alice' } },
     });
@@ -98,7 +98,7 @@ describe('Initiated Handshakes Page', () => {
   });
 
   it('renders handshake cards on success', async () => {
-    (getUserProfileAxiosRequest as jest.Mock).mockResolvedValueOnce({
+    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
       success: true,
       data: { data: { username: 'alice' } },
     });

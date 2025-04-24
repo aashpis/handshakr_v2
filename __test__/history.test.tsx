@@ -21,7 +21,7 @@ jest.mock('@/_lib/userDataAccess', () => ({
 }));
 
 import {
-  getUserProfileAxiosRequest,
+  getUserProfileAxiosRequest as fetchUserProfile,
   fetchInitiatedHandshakes,
   fetchReceivedHandshakes,
 } from '@/_lib/userDataAccess';
@@ -66,7 +66,7 @@ describe('Handshakes History Page', () => {
   });
 
   it('shows loading and then renders handshakes in descending order by signed date', async () => {
-    (getUserProfileAxiosRequest as jest.Mock).mockResolvedValueOnce({
+    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
       success: true,
       data: { data: { username: 'testuser' } },
     });
@@ -94,7 +94,7 @@ describe('Handshakes History Page', () => {
   });
 
   it('displays an error if user profile fails', async () => {
-    (getUserProfileAxiosRequest as jest.Mock).mockResolvedValueOnce({
+    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
       success: false,
       error: 'Profile load failed',
     });
@@ -106,7 +106,7 @@ describe('Handshakes History Page', () => {
   });
 
   it('displays handshakes even if one of the fetches fails', async () => {
-    (getUserProfileAxiosRequest as jest.Mock).mockResolvedValueOnce({
+    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
       success: true,
       data: { data: { username: 'testuser' } },
     });
@@ -129,7 +129,7 @@ describe('Handshakes History Page', () => {
   });
 
   it('displays error message on exception', async () => {
-    (getUserProfileAxiosRequest as jest.Mock).mockRejectedValueOnce(
+    (fetchUserProfile as jest.Mock).mockRejectedValueOnce(
       new Error('Unexpected failure')
     );
 
