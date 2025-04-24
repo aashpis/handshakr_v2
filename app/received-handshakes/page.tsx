@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchReceivedHandshakes, getUserProfileAxiosRequest } from "@/_lib/userDataAccess";
+import { fetchReceivedHandshakes, fetchUserProfile } from "@/_lib/userDataAccess";
 import HandshakeCard from "@/_ui/handshake-card";
 import PageHeader from "@/_ui/page-header";
 import { Handshake } from '@/_lib/definitions';
@@ -33,7 +33,7 @@ export default function Page() {
       setLoading(true);
   
       try {
-        const userRes = await getUserProfileAxiosRequest();
+        const userRes = await fetchUserProfile();
         if (!userRes.success) {
           setError(userRes.error || "Failed to get user profile");
           return;
