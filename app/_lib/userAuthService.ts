@@ -51,48 +51,48 @@ export async function createUserFetchRequest(
   }
 }
 
-/**
- * Sends a user registration request using `axios`.
- * 
- * @param {string} email - The email address of the user.
- * @param {string} username - The username chosen by the user.
- * @param {string} password - The password chosen by the user.
- * 
- * @returns {Promise<{ success: boolean, error?: string }>} - The result of the registration attempt.
- */
-export async function createUserAxiosRequest(
-  email: string,
-  username: string,
-  password: string
-) {
-  try {
-    await axios.post(
-      `${API.BASE}/${API.REGISTER}`,
-      { email, username, password },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+// /**
+//  * Sends a user registration request using `axios`.
+//  * 
+//  * @param {string} email - The email address of the user.
+//  * @param {string} username - The username chosen by the user.
+//  * @param {string} password - The password chosen by the user.
+//  * 
+//  * @returns {Promise<{ success: boolean, error?: string }>} - The result of the registration attempt.
+//  */
+// export async function createUserAxiosRequest(
+//   email: string,
+//   username: string,
+//   password: string
+// ) {
+//   try {
+//     await axios.post(
+//       `${API.BASE}/${API.REGISTER}`,
+//       { email, username, password },
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       }
+//     );
 
-    return { success: true };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error("Account creation failed:", error.response?.data);
-      return {
-        success: false,
-        error: error.response?.data?.message || "Account creation failed. Please try again.",
-      };
-    }
+//     return { success: true };
+//   } catch (error) {
+//     if (axios.isAxiosError(error)) {
+//       console.error("Account creation failed:", error.response?.data);
+//       return {
+//         success: false,
+//         error: error.response?.data?.message || "Account creation failed. Please try again.",
+//       };
+//     }
 
-    console.error("createUserRequest error:", error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "An unknown error occurred."
-    };
-  }
-}
+//     console.error("createUserRequest error:", error);
+//     return {
+//       success: false,
+//       error: error instanceof Error ? error.message : "An unknown error occurred."
+//     };
+//   }
+// }
 
 /**
  * Registers a new user after validating form data using `UserRegisterFormSchema`.
@@ -118,7 +118,8 @@ export async function registerNewUser(state: UserAuthFormState, formData: FormDa
 
   const { username, email, password } = validatedFields.data;
   
-  const result = await createUserAxiosRequest(email, username, password);
+  // const result = await createUserAxiosRequest(email, username, password);
+  const result = await createUserFetchRequest(email, username, password);
   
   if (!result.success) {
     console.log("user registration failed");
@@ -177,50 +178,50 @@ export async function loginFetchRequest(username: string, password: string) {
   }
 }
 
-/**
- * Authenticates a user login request using `axios`.
- * 
- * @param {string} username - The username of the user.
- * @param {string} password - The password of the user.
- * 
- * @returns {Promise<{ success: boolean, error?: string, data?: any }>} - The result of the login attempt.
- */
-export async function loginAxiosRequest(username: string, password: string) {
-  try {
-    const response = await axios.post(
-      `${API.BASE}/${API.LOGIN}`,
-      { username, password },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+// /**
+//  * Authenticates a user login request using `axios`.
+//  * 
+//  * @param {string} username - The username of the user.
+//  * @param {string} password - The password of the user.
+//  * 
+//  * @returns {Promise<{ success: boolean, error?: string, data?: any }>} - The result of the login attempt.
+//  */
+// export async function loginAxiosRequest(username: string, password: string) {
+//   try {
+//     const response = await axios.post(
+//       `${API.BASE}/${API.LOGIN}`,
+//       { username, password },
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       }
+//     );
 
-    // Extract CSRF Token from response headers
-    const csrfToken = response.headers['x-csrf-token'];
-    if (csrfToken) {
-      sessionStorage.setItem("X-XSRF-TOKEN", csrfToken);
-      console.log("CSRF token stored:", csrfToken);
-    }
+//     // Extract CSRF Token from response headers
+//     const csrfToken = response.headers['x-csrf-token'];
+//     if (csrfToken) {
+//       sessionStorage.setItem("X-XSRF-TOKEN", csrfToken);
+//       console.log("CSRF token stored:", csrfToken);
+//     }
 
-    return { success: true, data: response.data };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error("Login failed:", error.response?.data);
-      return {
-        success: false,
-        error: error.response?.data?.message || "Failed to login"
-      };
-    }
+//     return { success: true, data: response.data };
+//   } catch (error) {
+//     if (axios.isAxiosError(error)) {
+//       console.error("Login failed:", error.response?.data);
+//       return {
+//         success: false,
+//         error: error.response?.data?.message || "Failed to login"
+//       };
+//     }
 
-    console.error("authLoginDataRequest error:", error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "An unknown error occurred"
-    };
-  }
-}
+//     console.error("authLoginDataRequest error:", error);
+//     return {
+//       success: false,
+//       error: error instanceof Error ? error.message : "An unknown error occurred"
+//     };
+//   }
+// }
 
 /**
  * Handles user login by validating form input and calling the login function.
@@ -242,7 +243,7 @@ export async function loginUser(state: UserAuthFormState, formData: FormData) {
 
   const { username, password } = validatedFields.data;
 
-  const result = await loginAxiosRequest(username, password);
+  const result = await loginFetchRequest(username, password);
 
   if (!result.success) {
     return { message: result.error };
