@@ -1,99 +1,91 @@
-// __test__/handshake-history.test.tsx
 import { render, screen, waitFor } from '@testing-library/react';
 import Page from '../app/history/page';
 import { Handshake } from '@/_lib/definitions';
 
-jest.mock('@/_ui/page-header', () => ({ title, subTitle }: any) => (
+// Mock child components with proper TypeScript typing
+jest.mock('@/_ui/page-header', () => ({ title, subTitle }: { 
+  title: string, 
+  subTitle: string 
+}) => (
   <div data-testid="page-header">
     <h1>{title}</h1>
     <p>{subTitle}</p>
   </div>
 ));
 
-jest.mock('@/_ui/handshake-card', () => (props: any) => (
-  <div data-testid="handshake-card">{props.signedDate}</div>
+jest.mock('@/_ui/handshake-card', () => (props: Handshake) => (
+  <div data-testid="handshake-card">
+    {props.handshakeName} - {props.signedDate}
+    {props.handshakeStatus && <span data-testid="status-badge">{props.handshakeStatus}</span>}
+  </div>
 ));
 
+// Mock service functions to match userDataAccess implementation
 jest.mock('@/_lib/userDataAccess', () => ({
-  getUserProfileAxiosRequest: jest.fn(),
+  fetchUserProfile: jest.fn(),
   fetchInitiatedHandshakes: jest.fn(),
   fetchReceivedHandshakes: jest.fn(),
 }));
 
 import {
-  getUserProfileAxiosRequest as fetchUserProfile,
+  fetchUserProfile,
   fetchInitiatedHandshakes,
   fetchReceivedHandshakes,
 } from '@/_lib/userDataAccess';
 
 describe('Handshakes History Page', () => {
-    const initiated: Handshake[] = [
-        {
-          handshakeName: 'Handshake A',
-          encryptedDetails: 'Encrypted A',
-          signedDate: '2023-01-01',
-          completedDate: '2023-01-02',
-          handshakeStatus: 'Completed',
-          initiatorUsername: 'alice',
-          acceptorUsername: 'bob',
-        },
-      ];
-      
-      const received: Handshake[] = [
-        {
-          handshakeName: 'Handshake B',
-          encryptedDetails: 'Encrypted B',
-          signedDate: '2023-01-03',
-          completedDate: '2023-01-04',
-          handshakeStatus: 'Completed',
-          initiatorUsername: 'charlie',
-          acceptorUsername: 'alice',
-        },
-        {
-          handshakeName: 'Handshake C',
-          encryptedDetails: 'Encrypted C',
-          signedDate: '2023-01-02',
-          completedDate: '2023-10-20',
-          handshakeStatus: 'Pending',
-          initiatorUsername: 'david',
-          acceptorUsername: 'alice',
-        },
-      ];
-      
+  const mockInitiatedHandshakes: Handshake[] = [
+    {
+      handshakeName: 'Handshake A',
+      encryptedDetails: 'Encrypted A',
+      signedDate: '2023-01-01',
+      completedDate: '2023-01-02',
+      handshakeStatus: 'Completed',
+      initiatorUsername: 'alice',
+      acceptorUsername: 'bob',
+    }
+  ];
+
+  const mockReceivedHandshakes: Handshake[] = [
+    {
+      handshakeName: 'Handshake B',
+      encryptedDetails: 'Encrypted B',
+      signedDate: '2023-01-03',
+      completedDate: '2023-01-04',
+      handshakeStatus: 'Pending',
+      initiatorUsername: 'charlie',
+      acceptorUsername: 'alice',
+    }
+  ];
 
   beforeEach(() => {
     jest.clearAllMocks();
+    // Mock sessionStorage for CSRF token
+    Storage.prototype.getItem = jest.fn(() => 'mock-csrf-token');
   });
 
-  it('shows loading and then renders handshakes in descending order by signed date', async () => {
-    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
-      success: true,
-      data: { data: { username: 'testuser' } },
-    });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
-    (fetchInitiatedHandshakes as jest.Mock).mockResolvedValueOnce({
-      success: true,
-      data: initiated,
-    });
-
-    (fetchReceivedHandshakes as jest.Mock).mockResolvedValueOnce({
-      success: true,
-      data: received,
-    });
-
+  it('shows loading state initially', () => {
+    (fetchUserProfile as jest.Mock).mockImplementation(() => new Promise(() => {}));
+    
     render(<Page />);
-    expect(screen.getByText(/loading/i)).toBeInTheDocument();
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.queryByTestId('handshake-card')).not.toBeInTheDocument();
+  });
 
+  it('displays authentication error when no CSRF token', async () => {
+    Storage.prototype.getItem = jest.fn(() => null);
+    
+    render(<Page />);
     await waitFor(() => {
-      const cards = screen.getAllByTestId('handshake-card');
-      expect(cards.length).toBe(3);
-      expect(cards[0]).toHaveTextContent('2023-01-03');
-      expect(cards[1]).toHaveTextContent('2023-01-02');
-      expect(cards[2]).toHaveTextContent('2023-01-01');      
+      expect(screen.getByText('Not authenticated')).toBeInTheDocument();
     });
   });
 
-  it('displays an error if user profile fails', async () => {
+  it('displays error when profile fetch fails', async () => {
     (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
       success: false,
       error: 'Profile load failed',
@@ -101,41 +93,122 @@ describe('Handshakes History Page', () => {
 
     render(<Page />);
     await waitFor(() => {
-      expect(screen.getByText(/profile load failed/i)).toBeInTheDocument();
+      expect(screen.getByText('Profile load failed')).toBeInTheDocument();
     });
   });
 
-  it('displays handshakes even if one of the fetches fails', async () => {
+  it('displays authentication error when profile fetch returns 401', async () => {
     (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
-      success: true,
-      data: { data: { username: 'testuser' } },
-    });
-
-    (fetchInitiatedHandshakes as jest.Mock).mockResolvedValueOnce({
       success: false,
-      error: 'Initiated error',
-    });
-
-    (fetchReceivedHandshakes as jest.Mock).mockResolvedValueOnce({
-      success: true,
-      data: received,
+      error: 'Authentication Error',
     });
 
     render(<Page />);
     await waitFor(() => {
-      const cards = screen.getAllByTestId('handshake-card');
-      expect(cards.length).toBe(2);
+      expect(screen.getByText('Authentication Error')).toBeInTheDocument();
     });
   });
 
-  it('displays error message on exception', async () => {
+  it('renders handshakes in descending order by signed date', async () => {
+    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
+      success: true,
+      data: { data: { username: 'alice' } },
+    });
+    (fetchInitiatedHandshakes as jest.Mock).mockResolvedValueOnce({
+      success: true,
+      data: mockInitiatedHandshakes,
+    });
+    (fetchReceivedHandshakes as jest.Mock).mockResolvedValueOnce({
+      success: true,
+      data: mockReceivedHandshakes,
+    });
+
+    render(<Page />);
+    
+    await waitFor(() => {
+      const cards = screen.getAllByTestId('handshake-card');
+      expect(cards).toHaveLength(2);
+      expect(cards[0]).toHaveTextContent('Handshake B - 2023-01-03');
+      expect(cards[1]).toHaveTextContent('Handshake A - 2023-01-01');
+    });
+  });
+
+  it('handles API errors gracefully', async () => {
+    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
+      success: true,
+      data: { data: { username: 'alice' } },
+    });
+    (fetchInitiatedHandshakes as jest.Mock).mockResolvedValueOnce({
+      success: false,
+      error: 'Failed to get initiated handshakes',
+    });
+    (fetchReceivedHandshakes as jest.Mock).mockResolvedValueOnce({
+      success: false,
+      error: 'Failed to get received handshakes',
+    });
+
+    render(<Page />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Failed to get initiated handshakes')).toBeInTheDocument();
+    });
+  });
+
+  it('handles network errors', async () => {
     (fetchUserProfile as jest.Mock).mockRejectedValueOnce(
-      new Error('Unexpected failure')
+      new Error('Network error')
     );
 
     render(<Page />);
+    
     await waitFor(() => {
-      expect(screen.getByText(/unexpected failure/i)).toBeInTheDocument();
+      expect(screen.getByText('Network error')).toBeInTheDocument();
+    });
+  });
+
+  it('shows empty state when no handshakes found', async () => {
+    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
+      success: true,
+      data: { data: { username: 'alice' } },
+    });
+    (fetchInitiatedHandshakes as jest.Mock).mockResolvedValueOnce({
+      success: true,
+      data: [],
+    });
+    (fetchReceivedHandshakes as jest.Mock).mockResolvedValueOnce({
+      success: true,
+      data: [],
+    });
+
+    render(<Page />);
+    
+    await waitFor(() => {
+      expect(screen.queryByTestId('handshake-card')).not.toBeInTheDocument();
+      expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
+    });
+  });
+
+  it('shows handshake status badges', async () => {
+    (fetchUserProfile as jest.Mock).mockResolvedValueOnce({
+      success: true,
+      data: { data: { username: 'alice' } },
+    });
+    (fetchInitiatedHandshakes as jest.Mock).mockResolvedValueOnce({
+      success: true,
+      data: mockInitiatedHandshakes,
+    });
+    (fetchReceivedHandshakes as jest.Mock).mockResolvedValueOnce({
+      success: true,
+      data: mockReceivedHandshakes,
+    });
+
+    render(<Page />);
+    
+    await waitFor(() => {
+      const statusBadges = screen.getAllByTestId('status-badge');
+      expect(statusBadges).toHaveLength(2);
+      expect(statusBadges[0]).toHaveTextContent('Pending');
+      expect(statusBadges[1]).toHaveTextContent('Completed');
     });
   });
 });

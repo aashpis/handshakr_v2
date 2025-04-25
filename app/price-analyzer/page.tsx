@@ -89,7 +89,7 @@ export default function Page() {
       setMedianGraphUrl(medianRes.data || '');
   
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       setError(err instanceof Error ? err.message : 'Failed to fetch analysis.');
     } finally {
       setLoading(false);
