@@ -8,7 +8,7 @@
 
 import { UserRegisterFormSchema, UserAuthFormState, API, LoginFormSchema } from './definitions';
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 /**
  * Sends a user registration request using `fetch`.
