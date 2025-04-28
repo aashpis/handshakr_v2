@@ -56,8 +56,10 @@ export default function UserRegistrationForm() {
       {/* Registration form if registration is not successful */}
       {!state?.success && (
         <div>
-          <div className="justify-items-center">
-            <h1 className="text-primary text-2xl font-bold">Create new account</h1>
+          <div className="flex flex-col items-center">
+            <h1 className="text-primary text-2xl font-bold">
+              Create new account
+            </h1>
 
             {/* Prompt to redirect to login page if the user already has an account */}
             <p className="italic text-neutral text-xs">
