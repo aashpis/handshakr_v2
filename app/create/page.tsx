@@ -1,6 +1,6 @@
 import HandshakeCreationForm from '@/_ui/handshake-creation-form';
 import PageHeader from '@/_ui/page-header';
-
+import { userAuthRedirect } from '@/_lib/userAuthService';
 /**
  * Page component for creating a new handshake.
  *
@@ -10,6 +10,10 @@ import PageHeader from '@/_ui/page-header';
  */
 
 export default function Page() {
+
+    //auth check
+    userAuthRedirect();
+
   return (
     <div className="flex flex-col items-center justify-start min-h-screen">
       <PageHeader

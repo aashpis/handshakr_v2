@@ -7,6 +7,7 @@ import PriceStatsCard from '@/_ui/price-stats-card';
 import PriceGraphs from '@/_ui/price-graphs';
 import { PriceStats } from '@/_lib/definitions';
 import PageHeader from "@/_ui/page-header";
+import { userAuthRedirect } from '@/_lib/userAuthService';
 
 /**
  * Price Analyzer Page
@@ -20,6 +21,10 @@ import PageHeader from "@/_ui/page-header";
  * @returns A component that displays price analysis results.
  */
 export default function Page() {
+
+  //auth check
+  userAuthRedirect();
+
   /** Holds the price statistics (max, mean, median, min) of the item */
   const [priceData, setPriceData] = useState<PriceStats | null>(null);
 

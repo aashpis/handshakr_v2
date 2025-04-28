@@ -5,6 +5,7 @@ import { fetchReceivedHandshakes, fetchUserProfile } from "@/_lib/userDataAccess
 import HandshakeCard from "@/_ui/handshake-card";
 import PageHeader from "@/_ui/page-header";
 import { Handshake } from '@/_lib/definitions';
+import { userAuthRedirect } from '@/_lib/userAuthService';
 
 /**
  * Received Handshakes Page
@@ -15,6 +16,10 @@ import { Handshake } from '@/_lib/definitions';
  * @returns A component that renders received handshakes in card format.
  */
 export default function Page() {
+
+  //auth check
+  userAuthRedirect();
+
   /** List of received handshakes for the logged-in user */
   const [handshakes, setHandshakes] = useState<Handshake[]>([]);
 

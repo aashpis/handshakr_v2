@@ -5,6 +5,7 @@ import { fetchInitiatedHandshakes, fetchReceivedHandshakes, fetchUserProfile } f
 import HandshakeCard from "@/_ui/handshake-card";
 import PageHeader from "@/_ui/page-header";
 import { Handshake } from '@/_lib/definitions';
+import { userAuthRedirect } from '@/_lib/userAuthService';
 
 /**
  * Page component that displays a user's handshake history, including both initiated and received handshakes.
@@ -16,6 +17,9 @@ import { Handshake } from '@/_lib/definitions';
  * @returns A page displaying a list of handshakes (both initiated and received) with their details.
  */
 export default function Page() {
+
+    //auth check
+    userAuthRedirect();
 
   /** List of all handshakes for the logged-in user */
   const [handshakes, setHandshakes] = useState<Handshake[]>([]);
