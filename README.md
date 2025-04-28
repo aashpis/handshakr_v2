@@ -26,12 +26,35 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Build the project
 
+[Performant Node Package Manager (pnpm)](https://pnpm.io/installation) must be installed to build the project. 
+
+Install dependencies: 
+
+```bash
+pnpm install
+```
+
 Create and run the build version
 
 ```bash
 pnpm run build
 pnpm build
 ```
-## DOCUMENTATION
+## Documentation
 
-Documentation can be viewed from docs/index.html. 
+Documentation is created as html pages. View them via ./docs/index.html
+
+**Alternatively, build and view docs:**
+
+Docs can be built using:
+
+```bash
+pnpm generate-docs
+```
+
+View them locally via localhost:
+
+```bash
+pnpm preview-docs
+```
+
