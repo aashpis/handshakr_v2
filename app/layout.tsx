@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="appearance-none">
+      <body className="appearance-none bg-background text-foreground">
         {children}
       </body>
     </html>
