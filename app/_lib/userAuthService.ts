@@ -1,14 +1,14 @@
+import { UserRegisterFormSchema, UserAuthFormState, API, LoginFormSchema } from './definitions';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 /**
  * User authentication and registration helper functions for making requests to the backend API
  * These functions handle user creation, login, and logout,
  * and also provide error handling and CSRF token management.
  * 
- * @module userAuth
+ * @module userAuthService
  */
-
-import { UserRegisterFormSchema, UserAuthFormState, API, LoginFormSchema } from './definitions';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 /**
  * Sends a user registration request using `fetch`.
