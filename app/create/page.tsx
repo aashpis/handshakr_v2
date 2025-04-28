@@ -1,3 +1,5 @@
+'use client'
+
 import HandshakeCreationForm from '@/_ui/handshake-creation-form';
 import PageHeader from '@/_ui/page-header';
 import { userAuthRedirect } from '@/_lib/userAuthService';
