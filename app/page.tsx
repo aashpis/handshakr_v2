@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-4">
       <div className="flex flex-col md:flex-row w-full max-w-6xl items-center md:items-start mt-10 gap-8">
-        
+
         {/* Left side - Image and Text */}
         <div className="flex flex-col justify-start w-full md:w-1/2 p-8">
           <Image
@@ -24,9 +24,24 @@ export default function Home() {
             alt="handshakr banner"
             className="w-full h-auto mb-6"
           />
-          <p className="font-bold text-neutral-dark mb-6 text-center md:text-left">
-            Handshakr secures and facilitates private agreements, ranging from official marketplace interactions to casual on-the-fly deals.
-          </p>
+          <div>
+
+            <p className="font-bold text-neutral-dark mb-6 text-center md:text-left hyphens-none">
+              Handshakr secures and facilitates private agreements. <br></br>Anything from official marketplace interactions <br></br> to casual on-the-fly deals.
+            </p>
+            <p className=" text-neutral-dark mb-6 text-center md:text-left hyphens-none">
+              Download and install the android app to create handshakes where ever you are and validate them. 
+            </p>
+
+            <a
+  href="/handshakr_mobile.apk"
+  download
+  className="block w-full bg-primary text-white py-4 px-4 font-bold text-sm sm:text-base rounded cursor-pointer focus:outline-none focus:shadow-outline hover:bg-primary-dark text-center"
+>
+  Download the .apk
+</a>
+
+          </div>
           {/* <ul className="list-inside text-xl space-y-2">
             <li>Decentralized</li>
             <li>Secure</li>
