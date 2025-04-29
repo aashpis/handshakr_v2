@@ -30,7 +30,7 @@ export default function Home() {
               Handshakr secures and facilitates private agreements. <br></br>Anything from official marketplace interactions <br></br> to casual on-the-fly deals.
             </p>
             <p className=" text-neutral-dark mb-6 text-center md:text-left hyphens-none">
-              Download and install the android app to create handshakes where ever you are and validate them. 
+              Download and install the android app to create and validate handshakes wherever you are. 
             </p>
 
             <a
